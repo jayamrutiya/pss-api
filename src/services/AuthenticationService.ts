@@ -7,6 +7,8 @@ import { IUserRepository } from "../interfaces/IUserRepository";
 import { BadRequest } from "../errors/BadRequest";
 import env from "../config/env";
 import { DoLoginService } from "../types/Auth";
+import { NotFound } from "../errors/NotFound";
+import { User } from "@prisma/client";
 
 @injectable()
 export class AuthenticationService implements IAuthenticationService {
@@ -55,5 +57,31 @@ export class AuthenticationService implements IAuthenticationService {
     await this._userRepository.saveRefreshToken(getUser.id, refreshToken);
 
     return { accessToken, refreshToken };
+  }
+
+  async changePassword(
+    userId: number,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<User> {
+    const getUser = await this._userRepository.getUserById(userId);
+
+    if (!getUser) {
+      throw new NotFound("User not found.");
+    }
+
+    if (getUser.password !== oldPassword) {
+      throw new BadRequest("Old Password is not valid.");
+    }
+
+    const data = {
+      userName: getUser.userName,
+      salt: getUser.salt,
+      password: newPassword,
+      firstName: getUser.firstName,
+      lastName: getUser.lastName,
+    };
+
+    return await this._userRepository.updateUserById(userId, data);
   }
 }

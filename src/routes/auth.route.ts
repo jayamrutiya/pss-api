@@ -4,6 +4,7 @@ import { iocContainer as Container } from "../config/container";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { IAuthenticationService } from "../interfaces/IAuthenticationService";
 import { AuthenticationController } from "../controllers/AuthenticationController";
+import passport from "../middlewares/passport";
 
 const router = express.Router();
 
@@ -18,5 +19,11 @@ const authenticationController = new AuthenticationController(
 );
 
 router.post("/login", (req, res) => authenticationController.doLogin(req, res));
+
+router.post(
+  "/change/password",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => authenticationController.changePassword(req, res)
+);
 
 export default router;
