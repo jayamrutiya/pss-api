@@ -6,9 +6,11 @@ export const TYPES = {
   EmployeeService: Symbol("IEmployeeService"),
   JwtService: Symbol("IJwtService"),
   AuthenticationService: Symbol("IAuthenticationService"),
+  TemplateService: Symbol("ITemplateService"),
 
   // repositories
   TestRepository: Symbol("ITestRepository"),
   EmployeeRepository: Symbol("IEmployeeRepository"),
   UserRepository: Symbol("IUserRepository"),
+  TemplateRepository: Symbol("ITemplateRepository"),
 };

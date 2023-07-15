@@ -19,6 +19,9 @@ import { AuthenticationService } from "../services/AuthenticationService";
 import { JwtService } from "../services/JwtService";
 import { IUserRepository } from "../interfaces/IUserRepository";
 import { UserRepository } from "../repositories/UserRepository";
+import { ITemplateService } from "../interfaces/ITemplateService";
+import { TemplateService } from "../services/TemplateService";
+import { TemplateRepository } from "../repositories/TemplateRepository";
 
 const iocContainer = new Container();
 
@@ -34,6 +37,7 @@ iocContainer.bind<IJwtService>(TYPES.JwtService).to(JwtService);
 iocContainer
   .bind<IAuthenticationService>(TYPES.AuthenticationService)
   .to(AuthenticationService);
+iocContainer.bind<ITemplateService>(TYPES.TemplateService).to(TemplateService);
 
 // Repository
 iocContainer.bind<ITestRepository>(TYPES.TestRepository).to(TestRepository);
@@ -41,5 +45,8 @@ iocContainer
   .bind<IEmployeeRepository>(TYPES.EmployeeRepository)
   .to(EmployeeRepository);
 iocContainer.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
+iocContainer
+  .bind<TemplateRepository>(TYPES.TemplateRepository)
+  .to(TemplateRepository);
 
 export { iocContainer };

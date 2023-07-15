@@ -11,20 +11,20 @@ datasource db {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  userName    String        @unique
-  salt        String
-  password    String
-  firstName   String
-  lastName    String
-  createdAt   DateTime      @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime?     @updatedAt
-  WordContent WordContent[]
+  id        Int        @id @default(autoincrement())
+  userName  String     @unique
+  salt      String
+  password  String
+  firstName String
+  lastName  String
+  createdAt DateTime   @default(now()) @db.Timestamp(6)
+  updatedAt DateTime?  @updatedAt
+  Template  Template[]
 }
 
-model WordContent {
+model Template {
   id        Int       @id @default(autoincrement())
-  section   String
+  type      String
   title     String?
   details   String?   @db.Text
   userId    Int

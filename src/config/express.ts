@@ -39,6 +39,7 @@ app.use(`${ENV.API_ROOT}/docs`, routers.swaggerRouter);
 app.use(`${ENV.API_ROOT}/test`, routers.testRouter);
 app.use(`${ENV.API_ROOT}/employee`, routers.employeeRouter);
 app.use(`${ENV.API_ROOT}/auth`, routers.authRouter);
+app.use(`${ENV.API_ROOT}/template`, routers.templateRouter);
 
 // Use error handling middleware
 app.use(errorHandler);
