@@ -40,6 +40,7 @@ app.use(`${ENV.API_ROOT}/test`, routers.testRouter);
 app.use(`${ENV.API_ROOT}/employee`, routers.employeeRouter);
 app.use(`${ENV.API_ROOT}/auth`, routers.authRouter);
 app.use(`${ENV.API_ROOT}/template`, routers.templateRouter);
+app.use(`${ENV.API_ROOT}/customer`, routers.customerRouter);
 
 // Use error handling middleware
 app.use(errorHandler);

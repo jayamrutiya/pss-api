@@ -20,6 +20,7 @@ model User {
   createdAt DateTime   @default(now()) @db.Timestamp(6)
   updatedAt DateTime?  @updatedAt
   Template  Template[]
+  Customer  Customer[]
 }
 
 model Template {
@@ -39,4 +40,92 @@ model RefreshToken {
   token     String    @db.Text
   createdAt DateTime  @default(now()) @db.Timestamp(6)
   updatedAt DateTime? @updatedAt
+}
+
+model Customer {
+  id                                  Int       @id @default(autoincrement())
+  userId                              Int
+  User                                User      @relation(fields: [userId], references: [id])
+  date                                DateTime? @db.Timestamp(6)
+  companyName                         String?
+  companyAddress                      String?   @db.Text
+  companyNumber                       String?
+  emailId                             String
+  registerTransferAgentName           String?
+  registerTransferAgentAdress         String?   @db.Text
+  registerTransferAgentContactNumber  String?
+  registerTransferAgentEmail          String?
+  ledgerFolio                         String?
+  shareCertificateNumber              String?
+  distinctiveNumber                   String?
+  totalShareQuantity                  String?
+  faceValueAsOnToday                  String?
+  holdShareQuantitySelf               String?
+  companyHoldUndeliveredShareQuantity String?
+  holdShareQuantitySelfFaceValue      String?
+  oldCompanyName                      String?
+  oldQuantityholdShare                String?
+  ywdATabelData                       String?   @db.Text
+  fhnameInPancardExactSpelling        String?
+  fhrateInPercentage                  String?
+  fhnameAsPerShareCertificate         String?
+  fhfatherOrHusbandName               String?
+  fhcontactNumber                     String?
+  fhemail                             String?
+  fhpancardNumber                     String?
+  fhcity                              String?
+  fhaddressSameInAadharcard           String?   @db.Text
+  fholdAddressCompanyRegister         String?   @db.Text
+  fhpinCode                           String?
+  fhbusiness                          String?
+  fhgender                            String?
+  fhstate                             String?
+  fhage                               String?
+  fhaadharCardNumber                  String?
+  fhnameInAadharcardExactSpeling      String?
+  jhnameInPancardExactSpelling        String?
+  jhnameAsPerShareCertificate         String?
+  jhfatherOrHusbandName               String?
+  jhcontactNumber                     String?
+  jhpancardNumber                     String?
+  jhcity                              String?
+  jhaddressSameInAadharcard           String?   @db.Text
+  jholdAddressCompanyRegister         String?   @db.Text
+  jhgender                            String?
+  jhstate                             String?
+  jhage                               String?
+  jhaadharcardNumber                  String?
+  jhnameInAadharcardExactSpeling      String?
+  fhbankName                          String?
+  fhbankAddress                       String?   @db.Text
+  fhholderAddressInBank               String?
+  fhaccountTypeSavingorCurrent        String?
+  fhaccountNumber                     String?
+  fhbankTelephoneNumber               String?
+  fhbankIfscCode                      String?
+  fhbankEmail                         String?
+  fhnineDigitMICRNumber               String?
+  fhnameAsPerBankAccount              String?
+  jhbankName                          String?
+  jhbankAddress                       String?   @db.Text
+  jhholderAddressInBank               String?
+  jhaccountTypeSavingorCurrent        String?
+  jhaccountNumber                     String?
+  jhemail                             String?
+  jhbankTelephoneNumber               String?
+  jhbankIfscCode                      String?
+  jhbankEmail                         String?
+  jhnineDigitMICRNumber               String?
+  jhnameAsPerBankAccount              String?
+  dpName                              String?
+  dematNumber                         String?
+  cdslOrNsdl                          String?
+  nameAsPerDematAccount               String?
+  nomineeName                         String?
+  nomineeFatherOrHusbandName          String?
+  nomineeAddress                      String?   @db.Text
+  nomineeHolderRelationShip           String?
+  nomineeBirthdate                    DateTime?
+  createdAt                           DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt                           DateTime? @updatedAt
 }

@@ -1,0 +1,116 @@
+import { inject, injectable } from "inversify";
+import { ICustomerRepository } from "../interfaces/ICustomerRepository";
+import { ILoggerService } from "../interfaces/ILoggerService";
+import { IDatabaseService } from "../interfaces/IDatabaseService";
+import { TYPES } from "../config/types";
+import { Customer } from "@prisma/client";
+import { CreateCustomerRepoInput } from "../types/Customer";
+import { InternalServerError } from "../errors/InternalServerError";
+
+@injectable()
+export class CustomerRepository implements ICustomerRepository {
+  private _loggerService: ILoggerService;
+  private _databaseService: IDatabaseService;
+
+  constructor(
+    @inject(TYPES.LoggerService) loggerService: ILoggerService,
+    @inject(TYPES.DatabaseService) databaseService: IDatabaseService
+  ) {
+    this._loggerService = loggerService;
+    this._databaseService = databaseService;
+    this._loggerService.getLogger().info(`Creating: ${this.constructor.name}`);
+  }
+
+  async createCustomer(
+    customerData: CreateCustomerRepoInput
+  ): Promise<Customer> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const createCustomer = await client.customer.create({
+        data: customerData,
+      });
+
+      return createCustomer;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async updateCustomer(
+    id: number,
+    customerData: CreateCustomerRepoInput
+  ): Promise<Customer> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const updateCustomer = await client.customer.update({
+        data: customerData,
+        where: {
+          id,
+        },
+      });
+
+      return updateCustomer;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async getCustomers(userId: number): Promise<Customer[]> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const getAllCustomer = await client.customer.findMany({
+        where: {
+          userId,
+        },
+      });
+
+      return getAllCustomer;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async getCustomer(id: number, userId: number): Promise<Customer | null> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const getCustomer = await client.customer.findFirst({
+        where: {
+          id,
+          userId,
+        },
+      });
+
+      return getCustomer;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+}
