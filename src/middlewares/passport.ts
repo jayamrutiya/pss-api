@@ -28,7 +28,7 @@ passport.use(
     });
 
     if (!getUser) {
-      throw new Unauthorized("Unauthorized");
+      return done(new Unauthorized("Unauthorized"), null);
     }
 
     return done(null, payload);
