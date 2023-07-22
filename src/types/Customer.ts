@@ -11,9 +11,11 @@ export declare type CreateCustomerRepoInput = {
   registerTransferAgentContactNumber: string | null;
   registerTransferAgentEmail: string | null;
   ledgerFolio: string | null;
-  shareCertificateNumber: string | null;
-  distinctiveNumber: string | null;
-  totalShareQuantity: string | null;
+  tableSDT: string | null;
+  totalShares: string | null;
+  // shareCertificateNumber: string | null;
+  // distinctiveNumber: string | null;
+  // totalShareQuantity: string | null;
   faceValueAsOnToday: string | null;
   holdShareQuantitySelf: string | null;
   companyHoldUndeliveredShareQuantity: string | null;
@@ -147,6 +149,7 @@ export declare type CreateCustomerRepoInput = {
   iepfDividendYear: string | null;
   referenceLetterNo: string | null;
   referenceLetterdate: string | null;
+  otherLegalHears: string | null;
   //   createdAt: Date;
   //   updatedAt: Date | null;
 };
@@ -164,9 +167,11 @@ export declare type CreateCustomerServiceInput = {
   registerTransferAgentContactNumber: string | null;
   registerTransferAgentEmail: string | null;
   ledgerFolio: string | null;
-  shareCertificateNumber: string | null;
-  distinctiveNumber: string | null;
-  totalShareQuantity: string | null;
+  tableSDT: {
+    shareCertificateNumber: string | null;
+    distinctiveNumber: string | null;
+    totalShareQuantity: string | null;
+  }[];
   faceValueAsOnToday: string | null;
   holdShareQuantitySelf: string | null;
   companyHoldUndeliveredShareQuantity: string | null;
@@ -174,10 +179,10 @@ export declare type CreateCustomerServiceInput = {
   oldCompanyName: string | null;
   oldQuantityholdShare: string | null;
   ywdATabelData: {
-    year: string;
-    warrantNo: string;
-    ddMicrNo: string;
-    amount: string;
+    year: string | null;
+    warrantNo: string | null;
+    ddMicrNo: string | null;
+    amount: string | null;
   }[];
   fhnameInPancardExactSpelling: string | null;
   fhrateInPercentage: string | null;
@@ -305,6 +310,14 @@ export declare type CreateCustomerServiceInput = {
   iepfDividendYear: string | null;
   referenceLetterNo: string | null;
   referenceLetterdate: string | null;
+  otherLegalHears: {
+    nameInPancardExactSpelling: string | null;
+    addressSameInAadharcard: string | null;
+    nameInAadharcardExactSpelling: string | null;
+    age: string | null;
+    daughter: string | null;
+    son: string | null;
+  }[];
   //   createdAt: Date;
   //   updatedAt: Date | null;
 };

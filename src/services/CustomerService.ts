@@ -31,6 +31,16 @@ export class CustomerService implements ICustomerService {
       date: new Date(customerData.date!),
       nomineeBirthdate: new Date(customerData.nomineeBirthdate!),
       ywdATabelData: JSON.stringify(customerData.ywdATabelData),
+      otherLegalHears: JSON.stringify(customerData.otherLegalHears),
+      tableSDT: JSON.stringify(
+        customerData.tableSDT.map((d) => {
+          return { ledgerFolio: customerData.ledgerFolio, ...d };
+        })
+      ),
+      totalShares: customerData.tableSDT
+        .map((d) => Number(d.totalShareQuantity))
+        .reduce((prev, next) => prev + next)
+        .toString(),
     };
 
     if (!id) {

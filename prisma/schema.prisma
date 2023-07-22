@@ -56,9 +56,8 @@ model Customer {
   registerTransferAgentContactNumber         String?   @db.VarChar(20)
   registerTransferAgentEmail                 String?   @db.VarChar(20)
   ledgerFolio                                String?   @db.VarChar(20)
-  shareCertificateNumber                     String?   @db.VarChar(20)
-  distinctiveNumber                          String?   @db.VarChar(20)
-  totalShareQuantity                         String?   @db.VarChar(20)
+  tableSDT                                   String?   @db.Text
+  totalShares                                String?   @db.Text
   faceValueAsOnToday                         String?   @db.VarChar(20)
   holdShareQuantitySelf                      String?   @db.VarChar(20)
   companyHoldUndeliveredShareQuantity        String?   @db.VarChar(20)
@@ -192,6 +191,7 @@ model Customer {
   iepfDividendYear                           String?   @db.VarChar(20)
   referenceLetterNo                          String?   @db.VarChar(20)
   referenceLetterdate                        String?   @db.VarChar(20)
+  otherLegalHears                            String?   @db.Text
   createdAt                                  DateTime  @default(now()) @db.Timestamp(6)
   updatedAt                                  DateTime? @updatedAt
 }
