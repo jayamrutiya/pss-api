@@ -10,4 +10,6 @@ export interface ICustomerService {
   getCustomers(userId: number): Promise<Customer[]>;
 
   getCustomer(id: number, userId: number): Promise<Customer | null>;
+
+  deleteCustomer(id: number, userId: number): Promise<Customer | null>;
 }

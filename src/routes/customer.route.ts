@@ -29,4 +29,10 @@ router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
   customerController.upsertCustomer(req, res)
 );
 
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => customerController.deleteCustomer(req, res)
+);
+
 export default router;

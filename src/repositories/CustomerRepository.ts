@@ -113,4 +113,26 @@ export class CustomerRepository implements ICustomerRepository {
       // await this._databaseService.disconnect();
     }
   }
+
+  async deleteCustomer(id: number, userId: number): Promise<Customer | null> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const deleteCUstomer = await client.customer.delete({
+        where: {
+          id,
+        },
+      });
+
+      return deleteCUstomer;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
 }

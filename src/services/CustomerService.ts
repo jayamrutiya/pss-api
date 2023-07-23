@@ -8,6 +8,7 @@ import {
   CreateCustomerRepoInput,
   CreateCustomerServiceInput,
 } from "../types/Customer";
+import { NotFound } from "../errors/NotFound";
 
 @injectable()
 export class CustomerService implements ICustomerService {
@@ -59,5 +60,13 @@ export class CustomerService implements ICustomerService {
 
   async getCustomer(id: number, userId: number): Promise<Customer | null> {
     return await this._customerRepository.getCustomer(id, userId);
+  }
+
+  async deleteCustomer(id: number, userId: number): Promise<Customer | null> {
+    const getCustomer = await this._customerRepository.getCustomer(id, userId);
+    if (!getCustomer) {
+      throw new NotFound("Customer Not found.");
+    }
+    return await this._customerRepository.deleteCustomer(id, userId);
   }
 }
