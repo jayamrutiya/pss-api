@@ -35,7 +35,12 @@ export class CustomerService implements ICustomerService {
       otherLegalHears: JSON.stringify(customerData.otherLegalHears),
       tableSDT: JSON.stringify(
         customerData.tableSDT.map((d) => {
-          return { ledgerFolio: customerData.ledgerFolio, ...d };
+          return {
+            ledgerFolio: customerData.ledgerFolio,
+            startDistinctiveNumber: d.distinctiveNumber?.split("-")[0],
+            endDistinctiveNumber: d.distinctiveNumber?.split("-")[1],
+            ...d,
+          };
         })
       ),
       totalShares: customerData.tableSDT

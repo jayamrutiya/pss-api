@@ -8,6 +8,7 @@ export const TYPES = {
   AuthenticationService: Symbol("IAuthenticationService"),
   TemplateService: Symbol("ITemplateService"),
   CustomerService: Symbol("ICustomerService"),
+  CustomerTemplateService: Symbol("IcustomerTemplateService"),
 
   // repositories
   TestRepository: Symbol("ITestRepository"),
@@ -15,4 +16,5 @@ export const TYPES = {
   UserRepository: Symbol("IUserRepository"),
   TemplateRepository: Symbol("ITemplateRepository"),
   CustomerRepository: Symbol("ICustomerRepository"),
+  CustomerTemplateRepository: Symbol("ICustomerTemplateRepository"),
 };

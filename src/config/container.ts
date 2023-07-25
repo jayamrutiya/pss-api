@@ -26,6 +26,10 @@ import { ICustomerService } from "../interfaces/ICustomerService";
 import { CustomerService } from "../services/CustomerService";
 import { ICustomerRepository } from "../interfaces/ICustomerRepository";
 import { CustomerRepository } from "../repositories/CustomerRepository";
+import { ICustomerTemplateService } from "../interfaces/ICustomerTemplateService";
+import { CustomerTemplateService } from "../services/CustomerTemplateService";
+import { ICustomerTemplateRepository } from "../interfaces/ICustomerTemplateRepository";
+import { CustomerTemplateRepository } from "../repositories/CustomerTemplateRepository";
 
 const iocContainer = new Container();
 
@@ -43,6 +47,9 @@ iocContainer
   .to(AuthenticationService);
 iocContainer.bind<ITemplateService>(TYPES.TemplateService).to(TemplateService);
 iocContainer.bind<ICustomerService>(TYPES.CustomerService).to(CustomerService);
+iocContainer
+  .bind<ICustomerTemplateService>(TYPES.CustomerTemplateService)
+  .to(CustomerTemplateService);
 
 // Repository
 iocContainer.bind<ITestRepository>(TYPES.TestRepository).to(TestRepository);
@@ -56,5 +63,8 @@ iocContainer
 iocContainer
   .bind<ICustomerRepository>(TYPES.CustomerRepository)
   .to(CustomerRepository);
+iocContainer
+  .bind<ICustomerTemplateRepository>(TYPES.CustomerTemplateRepository)
+  .to(CustomerTemplateRepository);
 
 export { iocContainer };

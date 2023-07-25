@@ -4,6 +4,7 @@ import employeeRouter from "./employee.route";
 import authRouter from "./auth.route";
 import templateRouter from "./template.route";
 import customerRouter from "./customer.route";
+import customerTemplateRouter from "./customer-template.route";
 
 export default {
   swaggerRouter,
@@ -12,4 +13,5 @@ export default {
   authRouter,
   templateRouter,
   customerRouter,
+  customerTemplateRouter,
 };
