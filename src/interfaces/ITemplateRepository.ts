@@ -9,4 +9,6 @@ export interface ITemplateRepository {
   getTemplatesByType(type: string, userId: number): Promise<Template[]>;
 
   deleteTemplate(id: number, userId: number): Promise<Template>;
+
+  getTemplateById(id: number, userId: number): Promise<Template | null>;
 }

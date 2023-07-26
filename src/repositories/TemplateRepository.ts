@@ -111,4 +111,27 @@ export class TemplateRepository implements ITemplateRepository {
       // await this._databaseService.disconnect();
     }
   }
+
+  async getTemplateById(id: number, userId: number): Promise<Template | null> {
+    try {
+      // Get the database client
+      const client = this._databaseService.Client();
+
+      const getTemplate = await client.template.findFirst({
+        where: {
+          id,
+          userId,
+        },
+      });
+
+      return getTemplate;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
 }

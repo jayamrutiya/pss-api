@@ -1,5 +1,5 @@
 import { Customer } from "@prisma/client";
-import { CreateCustomerServiceInput } from "../types/Customer";
+import { CreateCustomerServiceInput, CustomerData } from "../types/Customer";
 
 export interface ICustomerService {
   upsertCustomer(
@@ -9,7 +9,7 @@ export interface ICustomerService {
 
   getCustomers(userId: number): Promise<Customer[]>;
 
-  getCustomer(id: number, userId: number): Promise<Customer | null>;
+  getCustomer(id: number, userId: number): Promise<CustomerData>;
 
   deleteCustomer(id: number, userId: number): Promise<Customer | null>;
 }

@@ -7,6 +7,7 @@ import { Customer } from "@prisma/client";
 import {
   CreateCustomerRepoInput,
   CreateCustomerServiceInput,
+  CustomerData,
 } from "../types/Customer";
 import { NotFound } from "../errors/NotFound";
 
@@ -66,8 +67,20 @@ export class CustomerService implements ICustomerService {
     return await this._customerRepository.getCustomers(userId);
   }
 
-  async getCustomer(id: number, userId: number): Promise<Customer | null> {
-    return await this._customerRepository.getCustomer(id, userId);
+  async getCustomer(id: number, userId: number): Promise<CustomerData> {
+    const getCustomer = await this._customerRepository.getCustomer(id, userId);
+
+    if (!getCustomer) {
+      throw new NotFound("Customer not found.");
+    }
+
+    const customer = {
+      ...getCustomer,
+      tableSDT: JSON.parse(getCustomer?.tableSDT!),
+      ywdATabelData: JSON.parse(getCustomer?.ywdATabelData!),
+      otherLegalHears: JSON.parse(getCustomer?.otherLegalHears!),
+    };
+    return customer;
   }
 
   async deleteCustomer(id: number, userId: number): Promise<Customer | null> {
