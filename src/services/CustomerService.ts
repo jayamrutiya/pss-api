@@ -29,7 +29,7 @@ export class CustomerService implements ICustomerService {
   ): Promise<Customer> {
     const customerRepoData: CreateCustomerRepoInput = {
       ...customerData,
-      date: new Date(customerData.date!),
+      date: customerData.date ? new Date(customerData.date) : null,
       nomineeBirthdate: new Date(customerData.nomineeBirthdate!),
       ywdATabelData: JSON.stringify(customerData.ywdATabelData),
       otherLegalHears: JSON.stringify(customerData.otherLegalHears),
