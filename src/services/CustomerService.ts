@@ -31,7 +31,6 @@ export class CustomerService implements ICustomerService {
     const customerRepoData: CreateCustomerRepoInput = {
       ...customerData,
       date: customerData.date ? new Date(customerData.date) : null,
-      nomineeBirthdate: new Date(customerData.nomineeBirthdate!),
       ywdATabelData: JSON.stringify(customerData.ywdATabelData),
       otherLegalHears: JSON.stringify(customerData.otherLegalHears),
       tableSDT: JSON.stringify(
@@ -51,6 +50,9 @@ export class CustomerService implements ICustomerService {
               .reduce((prev, next) => prev + next)
               .toString()
           : "0",
+      nomineeBirthdate: customerData.nomineeBirthdate
+        ? new Date(customerData.nomineeBirthdate)
+        : null,
     };
 
     if (!id) {
