@@ -43,10 +43,13 @@ export class CustomerService implements ICustomerService {
           };
         })
       ),
-      totalShares: customerData.tableSDT
-        .map((d) => Number(d.totalShareQuantity))
-        .reduce((prev, next) => prev + next)
-        .toString(),
+      totalShares:
+        customerData.tableSDT.length > 0
+          ? customerData.tableSDT
+              .map((d) => Number(d.totalShareQuantity))
+              .reduce((prev, next) => prev + next)
+              .toString()
+          : "0",
     };
 
     if (!id) {
