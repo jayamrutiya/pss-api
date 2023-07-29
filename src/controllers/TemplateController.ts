@@ -26,7 +26,7 @@ export default class TemplateController extends BaseController {
       const { id, type, title, details } = req.body;
 
       const types = [
-        "COM_CONTENT",
+        "COMMON_CONTENT",
         "REFE_LINE",
         "SUBJECT",
         "MAIN_CONTENT",
@@ -68,7 +68,7 @@ export default class TemplateController extends BaseController {
       const { type } = req.query;
 
       const types = [
-        "COM_CONTENT",
+        "COMMON_CONTENT",
         "REFE_LINE",
         "SUBJECT",
         "MAIN_CONTENT",

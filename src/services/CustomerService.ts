@@ -53,6 +53,15 @@ export class CustomerService implements ICustomerService {
       nomineeBirthdate: customerData.nomineeBirthdate
         ? new Date(customerData.nomineeBirthdate)
         : null,
+      bonusDate: customerData.bonusDate
+        ? new Date(customerData.bonusDate)
+        : null,
+      splitDate: customerData.splitDate
+        ? new Date(customerData.splitDate)
+        : null,
+      notaryDate: customerData.notaryDate
+        ? new Date(customerData.notaryDate)
+        : null,
     };
 
     if (!id) {

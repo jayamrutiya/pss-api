@@ -10,6 +10,11 @@ export declare type CreateCustomerRepoInput = {
   registerTransferAgentAdress: string | null;
   registerTransferAgentContactNumber: string | null;
   registerTransferAgentEmail: string | null;
+
+  bonusDate: Date | null;
+  splitDate: Date | null;
+  notaryDate: Date | null;
+
   ledgerFolio: string | null;
   tableSDT: string | null;
   totalShares: string | null;
@@ -125,6 +130,10 @@ export declare type CreateCustomerRepoInput = {
   city: string | null;
   deathOfHolderFirstHolder: string | null;
   deathOfHolderSecondHolder: string | null;
+
+  deathHolderFirstCity: string | null;
+  deathHolderSecondCity: string | null;
+
   addressSameInAadharcard: string | null;
   oldAddressCompanyRegister: string | null;
   gender: string | null;
@@ -166,6 +175,11 @@ export declare type CreateCustomerServiceInput = {
   registerTransferAgentAdress: string | null;
   registerTransferAgentContactNumber: string | null;
   registerTransferAgentEmail: string | null;
+
+  bonusDate: Date | null;
+  splitDate: Date | null;
+  notaryDate: Date | null;
+
   ledgerFolio: string | null;
   tableSDT: {
     shareCertificateNumber: string | null;
@@ -286,6 +300,10 @@ export declare type CreateCustomerServiceInput = {
   city: string | null;
   deathOfHolderFirstHolder: string | null;
   deathOfHolderSecondHolder: string | null;
+
+  deathHolderFirstCity: string | null;
+  deathHolderSecondCity: string | null;
+
   addressSameInAadharcard: string | null;
   oldAddressCompanyRegister: string | null;
   gender: string | null;
@@ -334,6 +352,11 @@ export declare type CustomerData = {
   registerTransferAgentAdress: string | null;
   registerTransferAgentContactNumber: string | null;
   registerTransferAgentEmail: string | null;
+
+  bonusDate: Date | null;
+  splitDate: Date | null;
+  notaryDate: Date | null;
+
   ledgerFolio: string | null;
   tableSDT: {
     shareCertificateNumber: string | null;
@@ -454,6 +477,10 @@ export declare type CustomerData = {
   city: string | null;
   deathOfHolderFirstHolder: string | null;
   deathOfHolderSecondHolder: string | null;
+
+  deathHolderFirstCity: string | null;
+  deathHolderSecondCity: string | null;
+
   addressSameInAadharcard: string | null;
   oldAddressCompanyRegister: string | null;
   gender: string | null;
