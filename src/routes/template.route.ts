@@ -24,6 +24,12 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) =>
   templateController.getTemplatesByType(req, res)
 );
 
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => templateController.getTemplatesById(req, res)
+);
+
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),

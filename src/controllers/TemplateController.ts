@@ -75,7 +75,7 @@ export default class TemplateController extends BaseController {
         "SUMMARY",
       ];
 
-      if (!type || !types.includes(type)) {
+      if (type && !types.includes(type)) {
         throw new BadRequest("Please select valid type.");
       }
       const token = req.user as any;
@@ -84,13 +84,42 @@ export default class TemplateController extends BaseController {
         type,
         token.id
       );
-
+      // type not get then provide all template with user id
       // Return the response
       return this.sendJSONResponse(
         res,
         "Get Templates.",
         {
           size: getTemplates.length,
+        },
+        getTemplates
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+  async getTemplatesById(req: any, res: express.Response) {
+    try {
+      // validate input
+      this.validateRequest(req);
+
+      const id = Number(req.params.id);
+
+      if (!id || id === null) {
+        throw new BadRequest("Please provide template id.");
+      }
+      const token = req.user as any;
+      const getTemplates = await this._templateService.getTemplateById(
+        id,
+        token.id
+      );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Get Template.",
+        {
+          size: 1,
         },
         getTemplates
       );

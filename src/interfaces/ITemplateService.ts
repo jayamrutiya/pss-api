@@ -6,5 +6,7 @@ export interface ITemplateService {
 
   getTemplatesByType(type: string, userId: number): Promise<Template[]>;
 
+  getTemplateById(id: number, userId: number): Promise<Template | null>;
+
   deleteTemplate(id: number, userId: number): Promise<Template>;
 }
