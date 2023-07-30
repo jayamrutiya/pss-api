@@ -1,4 +1,4 @@
-export const replaceAll = async (str, find, replace) => {
+export const replaceAll =   (str, find, replace) => {
   if (str) {
     find = find || "";
     find = find.replace(/[@#$%^&*()+=\-[\]\\';,./{}|":<>~_]/g, "\\$&");
