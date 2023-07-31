@@ -43,13 +43,12 @@ export class CustomerService implements ICustomerService {
           };
         })
       ),
-      totalShares:
-        customerData.tableSDT.length > 0
-          ? customerData.tableSDT
-              .map((d) => Number(d.totalShareQuantity))
-              .reduce((prev, next) => prev + next)
-              .toString()
-          : "0",
+      totalShares: customerData.tableSDT.length > 0
+        ? customerData.tableSDT
+          .map((d) => Number(d.totalShareQuantity))
+          .reduce((prev, next) => prev + next)
+          .toString()
+        : "0",
       nomineeBirthdate: customerData.nomineeBirthdate
         ? new Date(customerData.nomineeBirthdate)
         : null,
@@ -62,6 +61,9 @@ export class CustomerService implements ICustomerService {
       notaryDate: customerData.notaryDate
         ? new Date(customerData.notaryDate)
         : null,
+      currentYear: customerData.currentYear || null,
+      dpId: customerData.dematNumber?.slice(0, 8) || null,
+      clientId: customerData.dematNumber?.slice(8, 16) || null,
     };
 
     if (!id) {

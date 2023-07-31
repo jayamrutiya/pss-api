@@ -347,18 +347,21 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, replace);
 
     find = "[[dematNumber]]";
+    // let replace1 = customer.dematNumber;
     replace = customer.dematNumber;
     str = replaceAll(str, find, replace);
 
-    /* 
     find = "[[dpId]]";
+    // it'll take first 8 digit from dematNumber
+    // replace = replace1?.slice(0, 8)
     replace = customer.dpId;
     str = replaceAll(str, find, replace);
 
     find = "[[clientId]]";
+    // it'll take last 8 digit from dematNumber
+    // replace = replace1?.slice(8, 16)
     replace = customer.clientId;
     str = replaceAll(str, find, replace);
-    */
 
     find = "[[cdslOrNsdl]]";
     replace = customer.cdslOrNsdl;
@@ -676,10 +679,9 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     replace = customer.referenceLetterdate;
     str = replaceAll(str, find, replace);
 
-    // find = "[[currentYear]]";
-    // replace = customer.currentYear;
-    // str = replaceAll(str, find, replace);
-
+    find = "[[currentYear]]";
+    replace = customer.currentYear;
+    str = replaceAll(str, find, replace);
 
     return str;
   }

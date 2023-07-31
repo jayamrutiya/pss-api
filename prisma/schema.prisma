@@ -198,6 +198,9 @@ model Customer {
   referenceLetterNo                          String?            @db.VarChar(20)
   referenceLetterdate                        String?            @db.VarChar(20)
   otherLegalHears                            String?            @db.Text
+  currentYear                                String?            @db.VarChar(10)
+  dpId                                       String?            @db.VarChar(10)
+  clientId                                   String?            @db.VarChar(10)
   createdAt                                  DateTime           @default(now()) @db.Timestamp(6)
   updatedAt                                  DateTime?          @updatedAt
   CustomerTemplate                           CustomerTemplate[]
