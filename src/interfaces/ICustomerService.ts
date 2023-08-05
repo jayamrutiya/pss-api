@@ -7,7 +7,7 @@ export interface ICustomerService {
     customerData: CreateCustomerServiceInput
   ): Promise<Customer>;
 
-  getCustomers(userId: number): Promise<Customer[]>;
+  getCustomers(userId: number): Promise<CustomerData[]>;
 
   getCustomer(id: number, userId: number): Promise<CustomerData>;
 
