@@ -131,8 +131,8 @@ export declare type CreateCustomerRepoInput = {
   email: string | null;
   pancardNumber: string | null;
   city: string | null;
-  deathOfHolderFirstHolder: string | null;
-  deathOfHolderSecondHolder: string | null;
+  deathOfHolderFirstHolder: Date | null;
+  deathOfHolderSecondHolder: Date | null;
 
   deathHolderFirstCity: string | null;
   deathHolderSecondCity: string | null;
@@ -304,8 +304,8 @@ export declare type CreateCustomerServiceInput = {
   email: string | null;
   pancardNumber: string | null;
   city: string | null;
-  deathOfHolderFirstHolder: string | null;
-  deathOfHolderSecondHolder: string | null;
+  deathOfHolderFirstHolder: Date | null;
+  deathOfHolderSecondHolder: Date | null;
 
   deathHolderFirstCity: string | null;
   deathHolderSecondCity: string | null;
@@ -481,8 +481,8 @@ export declare type CustomerData = {
   email: string | null;
   pancardNumber: string | null;
   city: string | null;
-  deathOfHolderFirstHolder: string | null;
-  deathOfHolderSecondHolder: string | null;
+  deathOfHolderFirstHolder: Date | null;
+  deathOfHolderSecondHolder: Date | null;
 
   deathHolderFirstCity: string | null;
   deathHolderSecondCity: string | null;

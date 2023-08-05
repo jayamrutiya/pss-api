@@ -47,7 +47,7 @@ model Customer {
   id                                         Int                @id @default(autoincrement())
   userId                                     Int
   User                                       User               @relation(fields: [userId], references: [id])
-  date                                       DateTime?          @db.Timestamp(6)
+  date                                       DateTime?          @db.Date()
   companyName                                String?            @db.VarChar(20)
   companyAddress                             String?            @db.Text
   companyNumber                              String?            @db.VarChar(20)
@@ -128,7 +128,7 @@ model Customer {
   nomineeFatherOrHusbandName                 String?            @db.VarChar(20)
   nomineeAddress                             String?            @db.Text
   nomineeHolderRelationShip                  String?            @db.VarChar(20)
-  nomineeBirthdate                           DateTime?
+  nomineeBirthdate                           DateTime?          @db.Date()
   w1NameInPancardExactSpelling               String?            @db.VarChar(20)
   w1addressSameInAadharcard                  String?            @db.Text
   w1nameInAadharcardExactSpelling            String?            @db.VarChar(20)
@@ -169,8 +169,8 @@ model Customer {
   email                                      String?            @db.VarChar(20)
   pancardNumber                              String?            @db.VarChar(20)
   city                                       String?            @db.VarChar(20)
-  deathOfHolderFirstHolder                   String?            @db.VarChar(20)
-  deathOfHolderSecondHolder                  String?            @db.VarChar(20)
+  deathOfHolderFirstHolder                   DateTime?
+  deathOfHolderSecondHolder                  DateTime?
   deathHolderFirstCity                       String?            @db.VarChar(20)
   deathHolderSecondCity                      String?            @db.VarChar(20)
   addressSameInAadharcard                    String?            @db.Text
