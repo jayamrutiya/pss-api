@@ -71,16 +71,14 @@ export class TemplateRepository implements ITemplateRepository {
     try {
       // Get the database client
       const client = this._databaseService.Client();
-
+      console.log("type", type);
       const getTemplates = await client.template.findMany({
-        where: {
-          OR: [
-            {
+        where: type
+          ? {
               type,
               userId,
-            },
-          ],
-        },
+            }
+          : { userId },
       });
 
       return getTemplates;

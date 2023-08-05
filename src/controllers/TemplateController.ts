@@ -75,13 +75,13 @@ export default class TemplateController extends BaseController {
         "SUMMARY",
       ];
 
-      if (type && !types.includes(type)) {
+      if (type.trim() && !types.includes(type.trim())) {
         throw new BadRequest("Please select valid type.");
       }
       const token = req.user as any;
 
       const getTemplates = await this._templateService.getTemplatesByType(
-        type,
+        type.trim(),
         token.id
       );
       // type not get then provide all template with user id
