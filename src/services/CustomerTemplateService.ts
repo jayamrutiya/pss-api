@@ -44,8 +44,93 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       ywdATabelData: JSON.parse(customerData.ywdATabelData!),
       otherLegalHears: JSON.parse(customerData.otherLegalHears!),
     };
+
     let str, find, replace;
     str = template.details;
+
+    //tables ywdATable:- 
+    find = "[[ywdATable]]"
+    const header = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+    <thead>
+      <tr>
+        <th scope="col">Year</th>
+        <th scope="col">Warrant No.</th>
+        <th scope="col">DD/MICR No.</th>
+        <th scope="col">Amount ₹</th>
+      </tr>
+    </thead>
+    <tbody>`;
+    const footer = `</tbody>
+    </table>`
+    let body = "";
+    for (let index = 0; index < customer.ywdATabelData.length; index++) {
+      const customerYWD = customer.ywdATabelData[index];
+      body += `<tr>
+			<td>${customerYWD.year}</td>
+			<td>${customerYWD.warrantNo}</td>
+			<td>${customerYWD.ddMicrNo}</td>
+			<td>${customerYWD.amount}</td>
+		</tr>`
+    }
+    const data = header + body + footer
+    str = replaceAll(str, find, data);
+
+    //tables tableSDT:- 
+    find = "[[tableSDT]]"
+    const h = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+    <thead>
+      <tr>
+        <th scope="col">Share Certificate Number</th>
+        <th scope="col">Distinctive Number</th>
+        <th scope="col">Total Share Quantity</th>
+      </tr>
+    </thead>
+    <tbody>`;
+    const f = `</tbody>
+    </table>`
+    let b = "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      b += `<tr>
+			<td>${customerYWD.shareCertificateNumber}</td>
+			<td>${customerYWD.distinctiveNumber}</td>
+			<td>${customerYWD.totalShareQuantity}</td>
+		</tr>`
+    }
+    const dataSDT = h + b + f
+    str = replaceAll(str, find, dataSDT);
+
+    //table otherLegalHears :- 
+    find = "[[otherLegalHears]]"
+    const head = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+    <thead>
+      <tr>
+        <th scope="col">Name In Pancard Exact Spelling</th>
+        <th scope="col">Address Same In AadharCard</th>
+        <th scope="col">Name In Aadhar Card Exect Spelling</th>
+        <th scope="col">Age</th>
+        <th scope="col">Daughter</th>
+        <th scope="col">Son</th>
+      </tr>
+    </thead>
+    <tbody>`;
+    const foot = `</tbody>
+    </table>`
+    let bod = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      b += `<tr>
+			<td>${customerYWD.nameInPancardExactSpelling}</td>
+			<td>${customerYWD.addressSameInAadharcard}</td>
+			<td>${customerYWD.nameInAadharcardExactSpelling}</td>
+      <td>${customerYWD.age}</td>
+			<td>${customerYWD.daughter}</td>
+			<td>${customerYWD.son}</td>
+		</tr>`
+    }
+    const dataOtherLegalHears = head + bod + foot
+    str = replaceAll(str, find, dataOtherLegalHears);
+
     //basic details
     find = "[[companyName]]";
     replace = customer.companyName;
