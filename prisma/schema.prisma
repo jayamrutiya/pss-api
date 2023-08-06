@@ -196,7 +196,7 @@ model Customer {
   iepfDividendAmount                         String?            @db.VarChar(20)
   iepfDividendYear                           String?            @db.VarChar(20)
   referenceLetterNo                          String?            @db.VarChar(20)
-  referenceLetterdate                        String?            @db.VarChar(20)
+  referenceLetterdate                        DateTime?
   otherLegalHears                            String?            @db.Text
   currentYear                                String?            @db.VarChar(10)
   dpId                                       String?            @db.VarChar(10)

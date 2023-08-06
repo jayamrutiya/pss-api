@@ -68,6 +68,9 @@ export class CustomerService implements ICustomerService {
       deathOfHolderSecondHolder: customerData.deathOfHolderSecondHolder
         ? new Date(customerData.deathOfHolderSecondHolder)
         : null,
+      referenceLetterdate: customerData.referenceLetterdate
+        ? new Date(customerData.referenceLetterdate)
+        : null,
       currentYear: customerData.currentYear || null,
       dpId: customerData.dematNumber?.slice(0, 8) || null,
       clientId: customerData.dematNumber?.slice(8, 16) || null,

@@ -160,7 +160,7 @@ export declare type CreateCustomerRepoInput = {
   iepfDividendAmount: string | null;
   iepfDividendYear: string | null;
   referenceLetterNo: string | null;
-  referenceLetterdate: string | null;
+  referenceLetterdate: Date | null;
   otherLegalHears: string | null;
   //   createdAt: Date;
   //   updatedAt: Date | null;
@@ -333,7 +333,7 @@ export declare type CreateCustomerServiceInput = {
   iepfDividendAmount: string | null;
   iepfDividendYear: string | null;
   referenceLetterNo: string | null;
-  referenceLetterdate: string | null;
+  referenceLetterdate: Date | null;
   otherLegalHears: {
     nameInPancardExactSpelling: string | null;
     addressSameInAadharcard: string | null;
@@ -510,7 +510,7 @@ export declare type CustomerData = {
   iepfDividendAmount: string | null;
   iepfDividendYear: string | null;
   referenceLetterNo: string | null;
-  referenceLetterdate: string | null;
+  referenceLetterdate: Date | null;
   otherLegalHears: {
     nameInPancardExactSpelling: string | null;
     addressSameInAadharcard: string | null;
