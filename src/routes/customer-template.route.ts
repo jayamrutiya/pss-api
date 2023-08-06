@@ -28,5 +28,12 @@ router.get(
     customerTemplateController.getCustomerTemplateByTypeAndCustomerId(req, res);
   }
 );
+router.get(
+  "/:id",
+  // passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.createWordFileCustomerTemplate(req, res);
+  }
+);
 
 export default router;

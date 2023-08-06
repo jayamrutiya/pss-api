@@ -14,4 +14,7 @@ export interface ICustomerTemplateService {
     customerId: number,
     templateType: string
   ): Promise<UpdateCustomerTemplate[]>;
+  createWordFileCustomerTemplate(
+    customerId: number,
+  ): Promise<any>
 }

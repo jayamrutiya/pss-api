@@ -19,4 +19,6 @@ export interface ICustomerTemplateRepository {
     id: number,
     templateData: CreateCustomerTemplateInput
   ): Promise<UpdateCustomerTemplate>;
+
+  createWordFileCustomerTemplate(customerId: number): any;
 }

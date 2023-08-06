@@ -106,4 +106,27 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
       // await this._databaseService.disconnect();
     }
   }
+
+  async createWordFileCustomerTemplate(
+    customerId: number,
+  ): Promise<any> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+      const getData = await client.customerTemplate.findMany({
+        where: {
+          customerId
+        }
+      })
+      // console.log('body:- \n', getData);
+      return getData;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
 }
