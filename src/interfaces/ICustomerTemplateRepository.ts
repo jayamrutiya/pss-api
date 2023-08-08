@@ -8,7 +8,7 @@ import {
 export interface ICustomerTemplateRepository {
   createCustomerTemplate(
     customerTemplateData: CreateCustomerTemplateInput
-  ): Promise<CustomerTemplate>;
+  ): Promise<CustomerTemplateWithCustomerTemplate>;
 
   getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
@@ -16,7 +16,7 @@ export interface ICustomerTemplateRepository {
   ): Promise<CustomerTemplateWithCustomerTemplate[]>;
 
   updateCustomerTemplate(
-    id: number,
+    customerTemplateId: number,
     templateData: CreateCustomerTemplateInput
   ): Promise<UpdateCustomerTemplate>;
 

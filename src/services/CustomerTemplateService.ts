@@ -5,6 +5,7 @@ import { TYPES } from "../config/types";
 import { ICustomerTemplateRepository } from "../interfaces/ICustomerTemplateRepository";
 import {
   CreateCustomerTemplateInput,
+  CustomerTemplateWithCustomerTemplate,
   UpdateCustomerTemplate,
 } from "../types/CustomerTemplate";
 import { Customer, CustomerTemplate, Template } from "@prisma/client";
@@ -51,8 +52,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     let str, find, replace;
     str = template.details;
 
-    //tables ywdATable:- 
-    find = "[[ywdATable]]"
+    //tables ywdATable:-
+    find = "[[ywdATable]]";
     const header = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
     <thead>
       <tr>
@@ -64,7 +65,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     </thead>
     <tbody>`;
     const footer = `</tbody>
-    </table>`
+    </table>`;
     let body = "";
     for (let index = 0; index < customer.ywdATabelData.length; index++) {
       const customerYWD = customer.ywdATabelData[index];
@@ -73,13 +74,13 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 			<td>${customerYWD.warrantNo}</td>
 			<td>${customerYWD.ddMicrNo}</td>
 			<td>${customerYWD.amount}</td>
-		</tr>`
+		</tr>`;
     }
-    const data = header + body + footer
+    const data = header + body + footer;
     str = replaceAll(str, find, data);
 
-    //tables tableSDT:- 
-    find = "[[tableSDT]]"
+    //tables tableSDT:-
+    find = "[[tableSDT]]";
     const h = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
     <thead>
       <tr>
@@ -90,7 +91,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     </thead>
     <tbody>`;
     const f = `</tbody>
-    </table>`
+    </table>`;
     let b = "";
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
@@ -98,13 +99,13 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 			<td>${customerYWD.shareCertificateNumber}</td>
 			<td>${customerYWD.distinctiveNumber}</td>
 			<td>${customerYWD.totalShareQuantity}</td>
-		</tr>`
+		</tr>`;
     }
-    const dataSDT = h + b + f
+    const dataSDT = h + b + f;
     str = replaceAll(str, find, dataSDT);
 
-    //table otherLegalHears :- 
-    find = "[[otherLegalHears]]"
+    //table otherLegalHears :-
+    find = "[[otherLegalHears]]";
     const head = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
     <thead>
       <tr>
@@ -118,7 +119,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     </thead>
     <tbody>`;
     const foot = `</tbody>
-    </table>`
+    </table>`;
     let bod = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
@@ -129,9 +130,9 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       <td>${customerYWD.age}</td>
 			<td>${customerYWD.daughter}</td>
 			<td>${customerYWD.son}</td>
-		</tr>`
+		</tr>`;
     }
-    const dataOtherLegalHears = head + bod + foot
+    const dataOtherLegalHears = head + bod + foot;
     str = replaceAll(str, find, dataOtherLegalHears);
 
     //basic details
@@ -777,7 +778,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
   async createCustomerTemplate(
     userId: number,
     customerTemplateData: CreateCustomerTemplateInput
-  ): Promise<CustomerTemplate> {
+  ): Promise<CustomerTemplateWithCustomerTemplate> {
     const getCustomer = await this._customerRepository.getCustomer(
       customerTemplateData.customerId,
       userId
@@ -797,15 +798,29 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       getTemplate
     );
 
-    return await this._customerTemplateRepository.createCustomerTemplate({
-      ...customerTemplateData,
-      templateType: getTemplate.type,
-      templateData: replacedCustomerTemplateData,
-    });
+    if (customerTemplateData.id) {
+      return await this._customerTemplateRepository.updateCustomerTemplate(
+        customerTemplateData.id,
+        {
+          id: customerTemplateData.id,
+          customerId: customerTemplateData.customerId,
+          isCustomMainContentTemplate:
+            customerTemplateData.isCustomMainContentTemplate,
+          order: customerTemplateData.order,
+          templateId: customerTemplateData.templateId,
+          templateType: customerTemplateData.templateType,
+          templateData: replacedCustomerTemplateData,
+        }
+      );
+    } else {
+      return await this._customerTemplateRepository.createCustomerTemplate({
+        ...customerTemplateData,
+        templateType: getTemplate.type,
+        templateData: replacedCustomerTemplateData,
+      });
+    }
   }
-  async createWordFileCustomerTemplate(
-    customerId: number,
-  ): Promise<any> {
+  async createWordFileCustomerTemplate(customerId: number): Promise<any> {
     try {
       const types = [
         "COMMON_CONTENT",
@@ -815,93 +830,96 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         "SUMMARY",
       ];
 
-      const getTemplateData: CustomerTemplate[] = await this._customerTemplateRepository.createWordFileCustomerTemplate(
-        customerId
-      );
-      let body = ""
-      console.log('1');
+      const getTemplateData: CustomerTemplate[] =
+        await this._customerTemplateRepository.createWordFileCustomerTemplate(
+          customerId
+        );
+      let body = "";
+      console.log("1");
       let CCData = getTemplateData.filter(async (d) => {
         if (d.templateType === "COMMON_CONTENT") {
-          console.log('COMMON_CONTENT:- ' + typeof d.templateData);
-          console.log('COMMON_CONTENT:- ' + d.templateData);
-          body += d.templateData
+          console.log("COMMON_CONTENT:- " + typeof d.templateData);
+          console.log("COMMON_CONTENT:- " + d.templateData);
+          body += d.templateData;
         }
-      })
-      console.log('2');
-      body += "<br />"
-      console.log('3');
+      });
+      console.log("2");
+      body += "<br />";
+      console.log("3");
 
       let RLData = getTemplateData.filter(async (d) => {
         if (d.templateType === "REFE_LINE") {
-          console.log('REFE_LINE:- ' + typeof d.templateData);
-          console.log('REFE_LINE:- ' + d.templateData);
-          body += d.templateData
-
+          console.log("REFE_LINE:- " + typeof d.templateData);
+          console.log("REFE_LINE:- " + d.templateData);
+          body += d.templateData;
         }
-      })
-      console.log('4');
-      body += "<br />"
-      console.log('5');
+      });
+      console.log("4");
+      body += "<br />";
+      console.log("5");
       let SData = getTemplateData.filter(async (d) => {
         if (d.templateType === "SUBJECT") {
-          console.log('SUBJECT:- ' + typeof d.templateData);
-          console.log('SUBJECT:- ' + d.templateData);
-          body += d.templateData
+          console.log("SUBJECT:- " + typeof d.templateData);
+          console.log("SUBJECT:- " + d.templateData);
+          body += d.templateData;
         }
-      })
-      console.log('6');
-      body += "<div style='page-break-after:always'></div>"
-      console.log('7');
+      });
+      console.log("6");
+      body += "<div style='page-break-after:always'></div>";
+      console.log("7");
       let MCData = getTemplateData.filter(async (d) => {
         if (d.templateType === "MAIN_CONTENT") {
-          return d
+          return d;
         }
-      })
-      console.log('8');
-      let check = MCData.sort((a, b) => a.order! > b.order! ? 1 : -1)
-      console.log('9');
-      let MCTemplateData = ""
+      });
+      console.log("8");
+      let check = MCData.sort((a, b) => (a.order! > b.order! ? 1 : -1));
+      console.log("9");
+      let MCTemplateData = "";
       check.map(async (d) => {
-        console.log('MC:- ' + typeof d.templateData);
-        console.log('MC:- ' + d.templateData);
-        body += d.templateData
-        body += "<br />"
-      })
-      console.log('10');
-      // need to check accuracy of need to check 
-      body += "<div style='page-break-after:always'></div>"
-      console.log('11');
-      let SUData = getTemplateData.sort(((a, b) => a!.order! - b!.order!)).filter((d) => {
-        if (d.templateType === "SUMMARY") {
-          console.log('SUMMARY:- ' + typeof d.templateData);
-          console.log('SUMMARY:- ' + d.templateData);
-          body += d.templateData
-        }
-      })
-      console.log('12');
+        console.log("MC:- " + typeof d.templateData);
+        console.log("MC:- " + d.templateData);
+        body += d.templateData;
+        body += "<br />";
+      });
+      console.log("10");
+      // need to check accuracy of need to check
+      body += "<div style='page-break-after:always'></div>";
+      console.log("11");
+      let SUData = getTemplateData
+        .sort((a, b) => a!.order! - b!.order!)
+        .filter((d) => {
+          if (d.templateType === "SUMMARY") {
+            console.log("SUMMARY:- " + typeof d.templateData);
+            console.log("SUMMARY:- " + d.templateData);
+            body += d.templateData;
+          }
+        });
+      console.log("12");
       // let body = CCData + RLData + SData + MCTemplateData
 
       const converted = htmlDocs.asBlob(body);
       // const saveFile = await fs.writeFileSync(`/htmltoword/wordsof${customerId}/FinalForwardingLetter.docx`, converted);
-      console.log('13');
+      console.log("13");
 
       const arrayBuffer = await converted.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      __dirname = replaceAll(__dirname, "services", "")
+      __dirname = replaceAll(__dirname, "services", "");
       const folderPath = join(__dirname, "/document");
       fs.mkdirSync(folderPath, { recursive: true });
       const docxFilePath = join(folderPath, `/output_${customerId}.docx`);
       const saveFile = fs.writeFileSync(docxFilePath, buffer);
-      return true
+      return true;
     } catch (error) {
-      console.log('error:-' + error);
-      throw error
+      console.log("error:-" + error);
+      throw error;
     }
   }
 
   async getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
-    templateType: string
+    templateType: string,
+    userId: number
   ): Promise<UpdateCustomerTemplate[]> {
     const getCustomerTemplates =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
@@ -922,6 +940,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         await this._customerTemplateRepository.updateCustomerTemplate(
           customerTemplateent.id,
           {
+            id: customerTemplateent.id,
             customerId: customerTemplateent.customerId,
             isCustomMainContentTemplate:
               customerTemplateent.isCustomMainContentTemplate,
@@ -933,6 +952,40 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         );
 
       response.push(updateCustomerTemplate);
+    }
+
+    if (templateType === "COMMON_CONTENT" || templateType === "REFE_LINE") {
+      const getCustomer = await this._customerRepository.getCustomer(
+        customerId,
+        userId
+      );
+
+      const getTemplate = await this._templateRepository.getTemplatesByType(
+        templateType,
+        userId
+      );
+
+      if (!getCustomer || !getTemplate) {
+        throw new BadRequest("Please select valid customer or template.");
+      }
+
+      const replacedCustomerTemplateData = await this.replaceTemplateData(
+        getCustomer,
+        getTemplate[0]
+      );
+
+      const data =
+        await this._customerTemplateRepository.createCustomerTemplate({
+          id: null,
+          customerId,
+          isCustomMainContentTemplate: false,
+          order: null,
+          templateId: getTemplate[0].id,
+          templateType: getTemplate[0].type,
+          templateData: replacedCustomerTemplateData,
+        });
+
+      response.push(data);
     }
 
     return response;

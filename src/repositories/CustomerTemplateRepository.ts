@@ -27,13 +27,17 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
 
   async createCustomerTemplate(
     customerTemplateData: CreateCustomerTemplateInput
-  ): Promise<CustomerTemplate> {
+  ): Promise<CustomerTemplateWithCustomerTemplate> {
     try {
       // Get the database clinte
       const client = this._databaseService.Client();
-
+      const { id, ...restData } = customerTemplateData;
       const save = await client.customerTemplate.create({
-        data: customerTemplateData,
+        data: restData,
+        include: {
+          Template: true,
+          Customer: true,
+        },
       });
 
       return save;
@@ -78,18 +82,18 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
   }
 
   async updateCustomerTemplate(
-    id: number,
+    customerTemplateId: number,
     templateData: CreateCustomerTemplateInput
   ): Promise<UpdateCustomerTemplate> {
     try {
       // Get the database clinte
       const client = this._databaseService.Client();
-
+      const { id, ...restData } = templateData;
       const updateCustomerTemplates = await client.customerTemplate.update({
         where: {
-          id,
+          id: customerTemplateId,
         },
-        data: templateData,
+        data: restData,
         include: {
           Template: true,
           Customer: true,
@@ -107,17 +111,15 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
     }
   }
 
-  async createWordFileCustomerTemplate(
-    customerId: number,
-  ): Promise<any> {
+  async createWordFileCustomerTemplate(customerId: number): Promise<any> {
     try {
       // Get the database clinte
       const client = this._databaseService.Client();
       const getData = await client.customerTemplate.findMany({
         where: {
-          customerId
-        }
-      })
+          customerId,
+        },
+      });
       // console.log('body:- \n', getData);
       return getData;
     } catch (error) {

@@ -17,10 +17,6 @@ const customerTemplateController = new CustomerTemplateController(
   customerTemplateService
 );
 
-router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
-  customerTemplateController.createCustomerTemplate(req, res)
-);
-
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
@@ -28,8 +24,13 @@ router.get(
     customerTemplateController.getCustomerTemplateByTypeAndCustomerId(req, res);
   }
 );
-router.get(
-  "/:id",
+
+router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
+  customerTemplateController.createCustomerTemplate(req, res)
+);
+
+router.post(
+  "/word",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     customerTemplateController.createWordFileCustomerTemplate(req, res);
