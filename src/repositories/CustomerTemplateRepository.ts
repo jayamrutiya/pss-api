@@ -8,6 +8,7 @@ import { InternalServerError } from "../errors/InternalServerError";
 import {
   CreateCustomerTemplateInput,
   CustomerTemplateWithCustomerTemplate,
+  CustomerTemplateWithCustomerTemplateRepo,
   UpdateCustomerTemplate,
 } from "../types/CustomerTemplate";
 
@@ -34,10 +35,6 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
       const { id, ...restData } = customerTemplateData;
       const save = await client.customerTemplate.create({
         data: restData,
-        include: {
-          Template: true,
-          Customer: true,
-        },
       });
 
       return save;
@@ -54,7 +51,7 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
   async getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
     templateType: string
-  ): Promise<CustomerTemplateWithCustomerTemplate[]> {
+  ): Promise<CustomerTemplateWithCustomerTemplateRepo[]> {
     try {
       // Get the database clinte
       const client = this._databaseService.Client();
@@ -94,10 +91,6 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
           id: customerTemplateId,
         },
         data: restData,
-        include: {
-          Template: true,
-          Customer: true,
-        },
       });
 
       return updateCustomerTemplates;

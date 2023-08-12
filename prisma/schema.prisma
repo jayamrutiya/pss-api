@@ -214,6 +214,7 @@ model CustomerTemplate {
   Template                    Template? @relation(fields: [templateId], references: [id])
   templateType                String
   templateData                String?   @db.Text
+  templateTitle               String?
   order                       Int?
   isCustomMainContentTemplate Boolean   @default(false)
   createdAt                   DateTime  @default(now()) @db.Timestamp(6)

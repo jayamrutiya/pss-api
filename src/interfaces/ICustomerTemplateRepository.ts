@@ -2,6 +2,7 @@ import { CustomerTemplate } from "@prisma/client";
 import {
   CreateCustomerTemplateInput,
   CustomerTemplateWithCustomerTemplate,
+  CustomerTemplateWithCustomerTemplateRepo,
   UpdateCustomerTemplate,
 } from "../types/CustomerTemplate";
 
@@ -13,7 +14,7 @@ export interface ICustomerTemplateRepository {
   getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
     templateType: string
-  ): Promise<CustomerTemplateWithCustomerTemplate[]>;
+  ): Promise<CustomerTemplateWithCustomerTemplateRepo[]>;
 
   updateCustomerTemplate(
     customerTemplateId: number,

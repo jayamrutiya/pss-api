@@ -56,6 +56,15 @@ export class TemplateRepository implements ITemplateRepository {
         data: templateData,
       });
 
+      await client.customerTemplate.updateMany({
+        where: {
+          templateId: id,
+        },
+        data: {
+          templateTitle: templateData.title,
+        },
+      });
+
       return updateTemplate;
     } catch (error) {
       this._loggerService.getLogger().error(`Error ${error}`);

@@ -784,40 +784,85 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       userId
     );
 
-    const getTemplate = await this._templateRepository.getTemplateById(
-      customerTemplateData.templateId!,
-      userId
-    );
-
-    if (!getCustomer || !getTemplate) {
-      throw new BadRequest("Please select valid customer or template.");
-    }
-
-    const replacedCustomerTemplateData = await this.replaceTemplateData(
-      getCustomer,
-      getTemplate
-    );
-
-    if (customerTemplateData.id) {
-      return await this._customerTemplateRepository.updateCustomerTemplate(
-        customerTemplateData.id,
-        {
+    const getCustomerTemplates =
+      await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
+        customerTemplateData.customerId,
+        customerTemplateData.templateType
+      );
+    if (customerTemplateData.isCustomMainContentTemplate) {
+      if (customerTemplateData.id) {
+        return await this._customerTemplateRepository.updateCustomerTemplate(
+          customerTemplateData.id,
+          {
+            id: customerTemplateData.id,
+            customerId: customerTemplateData.customerId,
+            isCustomMainContentTemplate:
+              customerTemplateData.isCustomMainContentTemplate,
+            order: getCustomerTemplates.length + 1,
+            templateId: null,
+            templateType: customerTemplateData.templateType,
+            templateData: customerTemplateData.templateData,
+            templateTitle: customerTemplateData.templateTitle,
+          }
+        );
+      } else {
+        return await this._customerTemplateRepository.createCustomerTemplate({
           id: customerTemplateData.id,
           customerId: customerTemplateData.customerId,
           isCustomMainContentTemplate:
             customerTemplateData.isCustomMainContentTemplate,
-          order: customerTemplateData.order,
-          templateId: customerTemplateData.templateId,
+          order: getCustomerTemplates.length + 1,
+          templateId: null,
           templateType: customerTemplateData.templateType,
-          templateData: replacedCustomerTemplateData,
-        }
-      );
+          templateData: customerTemplateData.templateData,
+          templateTitle: customerTemplateData.templateTitle,
+        });
+      }
     } else {
-      return await this._customerTemplateRepository.createCustomerTemplate({
-        ...customerTemplateData,
-        templateType: getTemplate.type,
-        templateData: replacedCustomerTemplateData,
-      });
+      const getTemplate = await this._templateRepository.getTemplateById(
+        customerTemplateData.templateId!,
+        userId
+      );
+
+      if (!getCustomer || !getTemplate) {
+        throw new BadRequest("Please select valid customer or template.");
+      }
+
+      const replacedCustomerTemplateData = await this.replaceTemplateData(
+        getCustomer,
+        getTemplate
+      );
+
+      if (customerTemplateData.id) {
+        return await this._customerTemplateRepository.updateCustomerTemplate(
+          customerTemplateData.id,
+          {
+            id: customerTemplateData.id,
+            customerId: customerTemplateData.customerId,
+            isCustomMainContentTemplate:
+              customerTemplateData.isCustomMainContentTemplate,
+            order:
+              customerTemplateData.templateType === "MAIN_CONTENT"
+                ? getCustomerTemplates.length + 1
+                : null,
+            templateId: customerTemplateData.templateId,
+            templateType: customerTemplateData.templateType,
+            templateData: replacedCustomerTemplateData,
+            templateTitle: getTemplate.title,
+          }
+        );
+      } else {
+        return await this._customerTemplateRepository.createCustomerTemplate({
+          ...customerTemplateData,
+          order:
+            customerTemplateData.templateType === "MAIN_CONTENT"
+              ? getCustomerTemplates.length + 1
+              : null,
+          templateTitle: getTemplate.title,
+          templateType: getTemplate.type,
+          templateData: replacedCustomerTemplateData,
+        });
+      }
     }
   }
   async createWordFileCustomerTemplate(customerId: number): Promise<any> {
@@ -931,30 +976,54 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let i = 0; i < getCustomerTemplates.length; i++) {
       const customerTemplateent = getCustomerTemplates[i];
 
-      const replacedCustomerTemplateData = await this.replaceTemplateData(
-        customerTemplateent.Customer,
-        customerTemplateent.Template!
-      );
+      if (customerTemplateent.isCustomMainContentTemplate) {
+        const updateCustomerTemplate =
+          await this._customerTemplateRepository.updateCustomerTemplate(
+            customerTemplateent.id,
+            {
+              id: customerTemplateent.id,
+              customerId: customerTemplateent.customerId,
+              isCustomMainContentTemplate:
+                customerTemplateent.isCustomMainContentTemplate,
+              order: customerTemplateent.order,
+              templateId: customerTemplateent.templateId,
+              templateType: customerTemplateent.templateType,
+              templateData: customerTemplateent.templateData,
+              templateTitle: customerTemplateent.templateTitle,
+            }
+          );
 
-      const updateCustomerTemplate =
-        await this._customerTemplateRepository.updateCustomerTemplate(
-          customerTemplateent.id,
-          {
-            id: customerTemplateent.id,
-            customerId: customerTemplateent.customerId,
-            isCustomMainContentTemplate:
-              customerTemplateent.isCustomMainContentTemplate,
-            order: customerTemplateent.order,
-            templateId: customerTemplateent.templateId,
-            templateType: customerTemplateent.templateType,
-            templateData: replacedCustomerTemplateData,
-          }
+        response.push(updateCustomerTemplate);
+      } else {
+        const replacedCustomerTemplateData = await this.replaceTemplateData(
+          customerTemplateent.Customer,
+          customerTemplateent.Template!
         );
 
-      response.push(updateCustomerTemplate);
+        const updateCustomerTemplate =
+          await this._customerTemplateRepository.updateCustomerTemplate(
+            customerTemplateent.id,
+            {
+              id: customerTemplateent.id,
+              customerId: customerTemplateent.customerId,
+              isCustomMainContentTemplate:
+                customerTemplateent.isCustomMainContentTemplate,
+              order: customerTemplateent.order,
+              templateId: customerTemplateent.templateId,
+              templateType: customerTemplateent.templateType,
+              templateData: replacedCustomerTemplateData,
+              templateTitle: customerTemplateent.templateTitle,
+            }
+          );
+
+        response.push(updateCustomerTemplate);
+      }
     }
 
-    if (templateType === "COMMON_CONTENT" || templateType === "REFE_LINE") {
+    if (
+      getCustomerTemplates.length === 0 &&
+      (templateType === "COMMON_CONTENT" || templateType === "REFE_LINE")
+    ) {
       const getCustomer = await this._customerRepository.getCustomer(
         customerId,
         userId
@@ -983,6 +1052,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
           templateId: getTemplate[0].id,
           templateType: getTemplate[0].type,
           templateData: replacedCustomerTemplateData,
+          templateTitle: null,
         });
 
       response.push(data);

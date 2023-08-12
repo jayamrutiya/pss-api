@@ -6,6 +6,7 @@ export declare type CreateCustomerTemplateInput = {
   templateId: number | null;
   templateType: string;
   templateData: string | null;
+  templateTitle: string | null;
   order: number | null;
   isCustomMainContentTemplate: boolean;
   //   createdAt: Date;
@@ -18,6 +19,22 @@ export declare type CustomerTemplateWithCustomerTemplate = {
   templateId: number | null;
   templateType: string;
   templateData: string | null;
+  templateTitle: string | null;
+  order: number | null;
+  isCustomMainContentTemplate: boolean;
+  // Customer: Customer;
+  // Template: Template | null;
+  createdAt: Date;
+  updatedAt: Date | null;
+};
+
+export declare type CustomerTemplateWithCustomerTemplateRepo = {
+  id: number;
+  customerId: number;
+  templateId: number | null;
+  templateType: string;
+  templateData: string | null;
+  templateTitle: string | null;
   order: number | null;
   isCustomMainContentTemplate: boolean;
   Customer: Customer;
@@ -32,10 +49,11 @@ export declare type UpdateCustomerTemplate = {
   templateId: number | null;
   templateType: string;
   templateData: string | null;
+  templateTitle: string | null;
   order: number | null;
   isCustomMainContentTemplate: boolean;
-  Template: Template | null;
-  Customer: Customer;
+  // Template: Template | null;
+  // Customer: Customer;
   createdAt: Date;
   updatedAt: Date | null;
 };

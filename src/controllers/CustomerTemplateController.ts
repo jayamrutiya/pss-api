@@ -22,6 +22,7 @@ export class CustomerTemplateController extends BaseController {
 
   async createCustomerTemplate(req: any, res: express.Response) {
     try {
+      console.log("createCustomerTemplate");
       // validate input
       this.validateRequest(req);
 
