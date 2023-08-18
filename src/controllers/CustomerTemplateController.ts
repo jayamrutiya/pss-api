@@ -26,23 +26,25 @@ export class CustomerTemplateController extends BaseController {
       // validate input
       this.validateRequest(req);
 
-      const {
-        customerId,
-        templateId,
-        templateType,
-        templateData,
-        order,
-        isCustomMainContentTemplate,
-      } = req.body;
+      const [
+        {
+          customerId,
+          templateId,
+          templateType,
+          templateData,
+          order,
+          isCustomMainContentTemplate,
+        },
+      ] = req.body;
 
-      if (
-        customerId &&
-        templateId &&
-        templateType &&
-        isCustomMainContentTemplate
-      ) {
-        throw new BadRequest("Invalid argumets.");
-      }
+      // if (
+      //   customerId &&
+      //   templateId &&
+      //   templateType &&
+      //   isCustomMainContentTemplate
+      // ) {
+      //   throw new BadRequest("Invalid argumets.");
+      // }
 
       const token = req.user as any;
       const saveCustomerTemplate =

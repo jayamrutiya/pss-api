@@ -8,7 +8,7 @@ import {
 export interface ICustomerTemplateService {
   createCustomerTemplate(
     userId: number,
-    customerTemplateData: CreateCustomerTemplateInput
+    customerTemplateDataa: CreateCustomerTemplateInput[]
   ): Promise<CustomerTemplateWithCustomerTemplate>;
 
   getCustomerTemplateByTypeAndCustomerId(
