@@ -804,7 +804,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
                 customerId: customerTemplateData.customerId,
                 isCustomMainContentTemplate:
                   customerTemplateData.isCustomMainContentTemplate,
-                order: getCustomerTemplates.length + 1,
+                order: customerTemplateData.order,
                 templateId: null,
                 templateType: customerTemplateData.templateType,
                 templateData: customerTemplateData.templateData,
@@ -851,10 +851,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
                 customerId: customerTemplateData.customerId,
                 isCustomMainContentTemplate:
                   customerTemplateData.isCustomMainContentTemplate,
-                order:
-                  customerTemplateData.templateType === "MAIN_CONTENT"
-                    ? getCustomerTemplates.length + 1
-                    : null,
+                order: customerTemplateData.order,
                 templateId: customerTemplateData.templateId,
                 templateType: customerTemplateData.templateType,
                 templateData: replacedCustomerTemplateData,
