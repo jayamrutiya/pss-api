@@ -18,6 +18,22 @@ const customerTemplateController = new CustomerTemplateController(
 );
 
 router.get(
+  "/filter",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.getFiltterTemplate(req, res);
+  }
+);
+
+router.get(
+  "/status",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.getCustomerTemplateStatus(req, res);
+  }
+);
+
+router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -29,11 +45,23 @@ router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
   customerTemplateController.createCustomerTemplate(req, res)
 );
 
-router.post(
-  "/word",
+router.get("/word", (req, res) => {
+  customerTemplateController.createWordFileCustomerTemplate(req, res);
+});
+
+router.delete(
+  "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    customerTemplateController.createWordFileCustomerTemplate(req, res);
+    customerTemplateController.deleteCustomerTemplateById(req, res);
+  }
+);
+
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.getCustomerTemplateById(req, res);
   }
 );
 

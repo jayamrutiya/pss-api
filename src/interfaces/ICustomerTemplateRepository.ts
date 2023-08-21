@@ -22,4 +22,8 @@ export interface ICustomerTemplateRepository {
   ): Promise<UpdateCustomerTemplate>;
 
   createWordFileCustomerTemplate(customerId: number): any;
+
+  deleteCustomerTemplateById(id: number): Promise<any>;
+
+  getCustomerTemplateById(id: number): Promise<UpdateCustomerTemplate | null>;
 }

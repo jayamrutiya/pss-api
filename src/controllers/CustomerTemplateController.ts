@@ -143,4 +143,97 @@ export class CustomerTemplateController extends BaseController {
       return this.sendErrorResponse(req, res, error);
     }
   }
+
+  async getCustomerTemplateStatus(req: any, res: express.Response) {
+    try {
+      const token = req.user as any;
+      const { customerId, templateType } = req.query;
+
+      const getCustomerTemplate =
+        await this._customerTemplateService.getCustomerTemplateStatus(
+          Number(customerId),
+          templateType,
+          Number(token.id)
+        );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template Status.",
+        {
+          size: 1,
+        },
+        getCustomerTemplate
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async deleteCustomerTemplateById(req: any, res: express.Response) {
+    try {
+      const { id } = req.query;
+
+      const deleteCustomerTemplate =
+        await this._customerTemplateService.deleteCustomerTemplateById(
+          Number(id)
+        );
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template Deleted Successfully.",
+        {
+          size: 1,
+        },
+        deleteCustomerTemplate
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async getFiltterTemplate(req: any, res: express.Response) {
+    try {
+      const token = req.user as any;
+      const { customerId, templateType } = req.query;
+
+      const getFilterTemplate =
+        await this._customerTemplateService.getFiltterTemplate(
+          Number(customerId),
+          templateType,
+          Number(token.id)
+        );
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Filter Customer Template.",
+        {
+          size: getFilterTemplate.length,
+        },
+        getFilterTemplate
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async getCustomerTemplateById(req: any, res: express.Response) {
+    try {
+      const { id } = req.params;
+
+      const getData =
+        await this._customerTemplateService.getCustomerTemplateById(Number(id));
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template.",
+        {
+          size: 1,
+        },
+        getData
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
 }

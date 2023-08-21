@@ -17,6 +17,7 @@ import moment from "moment";
 const htmlDocs = require("html-docx-js");
 import fs from "fs";
 import { join } from "path";
+import { NotFound } from "../errors/NotFound";
 
 @injectable()
 export class CustomerTemplateService implements ICustomerTemplateService {
@@ -888,6 +889,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         "SUBJECT",
         "MAIN_CONTENT",
         "SUMMARY",
+        "AGREEMENT",
       ];
 
       const getTemplateData: CustomerTemplate[] =
@@ -1037,7 +1039,9 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     if (
       getCustomerTemplates.length === 0 &&
-      (templateType === "COMMON_CONTENT" || templateType === "REFE_LINE")
+      (templateType === "COMMON_CONTENT" ||
+        templateType === "REFE_LINE" ||
+        templateType === "AGREEMENT")
     ) {
       const getCustomer = await this._customerRepository.getCustomer(
         customerId,
@@ -1074,5 +1078,55 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     }
 
     return response;
+  }
+
+  async getCustomerTemplateStatus(
+    customerId: number,
+    templateType: string,
+    userId: number
+  ): Promise<{ isAvailable: boolean }> {
+    const getCustomerTemplates =
+      await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
+        customerId,
+        templateType
+      );
+
+    return { isAvailable: getCustomerTemplates.length > 0 };
+  }
+
+  async deleteCustomerTemplateById(id: number): Promise<any> {
+    return await this._customerTemplateRepository.deleteCustomerTemplateById(
+      id
+    );
+  }
+
+  async getFiltterTemplate(
+    customerId: number,
+    templateType: string,
+    userId: number
+  ): Promise<Template[]> {
+    const all = await this._templateRepository.getTemplatesByType(
+      templateType,
+      userId
+    );
+    const selected =
+      await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
+        customerId,
+        templateType
+      );
+
+    return await all.filter(
+      ({ id: id1 }) => !selected.some(({ templateId: id2 }) => id2 === id1)
+    );
+  }
+
+  async getCustomerTemplateById(id: number): Promise<UpdateCustomerTemplate> {
+    const getData =
+      await this._customerTemplateRepository.getCustomerTemplateById(id);
+    if (!getData) {
+      throw new NotFound("Customer Template Not Found");
+    }
+
+    return getData;
   }
 }

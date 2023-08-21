@@ -124,4 +124,46 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
       // await this._databaseService.disconnect();
     }
   }
+
+  async deleteCustomerTemplateById(id: number): Promise<any> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+      const deletedata = await client.customerTemplate.delete({
+        where: {
+          id,
+        },
+      });
+      return deletedata;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async getCustomerTemplateById(
+    id: number
+  ): Promise<UpdateCustomerTemplate | null> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+      const getdata = await client.customerTemplate.findFirst({
+        where: {
+          id,
+        },
+      });
+      return getdata;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
 }
