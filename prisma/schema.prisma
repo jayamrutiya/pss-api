@@ -51,7 +51,7 @@ model Customer {
   companyName                                String?            @db.VarChar(20)
   companyAddress                             String?            @db.Text
   companyNumber                              String?            @db.VarChar(20)
-  emailId                                    String             @db.VarChar(20)
+  emailId                                    String             @db.VarChar(100)
   registerTransferAgentName                  String?            @db.VarChar(20)
   registerTransferAgentAdress                String?            @db.Text
   registerTransferAgentContactNumber         String?            @db.VarChar(20)
@@ -69,7 +69,7 @@ model Customer {
   oldCompanyName                             String?            @db.VarChar(20)
   oldQuantityholdShare                       String?            @db.VarChar(20)
   ywdATabelData                              String?            @db.Text
-  fhnameInPancardExactSpelling               String?            @db.VarChar(20)
+  fhnameInPancardExactSpelling               String?            @db.VarChar(100)
   fhrateInPercentage                         String?            @db.VarChar(20)
   fhnameAsPerShareCertificate                String?            @db.VarChar(20)
   fhfatherOrHusbandName                      String?            @db.VarChar(20)
@@ -86,7 +86,7 @@ model Customer {
   fhage                                      String?            @db.VarChar(20)
   fhaadharCardNumber                         String?            @db.VarChar(20)
   fhnameInAadharcardExactSpeling             String?            @db.VarChar(20)
-  jhnameInPancardExactSpelling               String?            @db.VarChar(20)
+  jhnameInPancardExactSpelling               String?            @db.VarChar(100)
   jhnameAsPerShareCertificate                String?            @db.VarChar(20)
   jhfatherOrHusbandName                      String?            @db.VarChar(20)
   jhcontactNumber                            String?            @db.VarChar(20)
@@ -101,7 +101,7 @@ model Customer {
   jhnameInAadharcardExactSpeling             String?            @db.VarChar(20)
   fhbankName                                 String?            @db.VarChar(20)
   fhbankAddress                              String?            @db.Text
-  fhholderAddressInBank                      String?            @db.VarChar(20)
+  fhholderAddressInBank                      String?            @db.Text
   fhaccountTypeSavingorCurrent               String?            @db.VarChar(20)
   fhaccountNumber                            String?            @db.VarChar(20)
   fhbankTelephoneNumber                      String?            @db.VarChar(20)
@@ -111,7 +111,7 @@ model Customer {
   fhnameAsPerBankAccount                     String?            @db.VarChar(20)
   jhbankName                                 String?            @db.VarChar(20)
   jhbankAddress                              String?            @db.Text
-  jhholderAddressInBank                      String?            @db.VarChar(20)
+  jhholderAddressInBank                      String?            @db.Text
   jhaccountTypeSavingorCurrent               String?            @db.VarChar(20)
   jhaccountNumber                            String?            @db.VarChar(20)
   jhemail                                    String?            @db.VarChar(20)
@@ -179,7 +179,7 @@ model Customer {
   state                                      String?            @db.VarChar(20)
   age                                        String?            @db.VarChar(20)
   aadharcardNumber                           String?            @db.VarChar(20)
-  nameInAdharcardExactSpeling                String?            @db.VarChar(20)
+  nameInAdharcardExactSpeling                String?            @db.VarChar(100)
   lhabankName                                String?            @db.VarChar(20)
   lhabankAddress                             String?            @db.Text
   lhaholderAddressInBank                     String?            @db.Text
