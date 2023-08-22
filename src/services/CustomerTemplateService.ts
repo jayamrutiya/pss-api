@@ -178,13 +178,24 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     replace = customer.ledgerFolio;
     str = replaceAll(str, find, replace);
 
-    find = "[[bonusDate]]";
-    replace = moment(customer.bonusDate).format("DD MMM YYYY");
-    str = replaceAll(str, find, replace);
-
-    find = "[[splitDate]]";
-    replace = moment(customer.splitDate).format("DD MMM YYYY");
-    str = replaceAll(str, find, replace);
+    if (customer.bonusDate) {
+      find = "[[bonusDate]]";
+      replace = moment(customer.bonusDate).format("DD MMM YYYY");
+      str = replaceAll(str, find, replace);
+      //
+      find = "[[bonusSplit]]";
+      replace = "bonus";
+      str = replaceAll(str, find, replace);
+    }
+    else if (customer.splitDate) {
+      find = "[[splitDate]]";
+      replace = moment(customer.splitDate).format("DD MMM YYYY");
+      str = replaceAll(str, find, replace);
+      //
+      find = "[[bonusSplit]]";
+      replace = "split";
+      str = replaceAll(str, find, replace);
+    }
 
     find = "[[notaryDate]]";
     replace = moment(customer.notaryDate).format("DD MMM YYYY");
@@ -770,7 +781,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, replace);
 
     find = "[[currentYear]]";
-    replace = customer.currentYear;
+    replace = new Date().getFullYear();
     str = replaceAll(str, find, replace);
 
     return str;
