@@ -113,7 +113,6 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
           customerId,
         },
       });
-      // console.log('body:- \n', getData);
       return getData;
     } catch (error) {
       this._loggerService.getLogger().error(`Error ${error}`);

@@ -14,10 +14,10 @@ import { ITemplateRepository } from "../interfaces/ITemplateRepository";
 import { BadRequest } from "../errors/BadRequest";
 import { replaceAll } from "../config/helper";
 import moment from "moment";
-const htmlDocs = require("html-docx-js");
-import fs from "fs";
+import fs, { writeFileSync } from "fs";
 import { join } from "path";
 import { NotFound } from "../errors/NotFound";
+import htmlToDocx from "html-to-docx";
 
 @injectable()
 export class CustomerTemplateService implements ICustomerTemplateService {
@@ -186,8 +186,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       find = "[[bonusSplit]]";
       replace = "bonus";
       str = replaceAll(str, find, replace);
-    }
-    else if (customer.splitDate) {
+    } else if (customer.splitDate) {
       find = "[[splitDate]]";
       replace = moment(customer.splitDate).format("DD MMM YYYY");
       str = replaceAll(str, find, replace);
@@ -905,81 +904,76 @@ export class CustomerTemplateService implements ICustomerTemplateService {
           customerId
         );
       let body = "";
-      console.log("1");
+      // console.log("1");
       let CCData = getTemplateData.filter(async (d) => {
         if (d.templateType === "COMMON_CONTENT") {
-          console.log("COMMON_CONTENT:- " + typeof d.templateData);
-          console.log("COMMON_CONTENT:- " + d.templateData);
+          // console.log("COMMON_CONTENT:- " + typeof d.templateData);
+          // console.log("COMMON_CONTENT:- " + d.templateData);
           body += d.templateData;
         }
       });
-      console.log("2");
+      // console.log("2");
       body += "<br />";
-      console.log("3");
+      // console.log("3");
 
       let RLData = getTemplateData.filter(async (d) => {
         if (d.templateType === "REFE_LINE") {
-          console.log("REFE_LINE:- " + typeof d.templateData);
-          console.log("REFE_LINE:- " + d.templateData);
+          // console.log("REFE_LINE:- " + typeof d.templateData);
+          // console.log("REFE_LINE:- " + d.templateData);
           body += d.templateData;
         }
       });
-      console.log("4");
+      // console.log("4");
       body += "<br />";
-      console.log("5");
+      // console.log("5");
       let SData = getTemplateData.filter(async (d) => {
         if (d.templateType === "SUBJECT") {
-          console.log("SUBJECT:- " + typeof d.templateData);
-          console.log("SUBJECT:- " + d.templateData);
+          // console.log("SUBJECT:- " + typeof d.templateData);
+          // console.log("SUBJECT:- " + d.templateData);
           body += d.templateData;
         }
       });
-      console.log("6");
+      // console.log("6");
       body += "<div style='page-break-after:always'></div>";
-      console.log("7");
+      // console.log("7");
       let MCData = getTemplateData.filter(async (d) => {
         if (d.templateType === "MAIN_CONTENT") {
           return d;
         }
       });
-      console.log("8");
+      // console.log("8");
       let check = MCData.sort((a, b) => (a.order! > b.order! ? 1 : -1));
-      console.log("9");
+      // console.log("9");
       let MCTemplateData = "";
       check.map(async (d) => {
-        console.log("MC:- " + typeof d.templateData);
-        console.log("MC:- " + d.templateData);
+        // console.log("MC:- " + typeof d.templateData);
+        // console.log("MC:- " + d.templateData);
         body += d.templateData;
         body += "<br />";
       });
-      console.log("10");
+      // console.log("10");
       // need to check accuracy of need to check
       body += "<div style='page-break-after:always'></div>";
-      console.log("11");
+      // console.log("11");
       let SUData = getTemplateData
         .sort((a, b) => a!.order! - b!.order!)
         .filter((d) => {
           if (d.templateType === "SUMMARY") {
-            console.log("SUMMARY:- " + typeof d.templateData);
-            console.log("SUMMARY:- " + d.templateData);
+            // console.log("SUMMARY:- " + typeof d.templateData);
+            // console.log("SUMMARY:- " + d.templateData);
             body += d.templateData;
           }
         });
-      console.log("12");
+      // console.log("12");
       // let body = CCData + RLData + SData + MCTemplateData
 
-      const converted = htmlDocs.asBlob(body);
-      // const saveFile = await fs.writeFileSync(`/htmltoword/wordsof${customerId}/FinalForwardingLetter.docx`, converted);
-      console.log("13");
-
-      const arrayBuffer = await converted.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      __dirname = replaceAll(__dirname, "services", "");
+      const converted = await htmlToDocx(body);
+      const fileName = `/output_${customerId}.docx`;
       const folderPath = join(__dirname, "/document");
-      fs.mkdirSync(folderPath, { recursive: true });
-      const docxFilePath = join(folderPath, `/output_${customerId}.docx`);
-      const saveFile = fs.writeFileSync(docxFilePath, buffer);
-      return true;
+      await fs.mkdirSync(folderPath, { recursive: true });
+      const docxFilePath = join(folderPath, fileName);
+      const saveFile = await writeFileSync(docxFilePath, converted);
+      return { filePath: docxFilePath, fileName };
     } catch (error) {
       console.log("error:-" + error);
       throw error;
@@ -1079,7 +1073,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
           templateId: getTemplate[0].id,
           templateType: getTemplate[0].type,
           templateData: replacedCustomerTemplateData,
-          templateTitle: null,
+          templateTitle: getTemplate[0].title,
         });
 
       response.push(data);

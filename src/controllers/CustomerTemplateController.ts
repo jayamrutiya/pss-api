@@ -111,24 +111,16 @@ export class CustomerTemplateController extends BaseController {
         await this._customerTemplateService.createWordFileCustomerTemplate(
           customerId
         );
-      console.log("saveCustomerTemplateData:- ", saveCustomerTemplateData);
-
-      // Return the response
-      // const saveFile = await fs.writeFileSync(`/htmltoword/wordsof${customerId}/FinalForwardingLetter.docx`, converted);
-
       res.setHeader(
         "Content-Type",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       );
-      res.setHeader("Content-Disposition", "attachment; filename=output.docx");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=${saveCustomerTemplateData.fileName}`
+      );
 
-      // Read the file and send it as the response
-      __dirname = replaceAll(__dirname, "controllers", "document");
-      console.log("c:- " + __dirname);
-
-      const fileStream = fs.createReadStream(__dirname + "/output.docx");
-
-      console.log("con", __dirname);
+      const fileStream = fs.createReadStream(saveCustomerTemplateData.filePath);
       fileStream.pipe(res);
       return res;
       // this.sendJSONResponse(
