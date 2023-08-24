@@ -903,72 +903,60 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         await this._customerTemplateRepository.createWordFileCustomerTemplate(
           customerId
         );
-      let body = "";
-      // console.log("1");
-      let CCData = getTemplateData.filter(async (d) => {
-        if (d.templateType === "COMMON_CONTENT") {
-          // console.log("COMMON_CONTENT:- " + typeof d.templateData);
-          // console.log("COMMON_CONTENT:- " + d.templateData);
-          body += d.templateData;
-        }
-      });
-      // console.log("2");
-      body += "<br />";
-      // console.log("3");
 
-      let RLData = getTemplateData.filter(async (d) => {
-        if (d.templateType === "REFE_LINE") {
-          // console.log("REFE_LINE:- " + typeof d.templateData);
-          // console.log("REFE_LINE:- " + d.templateData);
+      let body = "";
+
+      let CCData = getTemplateData.map(async (d) => {
+        if (d.templateType === "COMMON_CONTENT") {
           body += d.templateData;
         }
       });
-      // console.log("4");
+
       body += "<br />";
-      // console.log("5");
-      let SData = getTemplateData.filter(async (d) => {
-        if (d.templateType === "SUBJECT") {
-          // console.log("SUBJECT:- " + typeof d.templateData);
-          // console.log("SUBJECT:- " + d.templateData);
+
+      let RLData = getTemplateData.map(async (d) => {
+        if (d.templateType === "REFE_LINE") {
           body += d.templateData;
         }
       });
-      // console.log("6");
-      body += "<div style='page-break-after:always'></div>";
-      // console.log("7");
-      let MCData = getTemplateData.filter(async (d) => {
-        if (d.templateType === "MAIN_CONTENT") {
-          return d;
+
+      body += "<br />";
+
+      let SData = getTemplateData.map(async (d) => {
+        if (d.templateType === "SUBJECT") {
+          body += d.templateData;
         }
       });
-      // console.log("8");
+
+      body += "<div style='page-break-after:always'></div>";
+
+      const MCData = getTemplateData.filter((d) => {
+        return d.templateType === "MAIN_CONTENT";
+      });
       let check = MCData.sort((a, b) => (a.order! > b.order! ? 1 : -1));
-      // console.log("9");
-      let MCTemplateData = "";
-      check.map(async (d) => {
-        // console.log("MC:- " + typeof d.templateData);
-        // console.log("MC:- " + d.templateData);
+      check.map((d) => {
         body += d.templateData;
         body += "<br />";
       });
-      // console.log("10");
-      // need to check accuracy of need to check
+
       body += "<div style='page-break-after:always'></div>";
-      // console.log("11");
-      let SUData = getTemplateData
-        .sort((a, b) => a!.order! - b!.order!)
-        .filter((d) => {
-          if (d.templateType === "SUMMARY") {
-            // console.log("SUMMARY:- " + typeof d.templateData);
-            // console.log("SUMMARY:- " + d.templateData);
-            body += d.templateData;
-          }
-        });
-      // console.log("12");
-      // let body = CCData + RLData + SData + MCTemplateData
+
+      let SUData = getTemplateData.map((d) => {
+        if (d.templateType === "SUMMARY") {
+          body += d.templateData;
+        }
+      });
+
+      body += "<div style='page-break-after:always'></div>";
+
+      let agreementData = getTemplateData.map((d) => {
+        if (d.templateType === "AGREEMENT") {
+          body += d.templateData;
+        }
+      });
 
       const converted = await htmlToDocx(body);
-      const fileName = `/output_${customerId}.docx`;
+      const fileName = `Forwarding-Letter_${customerId}.docx`;
       const folderPath = join(__dirname, "/document");
       await fs.mkdirSync(folderPath, { recursive: true });
       const docxFilePath = join(folderPath, fileName);

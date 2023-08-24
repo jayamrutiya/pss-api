@@ -4,7 +4,7 @@ import { ICustomerTemplateService } from "../interfaces/ICustomerTemplateService
 import { ILoggerService } from "../interfaces/ILoggerService";
 import BaseController from "./BaseController";
 import * as express from "express";
-import fs from "fs";
+import fs, { unlinkSync } from "fs";
 import { join } from "path";
 import { replaceAll } from "../config/helper";
 export class CustomerTemplateController extends BaseController {
@@ -111,17 +111,33 @@ export class CustomerTemplateController extends BaseController {
         await this._customerTemplateService.createWordFileCustomerTemplate(
           customerId
         );
-      res.setHeader(
-        "Content-Type",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      );
-      res.setHeader(
-        "Content-Disposition",
-        `attachment; filename=${saveCustomerTemplateData.fileName}`
-      );
+      // res.setHeader(
+      //   "Content-Type",
+      //   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      // );
+      // res.setHeader(
+      //   "Content-Disposition",
+      //   `attachment; filename=${saveCustomerTemplateData.fileName}`
+      // );
 
-      const fileStream = fs.createReadStream(saveCustomerTemplateData.filePath);
-      fileStream.pipe(res);
+      // const fileStream = await fs.createReadStream(
+      //   saveCustomerTemplateData.filePath
+      // );
+
+      // fileStream.pipe(res);
+      // await unlinkSync(saveCustomerTemplateData.filePath);
+
+      res.download(
+        saveCustomerTemplateData.filePath,
+        saveCustomerTemplateData.fileName,
+        (err) => {
+          if (err) {
+            console.log(err); // Check error if you want
+          } else {
+            unlinkSync(saveCustomerTemplateData.filePath);
+          }
+        }
+      );
       return res;
       // this.sendJSONResponse(
       //   res,
