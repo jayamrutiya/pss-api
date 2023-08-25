@@ -61,6 +61,9 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
           customerId,
           templateType,
         },
+        orderBy:{
+          order: 'asc'
+        },
         include: {
           Template: true,
           Customer: true,
