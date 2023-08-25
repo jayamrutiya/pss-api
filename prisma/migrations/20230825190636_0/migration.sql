@@ -42,19 +42,21 @@ CREATE TABLE `RefreshToken` (
 CREATE TABLE `Customer` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
-    `date` TIMESTAMP(6) NULL,
+    `date` DATE NULL,
     `companyName` VARCHAR(20) NULL,
     `companyAddress` TEXT NULL,
     `companyNumber` VARCHAR(20) NULL,
-    `emailId` VARCHAR(20) NOT NULL,
+    `emailId` VARCHAR(100) NOT NULL,
     `registerTransferAgentName` VARCHAR(20) NULL,
     `registerTransferAgentAdress` TEXT NULL,
     `registerTransferAgentContactNumber` VARCHAR(20) NULL,
     `registerTransferAgentEmail` VARCHAR(20) NULL,
+    `bonusDate` DATE NULL,
+    `splitDate` DATE NULL,
+    `notaryDate` DATE NULL,
     `ledgerFolio` VARCHAR(20) NULL,
-    `shareCertificateNumber` VARCHAR(20) NULL,
-    `distinctiveNumber` VARCHAR(20) NULL,
-    `totalShareQuantity` VARCHAR(20) NULL,
+    `tableSDT` TEXT NULL,
+    `totalShares` TEXT NULL,
     `faceValueAsOnToday` VARCHAR(20) NULL,
     `holdShareQuantitySelf` VARCHAR(20) NULL,
     `companyHoldUndeliveredShareQuantity` VARCHAR(20) NULL,
@@ -62,7 +64,7 @@ CREATE TABLE `Customer` (
     `oldCompanyName` VARCHAR(20) NULL,
     `oldQuantityholdShare` VARCHAR(20) NULL,
     `ywdATabelData` TEXT NULL,
-    `fhnameInPancardExactSpelling` VARCHAR(20) NULL,
+    `fhnameInPancardExactSpelling` VARCHAR(100) NULL,
     `fhrateInPercentage` VARCHAR(20) NULL,
     `fhnameAsPerShareCertificate` VARCHAR(20) NULL,
     `fhfatherOrHusbandName` VARCHAR(20) NULL,
@@ -79,7 +81,7 @@ CREATE TABLE `Customer` (
     `fhage` VARCHAR(20) NULL,
     `fhaadharCardNumber` VARCHAR(20) NULL,
     `fhnameInAadharcardExactSpeling` VARCHAR(20) NULL,
-    `jhnameInPancardExactSpelling` VARCHAR(20) NULL,
+    `jhnameInPancardExactSpelling` VARCHAR(100) NULL,
     `jhnameAsPerShareCertificate` VARCHAR(20) NULL,
     `jhfatherOrHusbandName` VARCHAR(20) NULL,
     `jhcontactNumber` VARCHAR(20) NULL,
@@ -94,7 +96,7 @@ CREATE TABLE `Customer` (
     `jhnameInAadharcardExactSpeling` VARCHAR(20) NULL,
     `fhbankName` VARCHAR(20) NULL,
     `fhbankAddress` TEXT NULL,
-    `fhholderAddressInBank` VARCHAR(20) NULL,
+    `fhholderAddressInBank` TEXT NULL,
     `fhaccountTypeSavingorCurrent` VARCHAR(20) NULL,
     `fhaccountNumber` VARCHAR(20) NULL,
     `fhbankTelephoneNumber` VARCHAR(20) NULL,
@@ -104,7 +106,7 @@ CREATE TABLE `Customer` (
     `fhnameAsPerBankAccount` VARCHAR(20) NULL,
     `jhbankName` VARCHAR(20) NULL,
     `jhbankAddress` TEXT NULL,
-    `jhholderAddressInBank` VARCHAR(20) NULL,
+    `jhholderAddressInBank` TEXT NULL,
     `jhaccountTypeSavingorCurrent` VARCHAR(20) NULL,
     `jhaccountNumber` VARCHAR(20) NULL,
     `jhemail` VARCHAR(20) NULL,
@@ -121,7 +123,7 @@ CREATE TABLE `Customer` (
     `nomineeFatherOrHusbandName` VARCHAR(20) NULL,
     `nomineeAddress` TEXT NULL,
     `nomineeHolderRelationShip` VARCHAR(20) NULL,
-    `nomineeBirthdate` DATETIME(3) NULL,
+    `nomineeBirthdate` DATE NULL,
     `w1NameInPancardExactSpelling` VARCHAR(20) NULL,
     `w1addressSameInAadharcard` TEXT NULL,
     `w1nameInAadharcardExactSpelling` VARCHAR(20) NULL,
@@ -162,15 +164,17 @@ CREATE TABLE `Customer` (
     `email` VARCHAR(20) NULL,
     `pancardNumber` VARCHAR(20) NULL,
     `city` VARCHAR(20) NULL,
-    `deathOfHolderFirstHolder` VARCHAR(20) NULL,
-    `deathOfHolderSecondHolder` VARCHAR(20) NULL,
+    `deathOfHolderFirstHolder` DATETIME(3) NULL,
+    `deathOfHolderSecondHolder` DATETIME(3) NULL,
+    `deathHolderFirstCity` VARCHAR(20) NULL,
+    `deathHolderSecondCity` VARCHAR(20) NULL,
     `addressSameInAadharcard` TEXT NULL,
     `oldAddressCompanyRegister` TEXT NULL,
     `gender` VARCHAR(20) NULL,
     `state` VARCHAR(20) NULL,
     `age` VARCHAR(20) NULL,
     `aadharcardNumber` VARCHAR(20) NULL,
-    `nameInAdharcardExactSpeling` VARCHAR(20) NULL,
+    `nameInAdharcardExactSpeling` VARCHAR(100) NULL,
     `lhabankName` VARCHAR(20) NULL,
     `lhabankAddress` TEXT NULL,
     `lhaholderAddressInBank` TEXT NULL,
@@ -187,7 +191,27 @@ CREATE TABLE `Customer` (
     `iepfDividendAmount` VARCHAR(20) NULL,
     `iepfDividendYear` VARCHAR(20) NULL,
     `referenceLetterNo` VARCHAR(20) NULL,
-    `referenceLetterdate` VARCHAR(20) NULL,
+    `referenceLetterdate` DATETIME(3) NULL,
+    `otherLegalHears` TEXT NULL,
+    `currentYear` VARCHAR(10) NULL,
+    `dpId` VARCHAR(10) NULL,
+    `clientId` VARCHAR(10) NULL,
+    `createdAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updatedAt` DATETIME(3) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CustomerTemplate` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `customerId` INTEGER NOT NULL,
+    `templateId` INTEGER NULL,
+    `templateType` VARCHAR(191) NOT NULL,
+    `templateData` TEXT NULL,
+    `templateTitle` VARCHAR(191) NULL,
+    `order` INTEGER NULL,
+    `isCustomMainContentTemplate` BOOLEAN NOT NULL DEFAULT false,
     `createdAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `updatedAt` DATETIME(3) NULL,
 
@@ -199,3 +223,9 @@ ALTER TABLE `Template` ADD CONSTRAINT `Template_userId_fkey` FOREIGN KEY (`userI
 
 -- AddForeignKey
 ALTER TABLE `Customer` ADD CONSTRAINT `Customer_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CustomerTemplate` ADD CONSTRAINT `CustomerTemplate_customerId_fkey` FOREIGN KEY (`customerId`) REFERENCES `Customer`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CustomerTemplate` ADD CONSTRAINT `CustomerTemplate_templateId_fkey` FOREIGN KEY (`templateId`) REFERENCES `Template`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
