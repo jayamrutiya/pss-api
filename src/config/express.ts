@@ -16,8 +16,25 @@ const app = express();
 app.use(helmet());
 
 // Enable CORS
-app.use(cors({ origin: "*" }));
-
+const whitelist = [
+  "http://localhost:3001",
+  "http://www.physicalshareindiasolution.in/",
+  "http://62.72.30.166/",
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      console.log("origin", origin);
+      callback(null, true);
+    } else {
+      console.log("Not allowed by CORS");
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
+app.options("*", cors());
 // Use body parser to read JSON payloads
 app.use(express.json({ limit: "500mb" }));
 app.use(bodyParser.json());

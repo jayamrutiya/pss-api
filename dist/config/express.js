@@ -18,7 +18,26 @@ const app = (0, express_1.default)();
 // Use helmet JS
 app.use((0, helmet_1.default)());
 // Enable CORS
-app.use((0, cors_1.default)({ origin: "*" }));
+const whitelist = [
+    "http://localhost:3001",
+    "http://www.physicalshareindiasolution.in/",
+    "http://62.72.30.166/",
+];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || whitelist.indexOf(origin) !== -1) {
+            console.log("origin", origin);
+            callback(null, true);
+        }
+        else {
+            console.log("Not allowed by CORS");
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+};
+app.use((0, cors_1.default)(corsOptions));
+app.options("*", (0, cors_1.default)());
 // Use body parser to read JSON payloads
 app.use(express_1.default.json({ limit: "500mb" }));
 app.use(body_parser_1.default.json());
