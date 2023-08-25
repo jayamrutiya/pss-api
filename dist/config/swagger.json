@@ -1,0 +1,78 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "node-setup API",
+        "version": "1.0",
+        "description": "node-setup",
+        "license": {
+            "name": "MIT",
+            "url": "https://spdx.org/licenses/MIT.html"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1.0",
+    "schemes": ["http"],
+    "tags": [{ "name": "test" }],
+    "paths": {
+        "/test": {
+            "post": {
+                "tags": ["test"],
+                "summary": "Get all the test data",
+                "description": "Get all the test data",
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "test",
+                        "in": "body",
+                        "description": "test string",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "example": {
+                                "code": 200,
+                                "status": "OK",
+                                "message": "Test data found",
+                                "metadata": {
+                                    "size": 1
+                                },
+                                "data": {
+                                    "test": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "definitions": {
+        "test": {
+            "type": "object",
+            "properties": {
+                "test": {
+                    "type": "string"
+                }
+            },
+            "required": ["test"]
+        }
+    }
+}
