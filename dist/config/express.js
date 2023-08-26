@@ -19,8 +19,8 @@ const app = (0, express_1.default)();
 app.use((0, helmet_1.default)());
 // Enable CORS
 const whitelist = [
-    "http://localhost:3001",
-    "http://www.physicalshareindiasolution.in/",
+    "http://localhost:3001/",
+    "https://www.physicalshareindiasolution.in/",
     "http://62.72.30.166/",
 ];
 const corsOptions = {
