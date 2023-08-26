@@ -17,9 +17,9 @@ app.use(helmet());
 
 // Enable CORS
 const whitelist = [
-  "http://localhost:3001/",
-  "https://www.physicalshareindiasolution.in/",
-  "http://62.72.30.166/",
+  "http://localhost:3001",
+  "https://www.physicalshareindiasolution.in",
+  "http://62.72.30.166",
 ];
 const corsOptions = {
   origin: function (origin, callback) {
