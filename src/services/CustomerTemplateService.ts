@@ -676,11 +676,11 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, replace);
 
     find = "[[deathOfHolderFirstHolder]]";
-    replace = customer.deathOfHolderFirstHolder;
+    replace = moment(customer.deathOfHolderFirstHolder).format("DD-MM-YYYY");
     str = replaceAll(str, find, replace);
 
     find = "[[deathOfHolderSecondHolder]]";
-    replace = customer.deathOfHolderSecondHolder;
+    replace = moment(customer.deathOfHolderSecondHolder).format("DD-MM-YYYY");
     str = replaceAll(str, find, replace);
 
     find = "[[addressSameInAadharcard]]";
@@ -784,7 +784,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, replace);
 
     find = "[[referenceLetterdate]]";
-    replace = customer.referenceLetterdate;
+    replace = moment(customer.referenceLetterdate).format("DD-MM-YYYY");
     str = replaceAll(str, find, replace);
 
     find = "[[currentYear]]";
@@ -927,41 +927,62 @@ export class CustomerTemplateService implements ICustomerTemplateService {
           body += d.templateData;
         }
       });
-
-      body += "<br />";
-
+      body += "<br /><p><strong>Subject</strong>:</p>";
+      // subject 
+      let count = 0;
       let SData = getTemplateData.map(async (d) => {
         if (d.templateType === "SUBJECT") {
+          count = count + 1;
+          d.templateData = d.templateData?.replace("<p>", `<p style="margin-left:40px">${count}. `)!;
           body += d.templateData;
         }
       });
-
-      body += "<div style='page-break-after:always'></div>";
-
+      body += "<br /><p>Dear Sir / Madam,</p><br /><div style='margin-left:40px; text-align:justify;'>";
+      //main content
       const MCData = getTemplateData.filter((d) => {
         return d.templateType === "MAIN_CONTENT";
       });
       let check = MCData.sort((a, b) => (a.order! > b.order! ? 1 : -1));
       check.map((d) => {
+        // d.templateData = d.templateData?.replace("<p>", `<p style="margin-bottom: 0;">`)!;
         body += d.templateData;
         body += "<br />";
       });
+      body += "</div>";
+      body += "<p>I am enclosing the following documents towards proof of my identification and address.</p><br />";
+      // body += "<div style='page-break-after:always'></div>";
 
-      body += "<div style='page-break-after:always'></div>";
-
-      let SUData = getTemplateData.map((d) => {
+      //summary
+      let scount = 0;
+      // body += "<div style='margin-left:40px;'>"
+      let SUTitleData = getTemplateData.map((d) => {
         if (d.templateType === "SUMMARY") {
-          body += d.templateData;
+          scount = scount + 1;
+          // body += scount + ". " + d.templateTitle;
+          body += `<p style='margin-left:40px;'>${scount}. ${d.templateTitle}</p>`;
         }
       });
+      body += "<br />"
 
+      //summary
+      const getCustomer = await this._customerRepository.getCustomer(customerId, 1)
+      body += "<p>Yours faithfully,</p><p>_______________________</p><p>" + getCustomer?.fhnameInPancardExactSpelling + "</p>";
       body += "<div style='page-break-after:always'></div>";
+      let count1 = 0;
+      let SUData = getTemplateData.map((d) => {
+        if (d.templateType === "SUMMARY") {
+          count1 += 1;
+          body += d.templateData;
+          body += "<div style='page-break-after:always'></div>";
+        }
+      });
 
       let agreementData = getTemplateData.map((d) => {
         if (d.templateType === "AGREEMENT") {
           body += d.templateData;
         }
       });
+
 
       const converted = await htmlToDocx(body);
       const fileName = `Forwarding-Letter_${customerId}.docx`;
