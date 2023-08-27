@@ -18,6 +18,7 @@ import fs, { writeFileSync } from "fs";
 import { join } from "path";
 import { NotFound } from "../errors/NotFound";
 import htmlToDocx from "html-to-docx";
+import htmlDocx from "html-docx-js";
 
 @injectable()
 export class CustomerTemplateService implements ICustomerTemplateService {
@@ -124,7 +125,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     let bod = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
-      b += `<tr>
+      bod += `<tr>
 			<td>${customerYWD.nameInPancardExactSpelling}</td>
 			<td>${customerYWD.addressSameInAadharcard}</td>
 			<td>${customerYWD.nameInAadharcardExactSpelling}</td>
@@ -928,16 +929,20 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         }
       });
       body += "<br /><p><strong>Subject</strong>:</p>";
-      // subject 
+      // subject
       let count = 0;
       let SData = getTemplateData.map(async (d) => {
         if (d.templateType === "SUBJECT") {
           count = count + 1;
-          d.templateData = d.templateData?.replace("<p>", `<p style="margin-left:40px">${count}. `)!;
+          d.templateData = d.templateData?.replace(
+            "<p>",
+            `<p style="margin-left:40px">${count}. `
+          )!;
           body += d.templateData;
         }
       });
-      body += "<br /><p>Dear Sir / Madam,</p><br /><div style='margin-left:40px; text-align:justify;'>";
+      body +=
+        "<br /><p>Dear Sir / Madam,</p><br /><div style='margin-left:40px; text-align:justify;'>";
       //main content
       const MCData = getTemplateData.filter((d) => {
         return d.templateType === "MAIN_CONTENT";
@@ -949,7 +954,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         body += "<br />";
       });
       body += "</div>";
-      body += "<p>I am enclosing the following documents towards proof of my identification and address.</p><br />";
+      body +=
+        "<p>I am enclosing the following documents towards proof of my identification and address.</p><br />";
       // body += "<div style='page-break-after:always'></div>";
 
       //summary
@@ -962,11 +968,17 @@ export class CustomerTemplateService implements ICustomerTemplateService {
           body += `<p style='margin-left:40px;'>${scount}. ${d.templateTitle}</p>`;
         }
       });
-      body += "<br />"
+      body += "<br />";
 
       //summary
-      const getCustomer = await this._customerRepository.getCustomer(customerId, 1)
-      body += "<p>Yours faithfully,</p><p>_______________________</p><p>" + getCustomer?.fhnameInPancardExactSpelling + "</p>";
+      const getCustomer = await this._customerRepository.getCustomer(
+        customerId,
+        1
+      );
+      body +=
+        "<p>Yours faithfully,</p><p>_______________________</p><p>" +
+        getCustomer?.fhnameInPancardExactSpelling +
+        "</p>";
       body += "<div style='page-break-after:always'></div>";
       let count1 = 0;
       let SUData = getTemplateData.map((d) => {
@@ -983,13 +995,15 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         }
       });
 
-
-      const converted = await htmlToDocx(body);
+      const converted = await htmlDocx.asBlob(body).arrayBuffer();
       const fileName = `Forwarding-Letter_${customerId}.docx`;
       const folderPath = join(__dirname, "/document");
       await fs.mkdirSync(folderPath, { recursive: true });
       const docxFilePath = join(folderPath, fileName);
-      const saveFile = await writeFileSync(docxFilePath, converted);
+      const saveFile = await writeFileSync(
+        docxFilePath,
+        Buffer.from(converted)
+      );
       return { filePath: docxFilePath, fileName };
     } catch (error) {
       console.log("error:-" + error);
