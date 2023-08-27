@@ -6,6 +6,7 @@ import { TYPES } from "../config/types";
 import { Template } from "@prisma/client";
 import { UpsertTemplate } from "../types/Template";
 import { InternalServerError } from "../errors/InternalServerError";
+import { BadRequest } from "../errors/BadRequest";
 
 @injectable()
 export class TemplateRepository implements ITemplateRepository {
@@ -106,6 +107,16 @@ export class TemplateRepository implements ITemplateRepository {
       // Get the database clinte
       const client = this._databaseService.Client();
 
+      const getData = await client.customerTemplate.findMany({
+        where: {
+          templateId: id,
+        },
+      });
+
+      if (getData.length > 0) {
+        throw new BadRequest("Template Alredy attach to client.");
+      }
+
       const deleteTemplates = await client.template.delete({
         where: {
           id,
@@ -115,6 +126,9 @@ export class TemplateRepository implements ITemplateRepository {
       return deleteTemplates;
     } catch (error) {
       this._loggerService.getLogger().error(`Error ${error}`);
+      if (error instanceof BadRequest) {
+        throw error;
+      }
       throw new InternalServerError(
         "An error occurred while interacting with the database."
       );
