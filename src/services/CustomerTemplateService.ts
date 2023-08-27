@@ -613,6 +613,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     replace = customer.deathHolderName2;
     str = replaceAll(str, find, replace);
 
+    find = "[[deathHolderFirstCity]]";
+    replace = customer.deathHolderFirstCity;
+    str = replaceAll(str, find, replace);
+
+    find = "[[deathHolderSecondCity]]";
+    replace = customer.deathHolderSecondCity;
+    str = replaceAll(str, find, replace);
+
     find = "[[deathOfAddress]]";
     replace = customer.deathOfAddress;
     str = replaceAll(str, find, replace);
