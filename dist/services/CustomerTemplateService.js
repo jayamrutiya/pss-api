@@ -47,7 +47,7 @@ const moment_1 = __importDefault(require("moment"));
 const fs_1 = __importStar(require("fs"));
 const path_1 = require("path");
 const NotFound_1 = require("../errors/NotFound");
-const html_to_docx_1 = __importDefault(require("html-to-docx"));
+const html_docx_js_1 = __importDefault(require("html-docx-js"));
 let CustomerTemplateService = class CustomerTemplateService {
     constructor(loggerService, customerTemplateRepository, customerRepository, templateRepository) {
         this._loggerService = loggerService;
@@ -134,7 +134,7 @@ let CustomerTemplateService = class CustomerTemplateService {
         let bod = "";
         for (let index = 0; index < customer.otherLegalHears.length; index++) {
             const customerYWD = customer.otherLegalHears[index];
-            b += `<tr>
+            bod += `<tr>
 			<td>${customerYWD.nameInPancardExactSpelling}</td>
 			<td>${customerYWD.addressSameInAadharcard}</td>
 			<td>${customerYWD.nameInAadharcardExactSpelling}</td>
@@ -503,6 +503,12 @@ let CustomerTemplateService = class CustomerTemplateService {
         find = "[[deathHolderName2]]";
         replace = customer.deathHolderName2;
         str = (0, helper_1.replaceAll)(str, find, replace);
+        find = "[[deathHolderFirstCity]]";
+        replace = customer.deathHolderFirstCity;
+        str = (0, helper_1.replaceAll)(str, find, replace);
+        find = "[[deathHolderSecondCity]]";
+        replace = customer.deathHolderSecondCity;
+        str = (0, helper_1.replaceAll)(str, find, replace);
         find = "[[deathOfAddress]]";
         replace = customer.deathOfAddress;
         str = (0, helper_1.replaceAll)(str, find, replace);
@@ -544,10 +550,10 @@ let CustomerTemplateService = class CustomerTemplateService {
         replace = customer.city;
         str = (0, helper_1.replaceAll)(str, find, replace);
         find = "[[deathOfHolderFirstHolder]]";
-        replace = customer.deathOfHolderFirstHolder;
+        replace = (0, moment_1.default)(customer.deathOfHolderFirstHolder).format("DD-MM-YYYY");
         str = (0, helper_1.replaceAll)(str, find, replace);
         find = "[[deathOfHolderSecondHolder]]";
-        replace = customer.deathOfHolderSecondHolder;
+        replace = (0, moment_1.default)(customer.deathOfHolderSecondHolder).format("DD-MM-YYYY");
         str = (0, helper_1.replaceAll)(str, find, replace);
         find = "[[addressSameInAadharcard]]";
         replace = customer.addressSameInAadharcard;
@@ -623,7 +629,7 @@ let CustomerTemplateService = class CustomerTemplateService {
         replace = customer.referenceLetterNo;
         str = (0, helper_1.replaceAll)(str, find, replace);
         find = "[[referenceLetterdate]]";
-        replace = customer.referenceLetterdate;
+        replace = (0, moment_1.default)(customer.referenceLetterdate).format("DD-MM-YYYY");
         str = (0, helper_1.replaceAll)(str, find, replace);
         find = "[[currentYear]]";
         replace = new Date().getFullYear();
@@ -722,39 +728,69 @@ let CustomerTemplateService = class CustomerTemplateService {
                     body += d.templateData;
                 }
             });
-            body += "<br />";
+            body += "<br /><p><strong>Subject</strong>:</p>";
+            // subject
+            let count = 0;
             let SData = getTemplateData.map(async (d) => {
                 if (d.templateType === "SUBJECT") {
+                    count = count + 1;
+                    d.templateData = d.templateData?.replace("<p>", `<p style="margin-left:40px">${count}. `);
                     body += d.templateData;
                 }
             });
-            body += "<div style='page-break-after:always'></div>";
+            body +=
+                "<br /><p>Dear Sir / Madam,</p><br /><div style='margin-left:40px; text-align:justify;'>";
+            //main content
             const MCData = getTemplateData.filter((d) => {
                 return d.templateType === "MAIN_CONTENT";
             });
             let check = MCData.sort((a, b) => (a.order > b.order ? 1 : -1));
             check.map((d) => {
+                // d.templateData = d.templateData?.replace("<p>", `<p style="margin-bottom: 0;">`)!;
                 body += d.templateData;
                 body += "<br />";
             });
-            body += "<div style='page-break-after:always'></div>";
-            let SUData = getTemplateData.map((d) => {
+            body += "</div>";
+            body +=
+                "<p>I am enclosing the following documents towards proof of my identification and address.</p><br />";
+            // body += "<div style='page-break-after:always'></div>";
+            //summary
+            let scount = 0;
+            // body += "<div style='margin-left:40px;'>"
+            let SUTitleData = getTemplateData.map((d) => {
                 if (d.templateType === "SUMMARY") {
-                    body += d.templateData;
+                    scount = scount + 1;
+                    // body += scount + ". " + d.templateTitle;
+                    body += `<p style='margin-left:40px;'>${scount}. ${d.templateTitle}</p>`;
                 }
             });
+            body += "<br />";
+            //summary
+            const getCustomer = await this._customerRepository.getCustomer(customerId, 1);
+            body +=
+                "<p>Yours faithfully,</p><p>_______________________</p><p>" +
+                    getCustomer?.fhnameInPancardExactSpelling +
+                    "</p>";
             body += "<div style='page-break-after:always'></div>";
+            let count1 = 0;
+            let SUData = getTemplateData.map((d) => {
+                if (d.templateType === "SUMMARY") {
+                    count1 += 1;
+                    body += d.templateData;
+                    body += "<div style='page-break-after:always'></div>";
+                }
+            });
             let agreementData = getTemplateData.map((d) => {
                 if (d.templateType === "AGREEMENT") {
                     body += d.templateData;
                 }
             });
-            const converted = await (0, html_to_docx_1.default)(body);
+            const converted = await html_docx_js_1.default.asBlob(body).arrayBuffer();
             const fileName = `Forwarding-Letter_${customerId}.docx`;
             const folderPath = (0, path_1.join)(__dirname, "/document");
             await fs_1.default.mkdirSync(folderPath, { recursive: true });
             const docxFilePath = (0, path_1.join)(folderPath, fileName);
-            const saveFile = await (0, fs_1.writeFileSync)(docxFilePath, converted);
+            const saveFile = await (0, fs_1.writeFileSync)(docxFilePath, Buffer.from(converted));
             return { filePath: docxFilePath, fileName };
         }
         catch (error) {

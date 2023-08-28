@@ -16,6 +16,7 @@ exports.TemplateRepository = void 0;
 const inversify_1 = require("inversify");
 const types_1 = require("../config/types");
 const InternalServerError_1 = require("../errors/InternalServerError");
+const BadRequest_1 = require("../errors/BadRequest");
 let TemplateRepository = class TemplateRepository {
     constructor(loggerService, databaseService) {
         this._loggerService = loggerService;
@@ -94,6 +95,14 @@ let TemplateRepository = class TemplateRepository {
         try {
             // Get the database clinte
             const client = this._databaseService.Client();
+            const getData = await client.customerTemplate.findMany({
+                where: {
+                    templateId: id,
+                },
+            });
+            if (getData.length > 0) {
+                throw new BadRequest_1.BadRequest("Template Alredy attach to client.");
+            }
             const deleteTemplates = await client.template.delete({
                 where: {
                     id,
@@ -103,6 +112,9 @@ let TemplateRepository = class TemplateRepository {
         }
         catch (error) {
             this._loggerService.getLogger().error(`Error ${error}`);
+            if (error instanceof BadRequest_1.BadRequest) {
+                throw error;
+            }
             throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
         }
         finally {
