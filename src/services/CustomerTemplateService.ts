@@ -401,6 +401,41 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     const datacdn = h1 + b1 + f1;
     str = replaceAll(str, find, datacdn);
 
+
+
+    //tables nameFolioShareFVCertiDistNo:-
+    find = "[[nameFolioShareFVCertiDistNo]]";
+    const hname = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary" bordercolor="black">
+    <thead>
+      <tr>
+        <th scope="col">NAME</th>
+        <th scope="col">FOLIO NUMBER</th>
+        <th scope="col">SHARES</th>
+        <th scope="col">FV</th>
+        <th scope="col">CERTIFICATE NO</th>
+        <th scope="col">DISTINCTIVE NO</th>
+      </tr>
+    </thead>
+    <tbody>`;
+    const fname = `</tbody>
+    </table>`;
+    let bname = "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      bname += `<tr>
+			<td style="text-align:center" >${customer.deathHolderName1} (Deceased) Jointly ${customer.deathHolderName2}</td>
+			<td style="text-align:center" >${customer.ledgerFolio}</td>
+			<td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
+			<td style="text-align:center" >${customer.faceValueAsOnToday}</td>
+			<td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+			<td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
+		</tr>`;
+    }
+    const dname = hname + bname + fname;
+    str = replaceAll(str, find, dname);
+
+
+
     //tables ywdATable:-
     find = "[[ywdATable]]";
     const header = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
@@ -1335,7 +1370,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
           body += `<p style="page-break-before: always;">&nbsp;</p>`;
         }
       });
-
+      body += `<p style="page-break-before: always;">&nbsp;</p>`;
       let agreementData = getTemplateData.map((d) => {
         if (d.templateType === "AGREEMENT") {
           body += d.templateData;
