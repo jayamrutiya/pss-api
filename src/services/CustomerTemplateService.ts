@@ -53,6 +53,144 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     let str, find, replace;
     str = template.details;
+
+    //try OLH
+
+    //table otherLegalHears :-
+    find = "[[olhnameInPancardExactSpelling]]";
+    let olhnamepan = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhnamepan += `${customerYWD.nameInPancardExactSpelling},`;
+    }
+    str = replaceAll(str, find, olhnamepan);
+
+    find = "[[olhnameInPancard1]]";
+    let olhnamepan1 = olhnamepan.split(",")[0]
+    str = replaceAll(str, find, olhnamepan1);
+
+    find = "[[olhnameInPancard2]]";
+    let olhnamepan2 = olhnamepan.split(",")[1]
+    str = replaceAll(str, find, olhnamepan2);
+
+    find = "[[olhnameInPancard3]]";
+    let olhnamepan3 = olhnamepan.split(",")[2]
+    str = replaceAll(str, find, olhnamepan3);
+
+
+    find = "[[olhnameInaadharcard]]";
+    let olhnameaadhar = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling};`;
+    }
+    str = replaceAll(str, find, olhnameaadhar);
+
+    find = "[[olhnameInaadharcard1]]";
+    let olhnameInaadharcard1 = olhnameaadhar.split(",")[0]
+    str = replaceAll(str, find, olhnameInaadharcard1);
+
+    find = "[[olhnameInaadharcard2]]";
+    let olhnameInaadharcard2 = olhnameaadhar.split(",")[1]
+    str = replaceAll(str, find, olhnameInaadharcard2);
+
+    find = "[[olhnameInaadharcard3]]";
+    let olhnameInaadharcard3 = olhnameaadhar.split(",")[2]
+    str = replaceAll(str, find, olhnameInaadharcard3);
+
+
+
+    find = "[[olhaddressaddhar]]";
+    let olhaddaadhar = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhaddaadhar += `${customerYWD.addressSameInAadharcard};`;
+    }
+    str = replaceAll(str, find, olhaddaadhar);
+
+    find = "[[olhaddressaddhar1]]";
+    let olhaddressaddhar1 = olhaddaadhar.split(",")[0]
+    str = replaceAll(str, find, olhaddressaddhar1);
+
+    find = "[[olhaddressaddhar2]]";
+    let olhaddressaddhar2 = olhaddaadhar.split(",")[1]
+    str = replaceAll(str, find, olhaddressaddhar2);
+
+    find = "[[olhaddressaddhar3]]";
+    let olhaddressaddhar3 = olhaddaadhar.split(",")[2]
+    str = replaceAll(str, find, olhaddressaddhar3);
+
+
+
+    find = "[[olhage]]";
+    let olhage = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhage += `${customerYWD.age},`;
+    }
+    str = replaceAll(str, find, olhage);
+
+    find = "[[olhage1]]";
+    let olhage1 = olhage.split(",")[0]
+    str = replaceAll(str, find, olhage1);
+
+    find = "[[olhage2]]";
+    let olhage2 = olhage.split(",")[1]
+    str = replaceAll(str, find, olhage2);
+
+    find = "[[olhage3]]";
+    let olhage3 = olhage.split(",")[2]
+    str = replaceAll(str, find, olhage3);
+
+    find = "[[olhdaughterson]]";
+    let olhdaughterson = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son},`;
+    }
+    str = replaceAll(str, find, olhdaughterson);
+
+    find = "[[olhdaughterson1]]";
+    let olhdaughterson1 = olhdaughterson.split(",")[0]
+    str = replaceAll(str, find, olhdaughterson1);
+
+    find = "[[olhdaughterson2]]";
+    let olhdaughterson2 = olhdaughterson.split(",")[1]
+    str = replaceAll(str, find, olhdaughterson2);
+
+    find = "[[olhdaughterson3]]";
+    let olhdaughterson3 = olhdaughterson.split(",")[2]
+    str = replaceAll(str, find, olhdaughterson3);
+
+    //error 
+    // try SDT
+
+    find = "[[distinctiveNumber]]";
+    let bd = "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      bd += `${customerYWD.distinctiveNumber},`;
+
+    }
+    str = replaceAll(str, find, bd);
+
+    find = "[[shareCertificateNumber]]";
+    let bs = "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      bs += `${customerYWD.shareCertificateNumber},`;
+    }
+    str = replaceAll(str, find, bs);
+
+    find = "[[totalShareQuantity]]";
+    let bt = "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      bt += `${customerYWD.totalShareQuantity},`;
+    }
+    str = replaceAll(str, find, bt);
+    //and error
+
     //noticeTable
     find = "[[noticeTable]]";
     const headn = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
