@@ -65,6 +65,326 @@ let CustomerTemplateService = class CustomerTemplateService {
         };
         let str, find, replace;
         str = template.details;
+        //noticeTable
+        find = "[[noticeTable]]";
+        const headn = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+    <thead>
+      <tr>
+        <td style="text-align:center"  scope="col">Folio No.</td>
+        <td style="text-align:center"  scope="col">Certificate Number</td>
+        <td style="text-align:center"  scope="col">Distinctive Number(s)</td>
+        <td style="text-align:center"  scope="col">Shares held in each Certificate</td>
+      </tr>
+    </thead>
+    <tbody>`;
+        const footn = `</tbody>
+    </table>`;
+        let bodyn = "";
+        bodyn += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bodyn += `<tr>
+			<td style="text-align:center" >${customer.ledgerFolio}</td>
+			<td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+			<td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
+			<td style="text-align:center" >${customerYWD.totalShareQuantity}of Rs.${customer.faceValueAsOnToday} /-FV</td>
+		</tr>`;
+        }
+        const datan = headn + bodyn + footn;
+        str = (0, helper_1.replaceAll)(str, find, datan);
+        //folioCertiDistShareInCerti
+        find = "[[folioCertiDistShareInCerti]]";
+        const headf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+    <thead>
+      <tr>
+        <td style="text-align:center"  scope="col">Folio No.</td>
+        <td style="text-align:center"  scope="col">Certificate Nos.</td>
+        <td style="text-align:center"  scope="col">Distinctive Nos. From</td>
+        <td style="text-align:center"  scope="col">Shares held in each Certificate</td>
+      </tr>
+    </thead>
+    <tbody>`;
+        const footf = `</tbody>
+    </table>`;
+        let bodyf = "";
+        bodyf += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bodyf += `<tr>
+			<td style="text-align:center" >${customer.ledgerFolio}</td>
+			<td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+			<td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
+			<td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
+		</tr>`;
+        }
+        const dataf = headf + bodyf + footf;
+        str = (0, helper_1.replaceAll)(str, find, dataf);
+        //folioShareCertiDist
+        find = "[[folioShareCertiDist]]";
+        const hf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+      <thead>
+        <tr>
+          <td style="text-align:center"  scope="col">Folio Number</td>
+          <td style="text-align:center"  scope="col">No. of Shares</td>
+          <td style="text-align:center"  scope="col">Certificate Numbers</td>
+          <td style="text-align:center"  scope="col">Distinctive No. (From)</td>
+          <td style="text-align:center"  scope="col">Distinctive No. (To)</td>
+        </tr>
+      </thead>
+      <tbody>`;
+        const ff = `</tbody>
+      </table>`;
+        let bf = "";
+        bf += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bf += `<tr>
+        <td style="text-align:center" >${customer.ledgerFolio}</td>
+        <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
+        <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]}</td>
+        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
+                ? customerYWD.distinctiveNumber?.split("-")[1]
+                : customerYWD.distinctiveNumber?.split("-")[0]}</td>
+      </tr>`;
+        }
+        const df = hf + bf + ff;
+        str = (0, helper_1.replaceAll)(str, find, df);
+        //folioCertiDistSharesNameShareHolder
+        find = "[[folioCertiDistSharesNameShareHolder]]";
+        const hof = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+      <thead>
+        <tr>
+          <td style="text-align:center"  scope="col">Folio No</td>
+          <td style="text-align:center"  scope="col">Certificate No</td>
+          <td style="text-align:center"  scope="col">Distinctive Nos.</td>
+          <td style="text-align:center"  scope="col">No of Shares</td>
+          <td style="text-align:center"  scope="col">Name of the Shareholder/s</td>
+        </tr>
+      </thead>
+      <tbody>`;
+        const fof = `</tbody>
+      </table>`;
+        let bof = "";
+        bof += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bof += `<tr>
+        <td style="text-align:center" >${customer.ledgerFolio}</td>
+        <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+        <td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
+        <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
+        <td style="text-align:center" >${customer.deathHolderName1} (deceased) jointly ${customer.deathHolderName2 ? customer.deathHolderName2 + "(deceased)" : ""}</td>
+      </tr>`;
+        }
+        const dof = hof + bof + fof;
+        str = (0, helper_1.replaceAll)(str, find, dof);
+        //folioSecuCertiNoDisti
+        find = "[[folioSecuCertiNoDisti]]";
+        const hdf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+      <thead>
+        <tr>
+          <td style="text-align:center"  scope="col"></td>
+          <td style="text-align:center"  scope="col">FOLIO NO.</td>
+          <td style="text-align:center"  scope="col">No. of securities </td>
+          <td style="text-align:center"  scope="col">Security Certificate No.</td>
+          <td style="text-align:center"  scope="col" colspan=2>Distinctive Nos. From-To</td>
+        </tr>
+      </thead>
+      <tbody>`;
+        const fdf = `</tbody>
+      </table>`;
+        let bdf = "";
+        bdf += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bdf += `<tr>
+      <td style="text-align:center" >${index + 1})</td>
+      <td style="text-align:center" >${customer.ledgerFolio}</td>
+      <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
+      <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]}</td>
+        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
+                ? customerYWD.distinctiveNumber?.split("-")[1]
+                : customerYWD.distinctiveNumber?.split("-")[0]}</td>
+      </tr>`;
+        }
+        const dff = hdf + bdf + fdf;
+        str = (0, helper_1.replaceAll)(str, find, dff);
+        //nameComCertiDistFolioSerHeld
+        find = "[[nameComCertiDistFolioSerHeld]]";
+        const hedf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+      <thead>
+        <tr>
+          <td style="text-align:center"  scope="col">Name of the Company</td>
+          <td style="text-align:center"  scope="col">Certificate No.</td>
+          <td style="text-align:center"  scope="col">Distinctive No.</td>
+          <td style="text-align:center"  scope="col">Folio No.</td>
+          <td style="text-align:center"  scope="col">No. and Face value of securities held</td>
+        </tr>
+      </thead>
+      <tbody>`;
+        const fedf = `</tbody>
+      </table>`;
+        let bedf = "";
+        bedf += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bedf += `<tr>
+      <td style="text-align:center" >${customer.companyName}</td>
+      <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+      <td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
+      <td style="text-align:center" >${customer.ledgerFolio}</td>
+      <td style="text-align:center" >${customerYWD.totalShareQuantity} OF F.V RS.${customer.faceValueAsOnToday}/-</td>
+      </tr>`;
+        }
+        const daaf = hedf + bedf + fedf;
+        str = (0, helper_1.replaceAll)(str, find, daaf);
+        //folioCertiDistFDistTNoShare
+        find = "[[folioCertiDistFDistTNoShare]]";
+        const heedf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+      <thead>
+        <tr>
+          <td style="text-align:center"  scope="col">Folio No.</td>
+          <td style="text-align:center"  scope="col">Certificate No.</td>
+          <td style="text-align:center"  scope="col">Distinctive No. From</td>
+          <td style="text-align:center"  scope="col">Distinctive No. To</td>
+          <td style="text-align:center"  scope="col">No. of shares held</td>
+        </tr>
+      </thead>
+      <tbody>`;
+        const feedf = `</tbody>
+      </table>`;
+        let beedf = "";
+        beedf += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            beedf += `<tr>
+      <td style="text-align:center" >${customer.ledgerFolio}</td>
+      <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]}</td>
+      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
+                ? customerYWD.distinctiveNumber?.split("-")[1]
+                : customerYWD.distinctiveNumber?.split("-")[0]}</td>
+      <td style="text-align:center" >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-</td>
+         
+      </tr>`;
+        }
+        const ddata = heedf + beedf + feedf;
+        str = (0, helper_1.replaceAll)(str, find, ddata);
+        //nameComFolioNoSecperClaim
+        find = "[[nameComFolioNoSecperClaim]]";
+        const hdata = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+      <thead>
+        <tr>
+          <td style="text-align:center"  scope="col">Name of the Company</td>
+          <td style="text-align:center"  scope="col">Folio No.</td>
+          <td style="text-align:center"  scope="col">No. of Securities</td>
+          <td style="text-align:center"  scope="col">% of Claim</td>
+        </tr>
+      </thead>
+      <tbody>`;
+        const fdata = `</tbody>
+      </table>`;
+        let bdata = "";
+        bdata += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bdata += `<tr>
+      <td style="text-align:center" >${customer.companyName}</td>
+      <td style="text-align:center" >${customer.ledgerFolio}</td>
+      <td style="text-align:center" >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-</td>
+      <td style="text-align:center" >100 %</td>
+      </tr>`;
+        }
+        const dataa = hdata + bdata + fdata;
+        str = (0, helper_1.replaceAll)(str, find, dataa);
+        //nameComFolioCertDistNEDistShares
+        find = "[[nameComFolioCertDistNEDistShares]]";
+        const headdata = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+      <thead>
+        <tr>
+        <td style="text-align:center"  scope="col">Folio No.</td>
+          <td style="text-align:center"  scope="col">Cert. No.</td>
+          <td style="text-align:center"  scope="col">Start Dist. No.</td>
+          <td style="text-align:center"  scope="col">End Dist. No.</td>
+          <td style="text-align:center"  scope="col">Shares</td>
+        </tr>
+      </thead>
+      <tbody>`;
+        const footerdata = `</tbody>
+      </table>`;
+        let bodydata = "";
+        bodydata += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bodydata += `<tr>
+      <td style="text-align:center" >${customer.ledgerFolio}</td>
+      <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]}</td>
+      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
+                ? customerYWD.distinctiveNumber?.split("-")[1]
+                : customerYWD.distinctiveNumber?.split("-")[0]}</td>
+      <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
+      </tr>`;
+        }
+        const dataData = headdata + bodydata + footerdata;
+        str = (0, helper_1.replaceAll)(str, find, dataData);
+        //folioShareCertiDistFT
+        find = "[[folioShareCertiDistFT]]";
+        const hdft = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+          <thead>
+            <tr>
+              <td style="text-align:center"  scope="col">Folio No.</td>
+              <td style="text-align:center"  scope="col">Certificate No.</td>
+              <td style="text-align:center"  scope="col">Distinctive No. From</td>
+              <td style="text-align:center"  scope="col">Distinctive No. To</td>
+              <td style="text-align:center"  scope="col">No. of shares held</td>
+            </tr>
+          </thead>
+          <tbody>`;
+        const fdft = `</tbody>
+          </table>`;
+        let bdft = "";
+        bdft += "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            bdft += `<tr>
+          <td style="text-align:center" >${customer.ledgerFolio}</td>
+          <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+          <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]}</td>
+          <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
+                ? customerYWD.distinctiveNumber?.split("-")[1]
+                : customerYWD.distinctiveNumber?.split("-")[0]}</td>
+          <td style="text-align:center" >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-</td>
+          </tr>`;
+        }
+        const d1data = hdft + bdft + fdft;
+        str = (0, helper_1.replaceAll)(str, find, d1data);
+        // certiDistNoSecurity
+        find = "[[certiDistNoSecurity]]";
+        const h1 = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary" bordercolor="black">
+ <thead>
+   <tr>
+     <th scope="col">CERTIFICATE NO.</th>
+     <th scope="col">DISTINCTIVE NOS.</th>
+     <th scope="col">NO. OF SECURITIES</th>
+   </tr>
+ </thead>
+ <tbody>`;
+        const f1 = `</tbody>
+ </table>`;
+        let b1 = "";
+        for (let index = 0; index < customer.tableSDT.length; index++) {
+            const customerYWD = customer.tableSDT[index];
+            b1 += `<tr>
+   <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+   <td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
+   <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
+ </tr>`;
+        }
+        const datacdn = h1 + b1 + f1;
+        str = (0, helper_1.replaceAll)(str, find, datacdn);
         //tables ywdATable:-
         find = "[[ywdATable]]";
         const header = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
@@ -83,17 +403,17 @@ let CustomerTemplateService = class CustomerTemplateService {
         for (let index = 0; index < customer.ywdATabelData.length; index++) {
             const customerYWD = customer.ywdATabelData[index];
             body += `<tr>
-			<td>${customerYWD.year}</td>
-			<td>${customerYWD.warrantNo}</td>
-			<td>${customerYWD.ddMicrNo}</td>
-			<td>${customerYWD.amount}</td>
+			<td style="text-align:center" >${customerYWD.year}</td>
+			<td style="text-align:center" >${customerYWD.warrantNo}</td>
+			<td style="text-align:center" >${customerYWD.ddMicrNo}</td>
+			<td style="text-align:center" >${customerYWD.amount}</td>
 		</tr>`;
         }
         const data = header + body + footer;
         str = (0, helper_1.replaceAll)(str, find, data);
         //tables tableSDT:-
         find = "[[tableSDT]]";
-        const h = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+        const h = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary" bordercolor="black">
     <thead>
       <tr>
         <th scope="col">Share Certificate Number</th>
@@ -108,9 +428,9 @@ let CustomerTemplateService = class CustomerTemplateService {
         for (let index = 0; index < customer.tableSDT.length; index++) {
             const customerYWD = customer.tableSDT[index];
             b += `<tr>
-			<td>${customerYWD.shareCertificateNumber}</td>
-			<td>${customerYWD.distinctiveNumber}</td>
-			<td>${customerYWD.totalShareQuantity}</td>
+			<td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
+			<td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
+			<td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
 		</tr>`;
         }
         const dataSDT = h + b + f;
@@ -135,12 +455,12 @@ let CustomerTemplateService = class CustomerTemplateService {
         for (let index = 0; index < customer.otherLegalHears.length; index++) {
             const customerYWD = customer.otherLegalHears[index];
             bod += `<tr>
-			<td>${customerYWD.nameInPancardExactSpelling}</td>
-			<td>${customerYWD.addressSameInAadharcard}</td>
-			<td>${customerYWD.nameInAadharcardExactSpelling}</td>
-      <td>${customerYWD.age}</td>
-			<td>${customerYWD.daughter}</td>
-			<td>${customerYWD.son}</td>
+			<td style="text-align:center" >${customerYWD.nameInPancardExactSpelling}</td>
+			<td style="text-align:center" >${customerYWD.addressSameInAadharcard}</td>
+			<td style="text-align:center" >${customerYWD.nameInAadharcardExactSpelling}</td>
+      <td style="text-align:center" >${customerYWD.age}</td>
+			<td style="text-align:center" >${customerYWD.daughter}</td>
+			<td style="text-align:center" >${customerYWD.son}</td>
 		</tr>`;
         }
         const dataOtherLegalHears = head + bod + foot;
@@ -771,13 +1091,13 @@ let CustomerTemplateService = class CustomerTemplateService {
                 "<p>Yours faithfully,</p><p>_______________________</p><p>" +
                     getCustomer?.fhnameInPancardExactSpelling +
                     "</p>";
-            body += "<div style='page-break-after:always'></div>";
+            body += `<p style="page-break-before: always;">&nbsp;</p>`;
             let count1 = 0;
             let SUData = getTemplateData.map((d) => {
                 if (d.templateType === "SUMMARY") {
                     count1 += 1;
                     body += d.templateData;
-                    body += "<div style='page-break-after:always'></div>";
+                    body += `<p style="page-break-before: always;">&nbsp;</p>`;
                 }
             });
             let agreementData = getTemplateData.map((d) => {
