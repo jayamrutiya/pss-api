@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `customer` MODIFY `fhnameAsPerShareCertificate` VARCHAR(100) NULL;
+ALTER TABLE `Customer` MODIFY `fhnameAsPerShareCertificate` VARCHAR(100) NULL;
