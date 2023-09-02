@@ -119,6 +119,12 @@ export class CustomerRepository implements ICustomerRepository {
       // Get the database clinte
       const client = this._databaseService.Client();
 
+      await client.customerTemplate.deleteMany({
+        where: {
+          customerId: id,
+        },
+      });
+
       const deleteCUstomer = await client.customer.delete({
         where: {
           id,
