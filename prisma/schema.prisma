@@ -71,7 +71,7 @@ model Customer {
   ywdATabelData                              String?            @db.Text
   fhnameInPancardExactSpelling               String?            @db.VarChar(50)
   fhrateInPercentage                         String?            @db.VarChar(50)
-  fhnameAsPerShareCertificate                String?            @db.VarChar(50)
+  fhnameAsPerShareCertificate                String?            @db.VarChar(100)
   fhfatherOrHusbandName                      String?            @db.VarChar(50)
   fhcontactNumber                            String?            @db.VarChar(50)
   fhemail                                    String?            @db.VarChar(50)
