@@ -1,5 +1,5 @@
 -- AlterTable
-ALTER TABLE `customer` MODIFY `companyNumber` VARCHAR(50) NULL,
+ALTER TABLE `Customer` MODIFY `companyNumber` VARCHAR(50) NULL,
     MODIFY `registerTransferAgentContactNumber` VARCHAR(50) NULL,
     MODIFY `ledgerFolio` VARCHAR(50) NULL,
     MODIFY `faceValueAsOnToday` VARCHAR(50) NULL,
