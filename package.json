@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "test": "jest --runInBand",
     "prisma:introspect": "npx prisma introspect",
-    "prisma:generate": "npx prisma generate",
+    "prisma:generate": "prisma migrate dev --name ${0} --preview-feature --create-only",
     "prisma:studio": "npx prisma studio",
     "prisma:migrate": "prisma migrate dev --name ${0} --preview-feature",
     "prisma:seed": "prisma db seed --preview-feature"
