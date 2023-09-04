@@ -16,6 +16,12 @@ const customerController = new CustomerController(
 );
 
 router.get(
+  "/master",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => customerController.getAllMasterCustomers(req, res)
+);
+
+router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => customerController.getCustomer(req, res)
@@ -33,6 +39,12 @@ router.delete(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => customerController.deleteCustomer(req, res)
+);
+
+router.post(
+  "/master",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => customerController.upsertCustomerMaster(req, res)
 );
 
 export default router;

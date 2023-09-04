@@ -3,7 +3,7 @@ import { ICustomerService } from "../interfaces/ICustomerService";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { TYPES } from "../config/types";
 import { ICustomerRepository } from "../interfaces/ICustomerRepository";
-import { Customer } from "@prisma/client";
+import { Customer, CustomerMaster } from "@prisma/client";
 import {
   CreateCustomerRepoInput,
   CreateCustomerServiceInput,
@@ -121,5 +121,30 @@ export class CustomerService implements ICustomerService {
       throw new NotFound("Customer Not found.");
     }
     return await this._customerRepository.deleteCustomer(id, userId);
+  }
+
+  async upsertCustomerMaster(
+    id: number | null,
+    name: string,
+    companyName: string | null,
+    userId: number
+  ): Promise<CustomerMaster> {
+    if (id) {
+      return await this._customerRepository.updateCustomerMaster(
+        id,
+        name,
+        companyName,
+        userId
+      );
+    }
+    return await this._customerRepository.createCustomerMaster(
+      name,
+      companyName,
+      userId
+    );
+  }
+
+  async getAllMasterCustomers(userId: number): Promise<CustomerMaster[]> {
+    return await this._customerRepository.getAllMasterCustomers(userId);
   }
 }

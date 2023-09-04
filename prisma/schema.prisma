@@ -11,16 +11,17 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  userName  String     @unique
-  salt      String
-  password  String
-  firstName String
-  lastName  String
-  createdAt DateTime   @default(now()) @db.Timestamp(6)
-  updatedAt DateTime?  @updatedAt
-  Template  Template[]
-  Customer  Customer[]
+  id             Int              @id @default(autoincrement())
+  userName       String           @unique
+  salt           String
+  password       String
+  firstName      String
+  lastName       String
+  createdAt      DateTime         @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime?        @updatedAt
+  Template       Template[]
+  Customer       Customer[]
+  CustomerMaster CustomerMaster[]
 }
 
 model Template {
@@ -43,8 +44,21 @@ model RefreshToken {
   updatedAt DateTime? @updatedAt
 }
 
+model CustomerMaster {
+  id          Int        @id @default(autoincrement())
+  userId      Int
+  User        User       @relation(fields: [userId], references: [id])
+  name        String     @db.Text
+  companyName String?    @db.Text
+  createdAt   DateTime   @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime?  @updatedAt
+  Customer    Customer[]
+}
+
 model Customer {
   id                                         Int                @id @default(autoincrement())
+  customerMasterId                           Int?
+  CustomerMaster                             CustomerMaster?    @relation(fields: [customerMasterId], references: [id])
   userId                                     Int
   User                                       User               @relation(fields: [userId], references: [id])
   date                                       DateTime?          @db.Date()

@@ -125,4 +125,52 @@ export class CustomerController extends BaseController {
       return this.sendErrorResponse(req, res, error);
     }
   }
+
+  async upsertCustomerMaster(req: any, res: express.Response) {
+    try {
+      const token = req.user as any;
+      const { id, name, companyName } = req.body;
+
+      const createCusMas = await this._customerService.upsertCustomerMaster(
+        id,
+        name,
+        companyName,
+        Number(token.id)
+      );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer created successfully.",
+        {
+          size: 1,
+        },
+        createCusMas
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async getAllMasterCustomers(req: any, res: express.Response) {
+    try {
+      const token = req.user as any;
+
+      const createCusMas = await this._customerService.getAllMasterCustomers(
+        Number(token.id)
+      );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer get successfully.",
+        {
+          size: createCusMas.length,
+        },
+        createCusMas
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
 }

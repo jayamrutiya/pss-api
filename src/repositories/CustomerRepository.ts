@@ -3,7 +3,7 @@ import { ICustomerRepository } from "../interfaces/ICustomerRepository";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { IDatabaseService } from "../interfaces/IDatabaseService";
 import { TYPES } from "../config/types";
-import { Customer } from "@prisma/client";
+import { Customer, CustomerMaster } from "@prisma/client";
 import { CreateCustomerRepoInput } from "../types/Customer";
 import { InternalServerError } from "../errors/InternalServerError";
 
@@ -132,6 +132,88 @@ export class CustomerRepository implements ICustomerRepository {
       });
 
       return deleteCUstomer;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async createCustomerMaster(
+    name: string,
+    companyName: string | null,
+    userId: number
+  ): Promise<CustomerMaster> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const createCusMas = await client.customerMaster.create({
+        data: {
+          name,
+          companyName,
+          userId,
+        },
+      });
+
+      return createCusMas;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async updateCustomerMaster(
+    id: number,
+    name: string,
+    companyName: string | null,
+    userId: number
+  ): Promise<CustomerMaster> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const createCusMas = await client.customerMaster.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          companyName,
+          userId,
+        },
+      });
+
+      return createCusMas;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async getAllMasterCustomers(userId: number): Promise<CustomerMaster[]> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const createCusMas = await client.customerMaster.findMany({
+        where: {
+          userId,
+        },
+      });
+
+      return createCusMas;
     } catch (error) {
       this._loggerService.getLogger().error(`Error ${error}`);
       throw new InternalServerError(
