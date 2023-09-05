@@ -1178,13 +1178,14 @@ let CustomerTemplateService = class CustomerTemplateService {
                     body += d.templateData;
                 }
             });
-            body += "<br />";
+            // body += "<br />";
             let RLData = getTemplateData.map(async (d) => {
                 if (d.templateType === "REFE_LINE") {
                     body += d.templateData;
                 }
             });
-            body += "<br /><p><strong>Subject</strong>:</p>";
+            body += `
+      <p><strong>Subject</strong>:</p>`;
             // subject
             let count = 0;
             let SData = getTemplateData.map(async (d) => {
@@ -1195,7 +1196,7 @@ let CustomerTemplateService = class CustomerTemplateService {
                 }
             });
             body +=
-                "<br /><p>Dear Sir / Madam,</p><br /><div style='margin-left:40px; text-align:justify;'>";
+                "<pre><span style='font-size:16px'><span style='font-family:Tahoma,Geneva,sans-serif'>Dear Sir / Madam,</span></span></pre><div style='margin-left:40px; text-align:justify;'>";
             //main content
             const MCData = getTemplateData.filter((d) => {
                 return d.templateType === "MAIN_CONTENT";
