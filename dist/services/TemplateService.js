@@ -16,6 +16,7 @@ exports.TemplateService = void 0;
 const inversify_1 = require("inversify");
 const types_1 = require("../config/types");
 const NotFound_1 = require("../errors/NotFound");
+const helper_1 = require("../config/helper");
 let TemplateService = class TemplateService {
     constructor(loggerService, templateRepository) {
         this._loggerService = loggerService;
@@ -23,14 +24,29 @@ let TemplateService = class TemplateService {
         this._loggerService.getLogger().info(`Creating: ${this.constructor.name}`);
     }
     async upsertTemplate(templateData) {
-        const { id, ...withOutId } = templateData;
+        let { id, ...withOutId } = templateData;
+        console.log("withOutId", withOutId);
+        let str, find, replace;
+        str = withOutId.details;
+        find = "<table>";
+        replace = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">`;
+        str = (0, helper_1.replaceAll)(str, find, replace);
+        find = "<td>";
+        replace = `<td style="text-align:center" >`;
+        str = (0, helper_1.replaceAll)(str, find, replace);
+        const data = {
+            userId: withOutId.userId,
+            type: withOutId.type,
+            title: withOutId.title,
+            details: str,
+        };
         if (templateData.id) {
             // update template
-            return await this._templateRepository.updateTemplate(id, withOutId);
+            return await this._templateRepository.updateTemplate(id, data);
         }
         else {
             // create template
-            return await this._templateRepository.createTemplate(withOutId);
+            return await this._templateRepository.createTemplate(data);
         }
     }
     async getTemplatesByType(type, userId) {

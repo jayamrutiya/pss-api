@@ -7,6 +7,7 @@ import { Template } from "@prisma/client";
 import { CreateTemplateService } from "../types/Template";
 import { BadRequest } from "../errors/BadRequest";
 import { NotFound } from "../errors/NotFound";
+import { replaceAll } from "../config/helper";
 
 @injectable()
 export class TemplateService implements ITemplateService {
@@ -23,13 +24,31 @@ export class TemplateService implements ITemplateService {
   }
 
   async upsertTemplate(templateData: CreateTemplateService): Promise<Template> {
-    const { id, ...withOutId } = templateData;
+    let { id, ...withOutId } = templateData;
+    console.log("withOutId", withOutId);
+
+    let str, find, replace;
+    str = withOutId.details;
+
+    find = "<table>";
+    replace = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">`;
+    str = replaceAll(str, find, replace);
+
+    find = "<td>";
+    replace = `<td style="text-align:center" >`;
+    str = replaceAll(str, find, replace);
+    const data = {
+      userId: withOutId.userId,
+      type: withOutId.type,
+      title: withOutId.title,
+      details: str,
+    };
     if (templateData.id) {
       // update template
-      return await this._templateRepository.updateTemplate(id!, withOutId);
+      return await this._templateRepository.updateTemplate(id!, data);
     } else {
       // create template
-      return await this._templateRepository.createTemplate(withOutId);
+      return await this._templateRepository.createTemplate(data);
     }
   }
 

@@ -582,7 +582,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         <th scope="col">Year</th>
         <th scope="col">Warrant No.</th>
         <th scope="col">DD/MICR No.</th>
-        <th scope="col">Amount ₹</th>
+        <th scope="col">Amount</th>
       </tr>
     </thead>
     <tbody>`;
@@ -1509,7 +1509,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
           body += `<p style="page-break-before: always;">&nbsp;</p>`;
         }
       });
-      body += `<p style="page-break-before: always;">&nbsp;</p>`;
+      // body += `<p style="page-break-before: always;">&nbsp;</p>`;
+
       let agreementData = getTemplateData.map((d) => {
         if (d.templateType === "AGREEMENT") {
           body += d.templateData;
