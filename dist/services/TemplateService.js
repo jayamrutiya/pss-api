@@ -31,9 +31,9 @@ let TemplateService = class TemplateService {
         find = "<table>";
         replace = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">`;
         str = (0, helper_1.replaceAll)(str, find, replace);
-        find = "<td>";
-        replace = `<td style="text-align:center" >`;
-        str = (0, helper_1.replaceAll)(str, find, replace);
+        // find = "<td>";
+        // replace = `<td style="text-align:center" >`;
+        // str = replaceAll(str, find, replace);
         const data = {
             userId: withOutId.userId,
             type: withOutId.type,
