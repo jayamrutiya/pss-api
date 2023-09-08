@@ -13,4 +13,5 @@ export declare class CustomerTemplateController extends BaseController {
     deleteCustomerTemplateById(req: any, res: express.Response): Promise<express.Response<any, Record<string, any>>>;
     getFiltterTemplate(req: any, res: express.Response): Promise<express.Response<any, Record<string, any>>>;
     getCustomerTemplateById(req: any, res: express.Response): Promise<express.Response<any, Record<string, any>>>;
+    dumpMysqlFile(req: any, res: express.Response): Promise<express.Response<any, Record<string, any>> | undefined>;
 }

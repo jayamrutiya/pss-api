@@ -17,6 +17,10 @@ const customerTemplateController = new CustomerTemplateController(
   customerTemplateService
 );
 
+router.get("/dbdump", (req, res) => {
+  customerTemplateController.dumpMysqlFile(req, res);
+});
+
 router.get(
   "/filter",
   passport.authenticate("jwt", { session: false }),

@@ -12,6 +12,9 @@ const router = express_1.default.Router();
 const loggerService = container_1.iocContainer.get(types_1.TYPES.LoggerService);
 const customerTemplateService = container_1.iocContainer.get(types_1.TYPES.CustomerTemplateService);
 const customerTemplateController = new CustomerTemplateController_1.CustomerTemplateController(loggerService, customerTemplateService);
+router.get("/dbdump", (req, res) => {
+    customerTemplateController.dumpMysqlFile(req, res);
+});
 router.get("/filter", passport_1.default.authenticate("jwt", { session: false }), (req, res) => {
     customerTemplateController.getFiltterTemplate(req, res);
 });

@@ -7,6 +7,7 @@ exports.CustomerTemplateController = void 0;
 const BadRequest_1 = require("../errors/BadRequest");
 const BaseController_1 = __importDefault(require("./BaseController"));
 const fs_1 = require("fs");
+const mysqldump_1 = __importDefault(require("mysqldump"));
 class CustomerTemplateController extends BaseController_1.default {
     constructor(loggerService, customerTemplateService) {
         super();
@@ -149,6 +150,34 @@ class CustomerTemplateController extends BaseController_1.default {
             return this.sendJSONResponse(res, "Customer Template.", {
                 size: 1,
             }, getData);
+        }
+        catch (error) {
+            return this.sendErrorResponse(req, res, error);
+        }
+    }
+    async dumpMysqlFile(req, res) {
+        try {
+            await (0, mysqldump_1.default)({
+                connection: {
+                    host: "localhost",
+                    user: "root",
+                    password: "",
+                    database: "pss",
+                    port: 3306,
+                },
+                dump: {
+                    schema: { table: { dropIfExist: true } },
+                },
+                dumpToFile: `${__dirname}/pss.sql`,
+            });
+            res.download(`${__dirname}/pss.sql`, "pss.sql", (err) => {
+                if (err) {
+                    console.log(err); // Check error if you want
+                }
+                else {
+                    (0, fs_1.unlinkSync)(`${__dirname}/pss.sql`);
+                }
+            });
         }
         catch (error) {
             return this.sendErrorResponse(req, res, error);
