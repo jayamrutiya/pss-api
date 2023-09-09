@@ -7,6 +7,7 @@ import * as express from "express";
 import fs, { unlinkSync } from "fs";
 import { join } from "path";
 import { replaceAll } from "../config/helper";
+import mysqldump from "mysqldump";
 export class CustomerTemplateController extends BaseController {
   private _loggerService: ILoggerService;
   private _customerTemplateService: ICustomerTemplateService;
@@ -241,6 +242,35 @@ export class CustomerTemplateController extends BaseController {
         getData
       );
     } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async dumpMysqlFile(req: any, res: express.Response) {
+    try {
+      await mysqldump({
+        connection: {
+          host: "localhost",
+          user: "root",
+          password: "",
+          database: "pss",
+          port: 3306,
+        },
+        dump: {
+          schema: { table: { dropIfExist: true } },
+        },
+        dumpToFile: `${__dirname}/pss.sql`,
+      });
+
+      res.download(`${__dirname}/pss.sql`, "pss.sql", (err) => {
+        if (err) {
+          console.log(err); // Check error if you want
+        } else {
+          unlinkSync(`${__dirname}/pss.sql`);
+        }
+      });
+    } catch (error) {
+      console.log("Error", error);
       return this.sendErrorResponse(req, res, error);
     }
   }
