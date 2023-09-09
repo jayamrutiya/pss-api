@@ -270,6 +270,7 @@ export class CustomerTemplateController extends BaseController {
         }
       });
     } catch (error) {
+      console.log("Error", error);
       return this.sendErrorResponse(req, res, error);
     }
   }
