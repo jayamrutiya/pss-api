@@ -170,6 +170,10 @@ export class CustomerRepository implements ICustomerRepository {
           userId,
           customerMasterId: createCusMas.id,
           fhnameInPancardExactSpelling: name,
+          ywdATabelData: JSON.stringify([]),
+          otherLegalHears: JSON.stringify([]),
+          tableSDT: JSON.stringify([]),
+          totalShares: "0",
         },
       });
 
