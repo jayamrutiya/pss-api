@@ -5,6 +5,7 @@ import { ILoggerService } from "../interfaces/ILoggerService";
 import { ICustomerTemplateService } from "../interfaces/ICustomerTemplateService";
 import { CustomerTemplateController } from "../controllers/CustomerTemplateController";
 import passport from "../middlewares/passport";
+import { uploadCompanyReply } from "../middlewares/multer";
 
 const router = express.Router();
 
@@ -66,6 +67,15 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     customerTemplateController.getCustomerTemplateById(req, res);
+  }
+);
+
+router.post(
+  "/master",
+  uploadCompanyReply.single("file"),
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.createCustomerTemplateMaster(req, res);
   }
 );
 

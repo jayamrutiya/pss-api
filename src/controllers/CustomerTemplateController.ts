@@ -8,6 +8,7 @@ import fs, { unlinkSync } from "fs";
 import { join } from "path";
 import { replaceAll } from "../config/helper";
 import mysqldump from "mysqldump";
+import env from "../config/env";
 export class CustomerTemplateController extends BaseController {
   private _loggerService: ILoggerService;
   private _customerTemplateService: ICustomerTemplateService;
@@ -269,6 +270,53 @@ export class CustomerTemplateController extends BaseController {
           unlinkSync(`${__dirname}/pss.sql`);
         }
       });
+    } catch (error) {
+      console.log("Error", error);
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async createCustomerTemplateMaster(req: any, res: express.Response) {
+    try {
+      const token = req.user as any;
+      console.log("File", req.file);
+      const userId = Number(token.id);
+      const customerId = Number(req.body.customerId);
+
+      let originalName = null;
+      let storeDocName = null;
+      let status = "PENDING";
+      let url;
+      const name = req.body.name;
+      if (req.file) {
+        status = "COMPANY REPLY";
+        originalName = req.file.originalname;
+        storeDocName = req.file.filename;
+        url = `${env.API_BASEURL}/doc/${storeDocName}`;
+      }
+      console.log("url", url);
+      // const name = req.body.
+
+      const createCustomerTemplateMaster =
+        await this._customerTemplateService.createCustomerTemplateMaster(
+          userId,
+          customerId,
+          name,
+          originalName,
+          storeDocName,
+          url,
+          status
+        );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template.",
+        {
+          size: 1,
+        },
+        createCustomerTemplateMaster
+      );
     } catch (error) {
       console.log("Error", error);
       return this.sendErrorResponse(req, res, error);

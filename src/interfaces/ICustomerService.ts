@@ -1,4 +1,8 @@
-import { Customer, CustomerMaster } from "@prisma/client";
+import {
+  Customer,
+  CustomerMaster,
+  CustomerTemplateMaster,
+} from "@prisma/client";
 import { CreateCustomerServiceInput, CustomerData } from "../types/Customer";
 
 export interface ICustomerService {
@@ -7,7 +11,10 @@ export interface ICustomerService {
     customerData: CreateCustomerServiceInput
   ): Promise<Customer>;
 
-  getCustomers(userId: number): Promise<CustomerData[]>;
+  getCustomers(
+    userId: number,
+    customerMasterId: number | null
+  ): Promise<CustomerData[]>;
 
   getCustomer(id: number, userId: number): Promise<CustomerData>;
 

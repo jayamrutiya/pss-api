@@ -69,15 +69,21 @@ export class CustomerRepository implements ICustomerRepository {
     }
   }
 
-  async getCustomers(userId: number): Promise<Customer[]> {
+  async getCustomers(
+    userId: number,
+    customerMasterId: number | null
+  ): Promise<Customer[]> {
     try {
       // Get the database clinte
       const client = this._databaseService.Client();
 
       const getAllCustomer = await client.customer.findMany({
-        where: {
-          userId,
-        },
+        where: customerMasterId
+          ? {
+              userId,
+              customerMasterId,
+            }
+          : { userId },
       });
 
       return getAllCustomer;

@@ -55,8 +55,14 @@ export class CustomerController extends BaseController {
       this.validateRequest(req);
 
       const token = req.user as any;
+      const customerMasterId = req.query.customerMasterId
+        ? Number(req.query.customerMasterId)
+        : null;
 
-      const getAllCustomer = await this._customerService.getCustomers(token.id);
+      const getAllCustomer = await this._customerService.getCustomers(
+        token.id,
+        customerMasterId
+      );
 
       // Return the response
       return this.sendJSONResponse(

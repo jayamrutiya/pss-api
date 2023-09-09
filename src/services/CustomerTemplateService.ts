@@ -8,7 +8,12 @@ import {
   CustomerTemplateWithCustomerTemplate,
   UpdateCustomerTemplate,
 } from "../types/CustomerTemplate";
-import { Customer, CustomerTemplate, Template } from "@prisma/client";
+import {
+  Customer,
+  CustomerTemplate,
+  CustomerTemplateMaster,
+  Template,
+} from "@prisma/client";
 import { ICustomerRepository } from "../interfaces/ICustomerRepository";
 import { ITemplateRepository } from "../interfaces/ITemplateRepository";
 import { BadRequest } from "../errors/BadRequest";
@@ -66,17 +71,16 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, olhnamepan);
 
     find = "[[olhnameInPancard1]]";
-    let olhnamepan1 = olhnamepan.split(",")[0]
+    let olhnamepan1 = olhnamepan.split(",")[0];
     str = replaceAll(str, find, olhnamepan1);
 
     find = "[[olhnameInPancard2]]";
-    let olhnamepan2 = olhnamepan.split(",")[1]
+    let olhnamepan2 = olhnamepan.split(",")[1];
     str = replaceAll(str, find, olhnamepan2);
 
     find = "[[olhnameInPancard3]]";
-    let olhnamepan3 = olhnamepan.split(",")[2]
+    let olhnamepan3 = olhnamepan.split(",")[2];
     str = replaceAll(str, find, olhnamepan3);
-
 
     find = "[[olhnameInaadharcard]]";
     let olhnameaadhar = "";
@@ -87,18 +91,16 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, olhnameaadhar);
 
     find = "[[olhnameInaadharcard1]]";
-    let olhnameInaadharcard1 = olhnameaadhar.split(",")[0]
+    let olhnameInaadharcard1 = olhnameaadhar.split(",")[0];
     str = replaceAll(str, find, olhnameInaadharcard1);
 
     find = "[[olhnameInaadharcard2]]";
-    let olhnameInaadharcard2 = olhnameaadhar.split(",")[1]
+    let olhnameInaadharcard2 = olhnameaadhar.split(",")[1];
     str = replaceAll(str, find, olhnameInaadharcard2);
 
     find = "[[olhnameInaadharcard3]]";
-    let olhnameInaadharcard3 = olhnameaadhar.split(",")[2]
+    let olhnameInaadharcard3 = olhnameaadhar.split(",")[2];
     str = replaceAll(str, find, olhnameInaadharcard3);
-
-
 
     find = "[[olhaddressaddhar]]";
     let olhaddaadhar = "";
@@ -109,18 +111,16 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, olhaddaadhar);
 
     find = "[[olhaddressaddhar1]]";
-    let olhaddressaddhar1 = olhaddaadhar.split(",")[0]
+    let olhaddressaddhar1 = olhaddaadhar.split(",")[0];
     str = replaceAll(str, find, olhaddressaddhar1);
 
     find = "[[olhaddressaddhar2]]";
-    let olhaddressaddhar2 = olhaddaadhar.split(",")[1]
+    let olhaddressaddhar2 = olhaddaadhar.split(",")[1];
     str = replaceAll(str, find, olhaddressaddhar2);
 
     find = "[[olhaddressaddhar3]]";
-    let olhaddressaddhar3 = olhaddaadhar.split(",")[2]
+    let olhaddressaddhar3 = olhaddaadhar.split(",")[2];
     str = replaceAll(str, find, olhaddressaddhar3);
-
-
 
     find = "[[olhage]]";
     let olhage = "";
@@ -131,38 +131,40 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, olhage);
 
     find = "[[olhage1]]";
-    let olhage1 = olhage.split(",")[0]
+    let olhage1 = olhage.split(",")[0];
     str = replaceAll(str, find, olhage1);
 
     find = "[[olhage2]]";
-    let olhage2 = olhage.split(",")[1]
+    let olhage2 = olhage.split(",")[1];
     str = replaceAll(str, find, olhage2);
 
     find = "[[olhage3]]";
-    let olhage3 = olhage.split(",")[2]
+    let olhage3 = olhage.split(",")[2];
     str = replaceAll(str, find, olhage3);
 
     find = "[[olhdaughterson]]";
     let olhdaughterson = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
-      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son},`;
+      olhdaughterson += `${
+        customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+      },`;
     }
     str = replaceAll(str, find, olhdaughterson);
 
     find = "[[olhdaughterson1]]";
-    let olhdaughterson1 = olhdaughterson.split(",")[0]
+    let olhdaughterson1 = olhdaughterson.split(",")[0];
     str = replaceAll(str, find, olhdaughterson1);
 
     find = "[[olhdaughterson2]]";
-    let olhdaughterson2 = olhdaughterson.split(",")[1]
+    let olhdaughterson2 = olhdaughterson.split(",")[1];
     str = replaceAll(str, find, olhdaughterson2);
 
     find = "[[olhdaughterson3]]";
-    let olhdaughterson3 = olhdaughterson.split(",")[2]
+    let olhdaughterson3 = olhdaughterson.split(",")[2];
     str = replaceAll(str, find, olhdaughterson3);
 
-    //error 
+    //error
     // try SDT
 
     find = "[[distinctiveNumber]]";
@@ -170,7 +172,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bd += `${customerYWD.distinctiveNumber},`;
-
     }
     str = replaceAll(str, find, bd);
 
@@ -269,13 +270,16 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       bf += `<tr>
         <td style="text-align:center" >${customer.ledgerFolio}</td>
         <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-        <td style="text-align:center" >${customerYWD.shareCertificateNumber
+        <td style="text-align:center" >${
+          customerYWD.shareCertificateNumber
         }</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
+        <td style="text-align:center" >${
+          customerYWD.distinctiveNumber?.split("-")[0]
         }</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
+        <td style="text-align:center" >${
+          customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0]
         }</td>
       </tr>`;
     }
@@ -303,13 +307,18 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       const customerYWD = customer.tableSDT[index];
       bof += `<tr>
         <td style="text-align:center" >${customer.ledgerFolio}</td>
-        <td style="text-align:center" >${customerYWD.shareCertificateNumber
+        <td style="text-align:center" >${
+          customerYWD.shareCertificateNumber
         }</td>
         <td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
         <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-        <td style="text-align:center" >${customer.deathHolderName1
-        } (deceased) jointly ${customer.deathHolderName2 ? customer.deathHolderName2 + "(deceased)" : ""
-        }</td>
+        <td style="text-align:center" >${
+          customer.deathHolderName1
+        } (deceased) jointly ${
+        customer.deathHolderName2
+          ? customer.deathHolderName2 + "(deceased)"
+          : ""
+      }</td>
       </tr>`;
     }
     const dof = hof + bof + fof;
@@ -339,11 +348,13 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       <td style="text-align:center" >${customer.ledgerFolio}</td>
       <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
       <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
+        <td style="text-align:center" >${
+          customerYWD.distinctiveNumber?.split("-")[0]
         }</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
+        <td style="text-align:center" >${
+          customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0]
         }</td>
       </tr>`;
     }
@@ -402,14 +413,17 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       beedf += `<tr>
       <td style="text-align:center" >${customer.ledgerFolio}</td>
       <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
+      <td style="text-align:center" >${
+        customerYWD.distinctiveNumber?.split("-")[0]
+      }</td>
+      <td style="text-align:center" >${
+        customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
           : customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      <td style="text-align:center" >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday
-        }/-</td>
+      }</td>
+      <td style="text-align:center" >${customerYWD.totalShareQuantity} of Rs.${
+        customer.faceValueAsOnToday
+      }/-</td>
          
       </tr>`;
     }
@@ -466,12 +480,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       bodydata += `<tr>
       <td style="text-align:center" >${customer.ledgerFolio}</td>
       <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
+      <td style="text-align:center" >${
+        customerYWD.distinctiveNumber?.split("-")[0]
+      }</td>
+      <td style="text-align:center" >${
+        customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
           : customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
+      }</td>
       <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
       </tr>`;
     }
@@ -499,16 +515,20 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       const customerYWD = customer.tableSDT[index];
       bdft += `<tr>
           <td style="text-align:center" >${customer.ledgerFolio}</td>
-          <td style="text-align:center" >${customerYWD.shareCertificateNumber
-        }</td>
-          <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-          <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-          <td style="text-align:center" >${customerYWD.totalShareQuantity
-        } of Rs.${customer.faceValueAsOnToday}/-</td>
+          <td style="text-align:center" >${
+            customerYWD.shareCertificateNumber
+          }</td>
+          <td style="text-align:center" >${
+            customerYWD.distinctiveNumber?.split("-")[0]
+          }</td>
+          <td style="text-align:center" >${
+            customerYWD.distinctiveNumber?.split("-")[1]
+              ? customerYWD.distinctiveNumber?.split("-")[1]
+              : customerYWD.distinctiveNumber?.split("-")[0]
+          }</td>
+          <td style="text-align:center" >${
+            customerYWD.totalShareQuantity
+          } of Rs.${customer.faceValueAsOnToday}/-</td>
           </tr>`;
     }
     const d1data = hdft + bdft + fdft;
@@ -538,8 +558,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     }
     const datacdn = h1 + b1 + f1;
     str = replaceAll(str, find, datacdn);
-
-
 
     //tables nameFolioShareFVCertiDistNo:-
     find = "[[nameFolioShareFVCertiDistNo]]";
@@ -571,8 +589,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     }
     const dname = hname + bname + fname;
     str = replaceAll(str, find, dname);
-
-
 
     //tables ywdATable:-
     find = "[[ywdATable]]";
@@ -1683,5 +1699,25 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     }
 
     return getData;
+  }
+
+  async createCustomerTemplateMaster(
+    userId: number,
+    customerId: number,
+    name: string,
+    originalName: string | null,
+    storeDocName: string | null,
+    url: string | null,
+    status: string | null
+  ): Promise<CustomerTemplateMaster> {
+    return await this._customerTemplateRepository.createCustomerTemplateMaster(
+      userId,
+      customerId,
+      name,
+      originalName,
+      storeDocName,
+      url,
+      status
+    );
   }
 }

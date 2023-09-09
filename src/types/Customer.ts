@@ -1,5 +1,6 @@
 export declare type CreateCustomerRepoInput = {
   //   id: number;
+  customerMasterId: number | null;
   currentYear: string | null;
   userId: number;
   clientId: string | null;
@@ -168,6 +169,7 @@ export declare type CreateCustomerRepoInput = {
 
 export declare type CreateCustomerServiceInput = {
   //   id: number;
+  customerMasterId: number | null;
   userId: number;
   date: Date | null;
   currentYear: string | null;

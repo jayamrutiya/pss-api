@@ -9,7 +9,10 @@ export interface ICustomerRepository {
     customerData: CreateCustomerRepoInput
   ): Promise<Customer>;
 
-  getCustomers(userId: number): Promise<Customer[]>;
+  getCustomers(
+    userId: number,
+    customerMasterId: number | null
+  ): Promise<Customer[]>;
 
   getCustomer(id: number, userId: number): Promise<Customer | null>;
 

@@ -11,17 +11,18 @@ datasource db {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
-  userName       String           @unique
-  salt           String
-  password       String
-  firstName      String
-  lastName       String
-  createdAt      DateTime         @default(now()) @db.Timestamp(6)
-  updatedAt      DateTime?        @updatedAt
-  Template       Template[]
-  Customer       Customer[]
-  CustomerMaster CustomerMaster[]
+  id                     Int                      @id @default(autoincrement())
+  userName               String                   @unique
+  salt                   String
+  password               String
+  firstName              String
+  lastName               String
+  createdAt              DateTime                 @default(now()) @db.Timestamp(6)
+  updatedAt              DateTime?                @updatedAt
+  Template               Template[]
+  Customer               Customer[]
+  CustomerMaster         CustomerMaster[]
+  CustomerTemplateMaster CustomerTemplateMaster[]
 }
 
 model Template {
@@ -56,181 +57,200 @@ model CustomerMaster {
 }
 
 model Customer {
-  id                                         Int                @id @default(autoincrement())
+  id                                         Int                      @id @default(autoincrement())
   customerMasterId                           Int?
-  CustomerMaster                             CustomerMaster?    @relation(fields: [customerMasterId], references: [id])
+  CustomerMaster                             CustomerMaster?          @relation(fields: [customerMasterId], references: [id])
   userId                                     Int
-  User                                       User               @relation(fields: [userId], references: [id])
-  date                                       DateTime?          @db.Date()
-  companyName                                String?            @db.VarChar(50)
-  companyAddress                             String?            @db.Text
-  companyNumber                              String?            @db.VarChar(50)
-  emailId                                    String             @db.VarChar(50)
-  registerTransferAgentName                  String?            @db.VarChar(50)
-  registerTransferAgentAdress                String?            @db.Text
-  registerTransferAgentContactNumber         String?            @db.VarChar(50)
-  registerTransferAgentEmail                 String?            @db.VarChar(50)
-  bonusDate                                  DateTime?          @db.Date()
-  splitDate                                  DateTime?          @db.Date()
-  notaryDate                                 DateTime?          @db.Date()
-  ledgerFolio                                String?            @db.VarChar(50)
-  tableSDT                                   String?            @db.Text
-  totalShares                                String?            @db.Text
-  faceValueAsOnToday                         String?            @db.VarChar(50)
-  holdShareQuantitySelf                      String?            @db.VarChar(50)
-  companyHoldUndeliveredShareQuantity        String?            @db.VarChar(50)
-  holdShareQuantitySelfFaceValue             String?            @db.VarChar(50)
-  oldCompanyName                             String?            @db.VarChar(50)
-  oldQuantityholdShare                       String?            @db.VarChar(50)
-  ywdATabelData                              String?            @db.Text
-  fhnameInPancardExactSpelling               String?            @db.VarChar(50)
-  fhrateInPercentage                         String?            @db.VarChar(50)
-  fhnameAsPerShareCertificate                String?            @db.VarChar(100)
-  fhfatherOrHusbandName                      String?            @db.VarChar(50)
-  fhcontactNumber                            String?            @db.VarChar(50)
-  fhemail                                    String?            @db.VarChar(50)
-  fhpancardNumber                            String?            @db.VarChar(50)
-  fhcity                                     String?            @db.VarChar(50)
-  fhaddressSameInAadharcard                  String?            @db.Text
-  fholdAddressCompanyRegister                String?            @db.Text
-  fhpinCode                                  String?            @db.VarChar(10)
-  fhbusiness                                 String?            @db.VarChar(50)
-  fhgender                                   String?            @db.VarChar(10)
-  fhstate                                    String?            @db.VarChar(50)
-  fhage                                      String?            @db.VarChar(10)
-  fhaadharCardNumber                         String?            @db.VarChar(50)
-  fhnameInAadharcardExactSpeling             String?            @db.VarChar(50)
-  jhnameInPancardExactSpelling               String?            @db.VarChar(100)
-  jhnameAsPerShareCertificate                String?            @db.VarChar(50)
-  jhfatherOrHusbandName                      String?            @db.VarChar(50)
-  jhcontactNumber                            String?            @db.VarChar(50)
-  jhpancardNumber                            String?            @db.VarChar(50)
-  jhcity                                     String?            @db.VarChar(50)
-  jhaddressSameInAadharcard                  String?            @db.Text
-  jholdAddressCompanyRegister                String?            @db.Text
-  jhgender                                   String?            @db.VarChar(10)
-  jhstate                                    String?            @db.VarChar(10)
-  jhage                                      String?            @db.VarChar(10)
-  jhaadharcardNumber                         String?            @db.VarChar(50)
-  jhnameInAadharcardExactSpeling             String?            @db.VarChar(50)
-  fhbankName                                 String?            @db.VarChar(50)
-  fhbankAddress                              String?            @db.Text
-  fhholderAddressInBank                      String?            @db.Text
-  fhaccountTypeSavingorCurrent               String?            @db.VarChar(30)
-  fhaccountNumber                            String?            @db.VarChar(50)
-  fhbankTelephoneNumber                      String?            @db.VarChar(50)
-  fhbankIfscCode                             String?            @db.VarChar(50)
-  fhbankEmail                                String?            @db.VarChar(50)
-  fhnineDigitMICRNumber                      String?            @db.VarChar(50)
-  fhnameAsPerBankAccount                     String?            @db.VarChar(50)
-  jhbankName                                 String?            @db.VarChar(30)
-  jhbankAddress                              String?            @db.Text
-  jhholderAddressInBank                      String?            @db.Text
-  jhaccountTypeSavingorCurrent               String?            @db.VarChar(50)
-  jhaccountNumber                            String?            @db.VarChar(50)
-  jhemail                                    String?            @db.VarChar(50)
-  jhbankTelephoneNumber                      String?            @db.VarChar(50)
-  jhbankIfscCode                             String?            @db.VarChar(50)
-  jhbankEmail                                String?            @db.VarChar(50)
-  jhnineDigitMICRNumber                      String?            @db.VarChar(50)
-  jhnameAsPerBankAccount                     String?            @db.VarChar(50)
-  dpName                                     String?            @db.VarChar(50)
-  dematNumber                                String?            @db.VarChar(50)
-  cdslOrNsdl                                 String?            @db.VarChar(50)
-  nameAsPerDematAccount                      String?            @db.VarChar(50)
-  nomineeName                                String?            @db.VarChar(50)
-  nomineeFatherOrHusbandName                 String?            @db.VarChar(50)
-  nomineeAddress                             String?            @db.Text
-  nomineeHolderRelationShip                  String?            @db.VarChar(50)
-  nomineeBirthdate                           DateTime?          @db.Date()
-  w1NameInPancardExactSpelling               String?            @db.VarChar(50)
-  w1addressSameInAadharcard                  String?            @db.Text
-  w1nameInAadharcardExactSpelling            String?            @db.VarChar(50)
-  w2nameInPancardExactSpelling               String?            @db.VarChar(50)
-  w2addressSameInAadharcard                  String?            @db.Text
-  w2nameInAadharcardExactSpelling            String?            @db.VarChar(50)
-  s1nameInPancardExactSpelling               String?            @db.VarChar(50)
-  s1nameInAadharcard                         String?            @db.VarChar(50)
-  s1addressAadharcard                        String?            @db.Text
-  s1age                                      String?            @db.VarChar(10)
-  s1income                                   String?            @db.VarChar(50)
-  s1email                                    String?            @db.VarChar(50)
-  s1mobileNumber                             String?            @db.VarChar(50)
-  s1itReturnShowAddress                      String?            @db.Text
-  s2nameInPancardExactSpelling               String?            @db.VarChar(50)
-  s2nameInAadharcard                         String?            @db.VarChar(50)
-  s2addressAadharcard                        String?            @db.Text
-  s2age                                      String?            @db.VarChar(50)
-  s2income                                   String?            @db.VarChar(50)
-  s2email                                    String?            @db.VarChar(50)
-  s2mobileNumber                             String?            @db.VarChar(50)
-  s2itReturnShowAddress                      String?            @db.Text
-  policeStationName                          String?            @db.VarChar(50)
-  oldName                                    String?            @db.VarChar(50)
-  newname                                    String?            @db.VarChar(50)
-  deathHolderName1                           String?            @db.VarChar(50)
-  deathHolderName2                           String?            @db.VarChar(50)
-  deathOfAddress                             String?            @db.Text
-  certificateDeathHolderName1                String?            @db.VarChar(50)
-  certificateDeathHolderName2                String?            @db.VarChar(50)
-  legalNamePancard                           String?            @db.VarChar(50)
-  successionCertificateNumberYear            String?            @db.VarChar(50)
-  successionCertificateCourtOrderDateAndYear String?            @db.VarChar(50)
-  nameInPancardExectSpelling                 String?            @db.VarChar(50)
-  nameAsPerShareCertificate                  String?            @db.VarChar(50)
-  fatherOrHusbandName                        String?            @db.VarChar(50)
-  contactNumber                              String?            @db.VarChar(50)
-  email                                      String?            @db.VarChar(50)
-  pancardNumber                              String?            @db.VarChar(50)
-  city                                       String?            @db.VarChar(50)
+  User                                       User                     @relation(fields: [userId], references: [id])
+  date                                       DateTime?                @db.Date()
+  companyName                                String?                  @db.VarChar(50)
+  companyAddress                             String?                  @db.Text
+  companyNumber                              String?                  @db.VarChar(50)
+  emailId                                    String                   @db.VarChar(50)
+  registerTransferAgentName                  String?                  @db.VarChar(50)
+  registerTransferAgentAdress                String?                  @db.Text
+  registerTransferAgentContactNumber         String?                  @db.VarChar(50)
+  registerTransferAgentEmail                 String?                  @db.VarChar(50)
+  bonusDate                                  DateTime?                @db.Date()
+  splitDate                                  DateTime?                @db.Date()
+  notaryDate                                 DateTime?                @db.Date()
+  ledgerFolio                                String?                  @db.VarChar(50)
+  tableSDT                                   String?                  @db.Text
+  totalShares                                String?                  @db.Text
+  faceValueAsOnToday                         String?                  @db.VarChar(50)
+  holdShareQuantitySelf                      String?                  @db.VarChar(50)
+  companyHoldUndeliveredShareQuantity        String?                  @db.VarChar(50)
+  holdShareQuantitySelfFaceValue             String?                  @db.VarChar(50)
+  oldCompanyName                             String?                  @db.VarChar(50)
+  oldQuantityholdShare                       String?                  @db.VarChar(50)
+  ywdATabelData                              String?                  @db.Text
+  fhnameInPancardExactSpelling               String?                  @db.VarChar(50)
+  fhrateInPercentage                         String?                  @db.VarChar(50)
+  fhnameAsPerShareCertificate                String?                  @db.VarChar(100)
+  fhfatherOrHusbandName                      String?                  @db.VarChar(50)
+  fhcontactNumber                            String?                  @db.VarChar(50)
+  fhemail                                    String?                  @db.VarChar(50)
+  fhpancardNumber                            String?                  @db.VarChar(50)
+  fhcity                                     String?                  @db.VarChar(50)
+  fhaddressSameInAadharcard                  String?                  @db.Text
+  fholdAddressCompanyRegister                String?                  @db.Text
+  fhpinCode                                  String?                  @db.VarChar(10)
+  fhbusiness                                 String?                  @db.VarChar(50)
+  fhgender                                   String?                  @db.VarChar(10)
+  fhstate                                    String?                  @db.VarChar(50)
+  fhage                                      String?                  @db.VarChar(10)
+  fhaadharCardNumber                         String?                  @db.VarChar(50)
+  fhnameInAadharcardExactSpeling             String?                  @db.VarChar(50)
+  jhnameInPancardExactSpelling               String?                  @db.VarChar(100)
+  jhnameAsPerShareCertificate                String?                  @db.VarChar(50)
+  jhfatherOrHusbandName                      String?                  @db.VarChar(50)
+  jhcontactNumber                            String?                  @db.VarChar(50)
+  jhpancardNumber                            String?                  @db.VarChar(50)
+  jhcity                                     String?                  @db.VarChar(50)
+  jhaddressSameInAadharcard                  String?                  @db.Text
+  jholdAddressCompanyRegister                String?                  @db.Text
+  jhgender                                   String?                  @db.VarChar(10)
+  jhstate                                    String?                  @db.VarChar(10)
+  jhage                                      String?                  @db.VarChar(10)
+  jhaadharcardNumber                         String?                  @db.VarChar(50)
+  jhnameInAadharcardExactSpeling             String?                  @db.VarChar(50)
+  fhbankName                                 String?                  @db.VarChar(50)
+  fhbankAddress                              String?                  @db.Text
+  fhholderAddressInBank                      String?                  @db.Text
+  fhaccountTypeSavingorCurrent               String?                  @db.VarChar(30)
+  fhaccountNumber                            String?                  @db.VarChar(50)
+  fhbankTelephoneNumber                      String?                  @db.VarChar(50)
+  fhbankIfscCode                             String?                  @db.VarChar(50)
+  fhbankEmail                                String?                  @db.VarChar(50)
+  fhnineDigitMICRNumber                      String?                  @db.VarChar(50)
+  fhnameAsPerBankAccount                     String?                  @db.VarChar(50)
+  jhbankName                                 String?                  @db.VarChar(30)
+  jhbankAddress                              String?                  @db.Text
+  jhholderAddressInBank                      String?                  @db.Text
+  jhaccountTypeSavingorCurrent               String?                  @db.VarChar(50)
+  jhaccountNumber                            String?                  @db.VarChar(50)
+  jhemail                                    String?                  @db.VarChar(50)
+  jhbankTelephoneNumber                      String?                  @db.VarChar(50)
+  jhbankIfscCode                             String?                  @db.VarChar(50)
+  jhbankEmail                                String?                  @db.VarChar(50)
+  jhnineDigitMICRNumber                      String?                  @db.VarChar(50)
+  jhnameAsPerBankAccount                     String?                  @db.VarChar(50)
+  dpName                                     String?                  @db.VarChar(50)
+  dematNumber                                String?                  @db.VarChar(50)
+  cdslOrNsdl                                 String?                  @db.VarChar(50)
+  nameAsPerDematAccount                      String?                  @db.VarChar(50)
+  nomineeName                                String?                  @db.VarChar(50)
+  nomineeFatherOrHusbandName                 String?                  @db.VarChar(50)
+  nomineeAddress                             String?                  @db.Text
+  nomineeHolderRelationShip                  String?                  @db.VarChar(50)
+  nomineeBirthdate                           DateTime?                @db.Date()
+  w1NameInPancardExactSpelling               String?                  @db.VarChar(50)
+  w1addressSameInAadharcard                  String?                  @db.Text
+  w1nameInAadharcardExactSpelling            String?                  @db.VarChar(50)
+  w2nameInPancardExactSpelling               String?                  @db.VarChar(50)
+  w2addressSameInAadharcard                  String?                  @db.Text
+  w2nameInAadharcardExactSpelling            String?                  @db.VarChar(50)
+  s1nameInPancardExactSpelling               String?                  @db.VarChar(50)
+  s1nameInAadharcard                         String?                  @db.VarChar(50)
+  s1addressAadharcard                        String?                  @db.Text
+  s1age                                      String?                  @db.VarChar(10)
+  s1income                                   String?                  @db.VarChar(50)
+  s1email                                    String?                  @db.VarChar(50)
+  s1mobileNumber                             String?                  @db.VarChar(50)
+  s1itReturnShowAddress                      String?                  @db.Text
+  s2nameInPancardExactSpelling               String?                  @db.VarChar(50)
+  s2nameInAadharcard                         String?                  @db.VarChar(50)
+  s2addressAadharcard                        String?                  @db.Text
+  s2age                                      String?                  @db.VarChar(50)
+  s2income                                   String?                  @db.VarChar(50)
+  s2email                                    String?                  @db.VarChar(50)
+  s2mobileNumber                             String?                  @db.VarChar(50)
+  s2itReturnShowAddress                      String?                  @db.Text
+  policeStationName                          String?                  @db.VarChar(50)
+  oldName                                    String?                  @db.VarChar(50)
+  newname                                    String?                  @db.VarChar(50)
+  deathHolderName1                           String?                  @db.VarChar(50)
+  deathHolderName2                           String?                  @db.VarChar(50)
+  deathOfAddress                             String?                  @db.Text
+  certificateDeathHolderName1                String?                  @db.VarChar(50)
+  certificateDeathHolderName2                String?                  @db.VarChar(50)
+  legalNamePancard                           String?                  @db.VarChar(50)
+  successionCertificateNumberYear            String?                  @db.VarChar(50)
+  successionCertificateCourtOrderDateAndYear String?                  @db.VarChar(50)
+  nameInPancardExectSpelling                 String?                  @db.VarChar(50)
+  nameAsPerShareCertificate                  String?                  @db.VarChar(50)
+  fatherOrHusbandName                        String?                  @db.VarChar(50)
+  contactNumber                              String?                  @db.VarChar(50)
+  email                                      String?                  @db.VarChar(50)
+  pancardNumber                              String?                  @db.VarChar(50)
+  city                                       String?                  @db.VarChar(50)
   deathOfHolderFirstHolder                   DateTime?
   deathOfHolderSecondHolder                  DateTime?
-  deathHolderFirstCity                       String?            @db.VarChar(50)
-  deathHolderSecondCity                      String?            @db.VarChar(50)
-  addressSameInAadharcard                    String?            @db.Text
-  oldAddressCompanyRegister                  String?            @db.Text
-  gender                                     String?            @db.VarChar(10)
-  state                                      String?            @db.VarChar(50)
-  age                                        String?            @db.VarChar(10)
-  aadharcardNumber                           String?            @db.VarChar(50)
-  nameInAdharcardExactSpeling                String?            @db.VarChar(100)
-  lhabankName                                String?            @db.VarChar(50)
-  lhabankAddress                             String?            @db.Text
-  lhaholderAddressInBank                     String?            @db.Text
-  lhaaccountTypeSavingorCurrent              String?            @db.VarChar(50)
-  lhaaccountNumber                           String?            @db.VarChar(50)
-  lhabankTelephoneNumber                     String?            @db.VarChar(50)
-  lhabankIfscCode                            String?            @db.VarChar(50)
-  lhanineDigitMICRNumber                     String?            @db.VarChar(50)
-  lhanameAsPerBankAccount                    String?            @db.VarChar(50)
-  lhadpName                                  String?            @db.VarChar(50)
-  lhadematNumber                             String?            @db.VarChar(50)
-  lhacdslOrNsdl                              String?            @db.VarChar(50)
-  lhanameAsPerDematAccount                   String?            @db.VarChar(50)
-  iepfDividendAmount                         String?            @db.VarChar(50)
-  iepfDividendYear                           String?            @db.VarChar(50)
-  referenceLetterNo                          String?            @db.VarChar(50)
+  deathHolderFirstCity                       String?                  @db.VarChar(50)
+  deathHolderSecondCity                      String?                  @db.VarChar(50)
+  addressSameInAadharcard                    String?                  @db.Text
+  oldAddressCompanyRegister                  String?                  @db.Text
+  gender                                     String?                  @db.VarChar(10)
+  state                                      String?                  @db.VarChar(50)
+  age                                        String?                  @db.VarChar(10)
+  aadharcardNumber                           String?                  @db.VarChar(50)
+  nameInAdharcardExactSpeling                String?                  @db.VarChar(100)
+  lhabankName                                String?                  @db.VarChar(50)
+  lhabankAddress                             String?                  @db.Text
+  lhaholderAddressInBank                     String?                  @db.Text
+  lhaaccountTypeSavingorCurrent              String?                  @db.VarChar(50)
+  lhaaccountNumber                           String?                  @db.VarChar(50)
+  lhabankTelephoneNumber                     String?                  @db.VarChar(50)
+  lhabankIfscCode                            String?                  @db.VarChar(50)
+  lhanineDigitMICRNumber                     String?                  @db.VarChar(50)
+  lhanameAsPerBankAccount                    String?                  @db.VarChar(50)
+  lhadpName                                  String?                  @db.VarChar(50)
+  lhadematNumber                             String?                  @db.VarChar(50)
+  lhacdslOrNsdl                              String?                  @db.VarChar(50)
+  lhanameAsPerDematAccount                   String?                  @db.VarChar(50)
+  iepfDividendAmount                         String?                  @db.VarChar(50)
+  iepfDividendYear                           String?                  @db.VarChar(50)
+  referenceLetterNo                          String?                  @db.VarChar(50)
   referenceLetterdate                        DateTime?
-  otherLegalHears                            String?            @db.Text
-  currentYear                                String?            @db.VarChar(10)
-  dpId                                       String?            @db.VarChar(10)
-  clientId                                   String?            @db.VarChar(10)
-  createdAt                                  DateTime           @default(now()) @db.Timestamp(6)
-  updatedAt                                  DateTime?          @updatedAt
+  otherLegalHears                            String?                  @db.Text
+  currentYear                                String?                  @db.VarChar(10)
+  dpId                                       String?                  @db.VarChar(10)
+  clientId                                   String?                  @db.VarChar(10)
+  createdAt                                  DateTime                 @default(now()) @db.Timestamp(6)
+  updatedAt                                  DateTime?                @updatedAt
   CustomerTemplate                           CustomerTemplate[]
+  CustomerTemplateMaster                     CustomerTemplateMaster[]
+}
+
+model CustomerTemplateMaster {
+  id               Int                @id @default(autoincrement())
+  userId           Int
+  User             User               @relation(fields: [userId], references: [id])
+  customerId       Int
+  Customer         Customer           @relation(fields: [customerId], references: [id])
+  name             String
+  originalName     String?
+  storeDocName     String?
+  url              String?
+  status           String?
+  createdAt        DateTime           @default(now()) @db.Timestamp(6)
+  updatedAt        DateTime?          @updatedAt
+  CustomerTemplate CustomerTemplate[]
 }
 
 model CustomerTemplate {
-  id                          Int       @id @default(autoincrement())
+  id                          Int                     @id @default(autoincrement())
+  customerTemplateMasterId    Int?
+  CustomerTemplateMaster      CustomerTemplateMaster? @relation(fields: [customerTemplateMasterId], references: [id])
   customerId                  Int
-  Customer                    Customer  @relation(fields: [customerId], references: [id])
+  Customer                    Customer                @relation(fields: [customerId], references: [id])
   templateId                  Int?
-  Template                    Template? @relation(fields: [templateId], references: [id])
+  Template                    Template?               @relation(fields: [templateId], references: [id])
   templateType                String
-  templateData                String?   @db.Text
+  templateData                String?                 @db.Text
   templateTitle               String?
   order                       Int?
-  isCustomMainContentTemplate Boolean   @default(false)
-  createdAt                   DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt                   DateTime? @updatedAt
+  isCustomMainContentTemplate Boolean                 @default(false)
+  createdAt                   DateTime                @default(now()) @db.Timestamp(6)
+  updatedAt                   DateTime?               @updatedAt
 }

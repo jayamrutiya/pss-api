@@ -86,8 +86,14 @@ export class CustomerService implements ICustomerService {
     }
   }
 
-  async getCustomers(userId: number): Promise<CustomerData[]> {
-    const customersData = await this._customerRepository.getCustomers(userId);
+  async getCustomers(
+    userId: number,
+    customerMasterId: number | null
+  ): Promise<CustomerData[]> {
+    const customersData = await this._customerRepository.getCustomers(
+      userId,
+      customerMasterId
+    );
     const customers = customersData.map((d) => {
       return {
         ...d,

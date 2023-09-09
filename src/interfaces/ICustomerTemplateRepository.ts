@@ -1,4 +1,4 @@
-import { CustomerTemplate } from "@prisma/client";
+import { CustomerTemplate, CustomerTemplateMaster } from "@prisma/client";
 import {
   CreateCustomerTemplateInput,
   CustomerTemplateWithCustomerTemplate,
@@ -26,4 +26,14 @@ export interface ICustomerTemplateRepository {
   deleteCustomerTemplateById(id: number): Promise<any>;
 
   getCustomerTemplateById(id: number): Promise<UpdateCustomerTemplate | null>;
+
+  createCustomerTemplateMaster(
+    userId: number,
+    customerId: number,
+    name: string,
+    originalName: string | null,
+    storeDocName: string | null,
+    url: string | null,
+    status: string | null
+  ): Promise<CustomerTemplateMaster>;
 }

@@ -3,7 +3,7 @@ import { ICustomerTemplateRepository } from "../interfaces/ICustomerTemplateRepo
 import { IDatabaseService } from "../interfaces/IDatabaseService";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { TYPES } from "../config/types";
-import { CustomerTemplate } from "@prisma/client";
+import { CustomerTemplate, CustomerTemplateMaster } from "@prisma/client";
 import { InternalServerError } from "../errors/InternalServerError";
 import {
   CreateCustomerTemplateInput,
@@ -61,8 +61,8 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
           customerId,
           templateType,
         },
-        orderBy:{
-          order: 'asc'
+        orderBy: {
+          order: "asc",
         },
         include: {
           Template: true,
@@ -159,6 +159,40 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
         },
       });
       return getdata;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async createCustomerTemplateMaster(
+    userId: number,
+    customerId: number,
+    name: string,
+    originalName: string | null,
+    storeDocName: string | null,
+    url: string | null,
+    status: string | null
+  ): Promise<CustomerTemplateMaster> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      return await client.customerTemplateMaster.create({
+        data: {
+          userId,
+          customerId,
+          name,
+          originalName,
+          storeDocName,
+          url,
+          status,
+        },
+      });
     } catch (error) {
       this._loggerService.getLogger().error(`Error ${error}`);
       throw new InternalServerError(
