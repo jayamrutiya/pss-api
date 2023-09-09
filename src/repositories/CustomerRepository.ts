@@ -165,6 +165,14 @@ export class CustomerRepository implements ICustomerRepository {
         },
       });
 
+      await client.customer.create({
+        data: {
+          userId,
+          customerMasterId: createCusMas.id,
+          fhnameInPancardExactSpelling: name,
+        },
+      });
+
       return createCusMas;
     } catch (error) {
       this._loggerService.getLogger().error(`Error ${error}`);

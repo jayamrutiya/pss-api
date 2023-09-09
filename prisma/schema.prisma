@@ -66,7 +66,7 @@ model Customer {
   companyName                                String?                  @db.VarChar(50)
   companyAddress                             String?                  @db.Text
   companyNumber                              String?                  @db.VarChar(50)
-  emailId                                    String                   @db.VarChar(50)
+  emailId                                    String?                  @db.VarChar(50)
   registerTransferAgentName                  String?                  @db.VarChar(50)
   registerTransferAgentAdress                String?                  @db.Text
   registerTransferAgentContactNumber         String?                  @db.VarChar(50)

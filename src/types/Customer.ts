@@ -9,7 +9,7 @@ export declare type CreateCustomerRepoInput = {
   companyName: string | null;
   companyAddress: string | null;
   companyNumber: string | null;
-  emailId: string;
+  emailId: string | null;
   registerTransferAgentName: string | null;
   registerTransferAgentAdress: string | null;
   registerTransferAgentContactNumber: string | null;
@@ -176,7 +176,7 @@ export declare type CreateCustomerServiceInput = {
   companyName: string | null;
   companyAddress: string | null;
   companyNumber: string | null;
-  emailId: string;
+  emailId: string | null;
   clientId: string | null;
   dpId: string | null;
   registerTransferAgentName: string | null;
@@ -355,7 +355,7 @@ export declare type CustomerData = {
   companyName: string | null;
   companyAddress: string | null;
   companyNumber: string | null;
-  emailId: string;
+  emailId: string | null;
   registerTransferAgentName: string | null;
   registerTransferAgentAdress: string | null;
   registerTransferAgentContactNumber: string | null;

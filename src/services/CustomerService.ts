@@ -143,11 +143,14 @@ export class CustomerService implements ICustomerService {
         userId
       );
     }
-    return await this._customerRepository.createCustomerMaster(
-      name,
-      companyName,
-      userId
-    );
+
+    const createCustomerMaster =
+      await this._customerRepository.createCustomerMaster(
+        name,
+        companyName,
+        userId
+      );
+    return createCustomerMaster;
   }
 
   async getAllMasterCustomers(userId: number): Promise<CustomerMaster[]> {
