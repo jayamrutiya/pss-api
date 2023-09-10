@@ -13,7 +13,8 @@ export interface ICustomerTemplateRepository {
 
   getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
-    templateType: string
+    templateType: string,
+    customerTemplateMasterId: number | null
   ): Promise<CustomerTemplateWithCustomerTemplateRepo[]>;
 
   updateCustomerTemplate(
@@ -21,7 +22,7 @@ export interface ICustomerTemplateRepository {
     templateData: CreateCustomerTemplateInput
   ): Promise<UpdateCustomerTemplate>;
 
-  createWordFileCustomerTemplate(customerId: number): any;
+  createWordFileCustomerTemplate(customerTemplateMasterId: number): any;
 
   deleteCustomerTemplateById(id: number): Promise<any>;
 
@@ -36,4 +37,8 @@ export interface ICustomerTemplateRepository {
     url: string | null,
     status: string | null
   ): Promise<CustomerTemplateMaster>;
+
+  getCustomerTemplateMasters(
+    customerId: number
+  ): Promise<CustomerTemplateMaster[]>;
 }

@@ -77,7 +77,7 @@ export class CustomerTemplateController extends BaseController {
       this.validateRequest(req);
 
       const token = req.user as any;
-      const { customerId, templateType } = req.query;
+      const { customerId, templateType, customerTemplateMasterId } = req.query;
 
       if (!customerId || !templateType) {
         throw new BadRequest("Invalid argument.");
@@ -87,7 +87,8 @@ export class CustomerTemplateController extends BaseController {
         await this._customerTemplateService.getCustomerTemplateByTypeAndCustomerId(
           Number(customerId),
           templateType,
-          Number(token.id)
+          Number(token.id),
+          Number(customerTemplateMasterId)
         );
 
       // Return the response
@@ -107,10 +108,14 @@ export class CustomerTemplateController extends BaseController {
     try {
       // validate input
       this.validateRequest(req);
+      const customerTemplateMasterId = Number(
+        req.query.customerTemplateMasterId
+      );
       const customerId = Number(req.query.customerId);
       const token = req.user as any;
       const saveCustomerTemplateData =
         await this._customerTemplateService.createWordFileCustomerTemplate(
+          customerTemplateMasterId,
           customerId
         );
       // res.setHeader(
@@ -157,13 +162,14 @@ export class CustomerTemplateController extends BaseController {
   async getCustomerTemplateStatus(req: any, res: express.Response) {
     try {
       const token = req.user as any;
-      const { customerId, templateType } = req.query;
+      const { customerId, templateType, customerTemplateMasterId } = req.query;
 
       const getCustomerTemplate =
         await this._customerTemplateService.getCustomerTemplateStatus(
           Number(customerId),
           templateType,
-          Number(token.id)
+          Number(token.id),
+          Number(customerTemplateMasterId)
         );
 
       // Return the response
@@ -205,13 +211,14 @@ export class CustomerTemplateController extends BaseController {
   async getFiltterTemplate(req: any, res: express.Response) {
     try {
       const token = req.user as any;
-      const { customerId, templateType } = req.query;
+      const { customerId, templateType, customerTemplateMasterId } = req.query;
 
       const getFilterTemplate =
         await this._customerTemplateService.getFiltterTemplate(
           Number(customerId),
           templateType,
-          Number(token.id)
+          Number(token.id),
+          Number(customerTemplateMasterId)
         );
       // Return the response
       return this.sendJSONResponse(
@@ -316,6 +323,30 @@ export class CustomerTemplateController extends BaseController {
           size: 1,
         },
         createCustomerTemplateMaster
+      );
+    } catch (error) {
+      console.log("Error", error);
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async getCustomerTemplateMasters(req: any, res: express.Response) {
+    try {
+      const { customerId } = req.query;
+
+      const getCustomerTemplateMasters =
+        await this._customerTemplateService.getCustomerTemplateMasters(
+          Number(customerId)
+        );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template Master.",
+        {
+          size: getCustomerTemplateMasters.length,
+        },
+        getCustomerTemplateMasters
       );
     } catch (error) {
       console.log("Error", error);

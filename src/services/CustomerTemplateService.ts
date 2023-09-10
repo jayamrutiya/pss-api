@@ -1347,7 +1347,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       const getCustomerTemplates =
         await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
           customerTemplateData.customerId,
-          customerTemplateData.templateType
+          customerTemplateData.templateType,
+          customerTemplateData.customerTemplateMasterId
         );
       if (customerTemplateData.isCustomMainContentTemplate) {
         if (customerTemplateData.id) {
@@ -1357,6 +1358,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
               {
                 id: customerTemplateData.id,
                 customerId: customerTemplateData.customerId,
+                customerTemplateMasterId:
+                  customerTemplateData.customerTemplateMasterId,
                 isCustomMainContentTemplate:
                   customerTemplateData.isCustomMainContentTemplate,
                 order: customerTemplateData.order,
@@ -1372,6 +1375,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
             await this._customerTemplateRepository.createCustomerTemplate({
               id: customerTemplateData.id,
               customerId: customerTemplateData.customerId,
+              customerTemplateMasterId:
+                customerTemplateData.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateData.isCustomMainContentTemplate,
               order: getCustomerTemplates.length + 1,
@@ -1404,6 +1409,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
               {
                 id: customerTemplateData.id,
                 customerId: customerTemplateData.customerId,
+                customerTemplateMasterId:
+                  customerTemplateData.customerTemplateMasterId,
                 isCustomMainContentTemplate:
                   customerTemplateData.isCustomMainContentTemplate,
                 order: customerTemplateData.order,
@@ -1433,7 +1440,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     return response;
   }
-  async createWordFileCustomerTemplate(customerId: number): Promise<any> {
+  async createWordFileCustomerTemplate(
+    customerTemplateMasterId: number,
+    customerId: number
+  ): Promise<any> {
     try {
       const types = [
         "COMMON_CONTENT",
@@ -1446,7 +1456,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
       const getTemplateData: CustomerTemplate[] =
         await this._customerTemplateRepository.createWordFileCustomerTemplate(
-          customerId
+          customerTemplateMasterId
         );
 
       let body = "";
@@ -1534,7 +1544,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       });
 
       const converted = await htmlDocx.asBlob(body).arrayBuffer();
-      const fileName = `Forwarding-Letter_${customerId}.docx`;
+      const fileName = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
       const folderPath = join(__dirname, "/document");
       await fs.mkdirSync(folderPath, { recursive: true });
       const docxFilePath = join(folderPath, fileName);
@@ -1552,12 +1562,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
   async getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<UpdateCustomerTemplate[]> {
     const getCustomerTemplates =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
     const response: UpdateCustomerTemplate[] = [];
 
@@ -1571,6 +1583,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
             {
               id: customerTemplateent.id,
               customerId: customerTemplateent.customerId,
+              customerTemplateMasterId:
+                customerTemplateent.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateent.isCustomMainContentTemplate,
               order: customerTemplateent.order,
@@ -1594,6 +1608,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
             {
               id: customerTemplateent.id,
               customerId: customerTemplateent.customerId,
+              customerTemplateMasterId:
+                customerTemplateent.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateent.isCustomMainContentTemplate,
               order: customerTemplateent.order,
@@ -1637,6 +1653,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         await this._customerTemplateRepository.createCustomerTemplate({
           id: null,
           customerId,
+          customerTemplateMasterId,
           isCustomMainContentTemplate: false,
           order: null,
           templateId: getTemplate[0].id,
@@ -1654,12 +1671,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
   async getCustomerTemplateStatus(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<{ isAvailable: boolean }> {
     const getCustomerTemplates =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
 
     return { isAvailable: getCustomerTemplates.length > 0 };
@@ -1674,7 +1693,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
   async getFiltterTemplate(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<Template[]> {
     const all = await this._templateRepository.getTemplatesByType(
       templateType,
@@ -1683,7 +1703,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     const selected =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
 
     return await all.filter(
@@ -1718,6 +1739,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       storeDocName,
       url,
       status
+    );
+  }
+
+  async getCustomerTemplateMasters(
+    customerId: number
+  ): Promise<CustomerTemplateMaster[]> {
+    return await this._customerTemplateRepository.getCustomerTemplateMasters(
+      customerId
     );
   }
 }
