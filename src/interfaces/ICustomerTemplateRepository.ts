@@ -41,4 +41,21 @@ export interface ICustomerTemplateRepository {
   getCustomerTemplateMasters(
     customerId: number
   ): Promise<CustomerTemplateMaster[]>;
+
+  getCustomerTemplateMasterById(
+    id: number
+  ): Promise<CustomerTemplateMaster | null>;
+
+  updateCustomerTemplateMaster(
+    id: number,
+    userId: number,
+    customerId: number,
+    name: string,
+    originalName: string | null,
+    storeDocName: string | null,
+    url: string | null,
+    status: string | null
+  ): Promise<CustomerTemplateMaster>;
+
+  deleteCustomerTemplateMasterById(id: number): Promise<CustomerTemplateMaster>;
 }

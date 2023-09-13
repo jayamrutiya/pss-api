@@ -87,4 +87,12 @@ router.post(
   }
 );
 
+router.delete(
+  "/master",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.deleteCustomerTemplateMasterById(req, res);
+  }
+);
+
 export default router;

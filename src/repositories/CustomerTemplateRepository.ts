@@ -228,4 +228,92 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
       // await this._databaseService.disconnect();
     }
   }
+
+  async getCustomerTemplateMasterById(
+    id: number
+  ): Promise<CustomerTemplateMaster | null> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      return await client.customerTemplateMaster.findFirst({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async updateCustomerTemplateMaster(
+    id: number,
+    userId: number,
+    customerId: number,
+    name: string,
+    originalName: string | null,
+    storeDocName: string | null,
+    url: string | null,
+    status: string | null
+  ): Promise<CustomerTemplateMaster> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      return await client.customerTemplateMaster.update({
+        where: {
+          id,
+        },
+        data: {
+          userId,
+          customerId,
+          name,
+          originalName,
+          storeDocName,
+          url,
+          status,
+        },
+      });
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async deleteCustomerTemplateMasterById(
+    id: number
+  ): Promise<CustomerTemplateMaster> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      await client.customerTemplate.deleteMany({
+        where: {
+          customerTemplateMasterId: id,
+        },
+      });
+
+      return await client.customerTemplateMaster.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
 }

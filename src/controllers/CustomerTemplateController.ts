@@ -141,7 +141,7 @@ export class CustomerTemplateController extends BaseController {
           if (err) {
             console.log(err); // Check error if you want
           } else {
-            unlinkSync(saveCustomerTemplateData.filePath);
+            // unlinkSync(saveCustomerTemplateData.filePath);
           }
         }
       );
@@ -347,6 +347,30 @@ export class CustomerTemplateController extends BaseController {
           size: getCustomerTemplateMasters.length,
         },
         getCustomerTemplateMasters
+      );
+    } catch (error) {
+      console.log("Error", error);
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async deleteCustomerTemplateMasterById(req: any, res: express.Response) {
+    try {
+      const { id } = req.query;
+
+      const deleteData =
+        await this._customerTemplateService.deleteCustomerTemplateMasterById(
+          Number(id)
+        );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template Master deleted successfully.",
+        {
+          size: 1,
+        },
+        deleteData
       );
     } catch (error) {
       console.log("Error", error);

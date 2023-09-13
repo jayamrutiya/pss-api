@@ -58,4 +58,6 @@ export interface ICustomerTemplateService {
   getCustomerTemplateMasters(
     customerId: number
   ): Promise<CustomerTemplateMaster[]>;
+
+  deleteCustomerTemplateMasterById(id: number): Promise<CustomerTemplateMaster>;
 }

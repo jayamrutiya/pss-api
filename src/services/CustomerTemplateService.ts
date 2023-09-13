@@ -19,11 +19,12 @@ import { ITemplateRepository } from "../interfaces/ITemplateRepository";
 import { BadRequest } from "../errors/BadRequest";
 import { replaceAll } from "../config/helper";
 import moment from "moment";
-import fs, { writeFileSync } from "fs";
+import fs, { unlinkSync, writeFileSync } from "fs";
 import { join } from "path";
 import { NotFound } from "../errors/NotFound";
 import htmlToDocx from "html-to-docx";
 import htmlDocx from "html-docx-js";
+import env from "../config/env";
 
 @injectable()
 export class CustomerTemplateService implements ICustomerTemplateService {
@@ -1542,12 +1543,45 @@ export class CustomerTemplateService implements ICustomerTemplateService {
           body += d.templateData;
         }
       });
-
+      console.log("body", body);
       const converted = await htmlDocx.asBlob(body).arrayBuffer();
-      const fileName = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
-      const folderPath = join(__dirname, "/document");
-      await fs.mkdirSync(folderPath, { recursive: true });
-      const docxFilePath = join(folderPath, fileName);
+      let fileName:
+        | string
+        | null = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
+      let url: string | null = `${env.API_BASEURL}/doc/${fileName}`;
+      let originalName: string | null = fileName;
+      let status: string | null = "PENDING";
+
+      const getCustomerTemplateMaster =
+        await this._customerTemplateRepository.getCustomerTemplateMasterById(
+          customerTemplateMasterId
+        );
+
+      if (getCustomerTemplateMaster === null) {
+        throw new NotFound("Customer Template Not found.");
+      }
+
+      if (getCustomerTemplateMaster.url) {
+        fileName = getCustomerTemplateMaster.storeDocName;
+        url = `${env.API_BASEURL}/doc/${fileName}`;
+        originalName = fileName;
+        status = getCustomerTemplateMaster.status;
+      }
+      await this._customerTemplateRepository.updateCustomerTemplateMaster(
+        getCustomerTemplateMaster.id,
+        getCustomerTemplateMaster.userId,
+        getCustomerTemplateMaster.customerId,
+        getCustomerTemplateMaster.name,
+        originalName,
+        fileName,
+        url,
+        status
+      );
+
+      // const folderPath = join(__dirname, "/document");
+      // await fs.mkdirSync(folderPath, { recursive: true });
+      const docxFilePath = join("./src/public/", fileName!);
+      console.log("docxFilePath", docxFilePath);
       const saveFile = await writeFileSync(
         docxFilePath,
         Buffer.from(converted)
@@ -1748,5 +1782,17 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     return await this._customerTemplateRepository.getCustomerTemplateMasters(
       customerId
     );
+  }
+
+  async deleteCustomerTemplateMasterById(
+    id: number
+  ): Promise<CustomerTemplateMaster> {
+    const deletData =
+      await this._customerTemplateRepository.deleteCustomerTemplateMasterById(
+        id
+      );
+    await unlinkSync(join("./src/public", deletData.storeDocName!));
+
+    return deletData;
   }
 }
