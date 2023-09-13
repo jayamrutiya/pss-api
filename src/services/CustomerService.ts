@@ -10,17 +10,24 @@ import {
   CustomerData,
 } from "../types/Customer";
 import { NotFound } from "../errors/NotFound";
+import { ICustomerTemplateRepository } from "../interfaces/ICustomerTemplateRepository";
+import { unlinkSync } from "fs";
+import { join } from "path";
 
 @injectable()
 export class CustomerService implements ICustomerService {
   private _loggerService: ILoggerService;
   private _customerRepository: ICustomerRepository;
+  private _customerTemplateRepository: ICustomerTemplateRepository;
   constructor(
     @inject(TYPES.LoggerService) loggerService: ILoggerService,
-    @inject(TYPES.CustomerRepository) customerRepository: ICustomerRepository
+    @inject(TYPES.CustomerRepository) customerRepository: ICustomerRepository,
+    @inject(TYPES.CustomerTemplateRepository)
+    customerTemplateRepository: ICustomerTemplateRepository
   ) {
     this._loggerService = loggerService;
     this._customerRepository = customerRepository;
+    this._customerTemplateRepository = customerTemplateRepository;
     this._loggerService.getLogger().info(`Creating: ${this.constructor.name}`);
   }
 
@@ -125,6 +132,13 @@ export class CustomerService implements ICustomerService {
     const getCustomer = await this._customerRepository.getCustomer(id, userId);
     if (!getCustomer) {
       throw new NotFound("Customer Not found.");
+    }
+    const getCustomerTemplateMaster =
+      await this._customerTemplateRepository.getCustomerTemplateMasters(id);
+
+    for (let i = 0; i < getCustomerTemplateMaster.length; i++) {
+      const data = getCustomerTemplateMaster[i];
+      await unlinkSync(join("./src/public", data.storeDocName!));
     }
     return await this._customerRepository.deleteCustomer(id, userId);
   }
