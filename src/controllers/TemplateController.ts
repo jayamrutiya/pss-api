@@ -32,6 +32,7 @@ export default class TemplateController extends BaseController {
         "MAIN_CONTENT",
         "SUMMARY",
         "AGREEMENT",
+        "SUMMARY1",
       ];
 
       if (!type || !types.includes(type)) {
@@ -75,6 +76,7 @@ export default class TemplateController extends BaseController {
         "MAIN_CONTENT",
         "SUMMARY",
         "AGREEMENT",
+        "SUMMARY1",
       ];
 
       if (type.trim() && !types.includes(type.trim())) {

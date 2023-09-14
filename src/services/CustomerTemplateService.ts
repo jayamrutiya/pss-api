@@ -1453,6 +1453,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         "MAIN_CONTENT",
         "SUMMARY",
         "AGREEMENT",
+        "SUMMARY1",
       ];
 
       const getTemplateData: CustomerTemplate[] =
@@ -1510,7 +1511,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       let scount = 0;
       // body += "<div style='margin-left:40px;'>"
       let SUTitleData = getTemplateData.map((d) => {
-        if (d.templateType === "SUMMARY") {
+        if (d.templateType === "SUMMARY1") {
           scount = scount + 1;
           // body += scount + ". " + d.templateTitle;
           body += `<p style='margin-left:40px;'>${scount}. ${d.templateTitle}</p>`;
