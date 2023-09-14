@@ -1,4 +1,6 @@
 import multer from "multer";
+import path from "path";
+import { BadRequest } from "../errors/BadRequest";
 
 export const uploadCompanyReply = multer({
   storage: multer.diskStorage({
@@ -9,4 +11,14 @@ export const uploadCompanyReply = multer({
       cb(null, `${Date.now()}_${file.originalname}`);
     },
   }),
+  fileFilter: function (req, file, cb) {
+    var ext = path.extname(file.originalname);
+    // if (ext !== ".pdf" && ext !== ".jpg" && ext !== ".gif" && ext !== ".jpeg") {
+    //   return callback(new BadRequest("Only pdf are allowed"));
+    // }
+    if (ext !== ".pdf") {
+      return cb(new BadRequest("Only pdf is allowed"));
+    }
+    cb(null, true);
+  },
 });
