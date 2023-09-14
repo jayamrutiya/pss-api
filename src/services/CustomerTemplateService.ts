@@ -1329,6 +1329,15 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     replace = new Date().getFullYear();
     str = replaceAll(str, find, replace);
 
+    //photo
+    find = "[[affixPhoto]]";
+    let htmlAffixPhoto = `<table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:100px"> 	<tbody> 		<tr> 			<td style="text-align:center"><br /> 			Affix Photo<br /> 			&nbsp;</td> 		</tr> 	</tbody> </table>`;
+    str = replaceAll(str, find, htmlAffixPhoto);
+
+    find = "[[photo]]";
+    let htmlPhoto = `<table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:100px"> 	<tbody> 		<tr> 			<td style="text-align:center"><br /> 			Photo<br /> 			&nbsp;</td> 		</tr> 	</tbody> </table>  `;
+    str = replaceAll(str, find, htmlPhoto);
+
     return str;
   }
 
