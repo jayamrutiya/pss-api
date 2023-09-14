@@ -28,4 +28,6 @@ export interface ICustomerService {
   ): Promise<CustomerMaster>;
 
   getAllMasterCustomers(userId: number): Promise<CustomerMaster[]>;
+
+  deleteCustomerMaster(userId: number, id: number): Promise<CustomerMaster>;
 }

@@ -47,4 +47,10 @@ router.post(
   (req, res) => customerController.upsertCustomerMaster(req, res)
 );
 
+router.delete(
+  "/master",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => customerController.deleteCustomerMaster(req, res)
+);
+
 export default router;

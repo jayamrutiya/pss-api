@@ -32,4 +32,6 @@ export interface ICustomerRepository {
   ): Promise<CustomerMaster>;
 
   getAllMasterCustomers(userId: number): Promise<CustomerMaster[]>;
+
+  deleteCustomerMaster(id: number): Promise<CustomerMaster>;
 }

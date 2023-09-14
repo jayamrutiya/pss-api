@@ -170,4 +170,21 @@ export class CustomerService implements ICustomerService {
   async getAllMasterCustomers(userId: number): Promise<CustomerMaster[]> {
     return await this._customerRepository.getAllMasterCustomers(userId);
   }
+
+  async deleteCustomerMaster(
+    userId: number,
+    id: number
+  ): Promise<CustomerMaster> {
+    const getAllCustomers = await this._customerRepository.getCustomers(
+      userId,
+      id
+    );
+
+    for (let i = 0; i < getAllCustomers.length; i++) {
+      const data = getAllCustomers[i];
+      await this.deleteCustomer(data.id, userId);
+    }
+
+    return await this._customerRepository.deleteCustomerMaster(id);
+  }
 }

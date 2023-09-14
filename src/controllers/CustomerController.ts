@@ -179,4 +179,28 @@ export class CustomerController extends BaseController {
       return this.sendErrorResponse(req, res, error);
     }
   }
+
+  async deleteCustomerMaster(req: any, res: express.Response) {
+    try {
+      const token = req.user as any;
+
+      const { id } = req.query;
+
+      const data = await this._customerService.deleteCustomerMaster(
+        Number(token.id),
+        Number(id)
+      );
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer deleted successfully.",
+        {
+          size: 1,
+        },
+        data
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
 }
