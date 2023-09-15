@@ -3,7 +3,7 @@ import { ICustomerRepository } from "../interfaces/ICustomerRepository";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { IDatabaseService } from "../interfaces/IDatabaseService";
 import { TYPES } from "../config/types";
-import { Customer, CustomerMaster } from "@prisma/client";
+import { Customer, CustomerMaster, Document } from "@prisma/client";
 import { CreateCustomerRepoInput } from "../types/Customer";
 import { InternalServerError } from "../errors/InternalServerError";
 
@@ -260,6 +260,84 @@ export class CustomerRepository implements ICustomerRepository {
       });
 
       return createCusMas;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async createDocument(
+    customerMasterId: number,
+    name: string | null,
+    originalName: string | null,
+    storeDocName: string | null,
+    mimeType: string | null,
+    sizeInBytes: string | null,
+    url: string | null
+  ): Promise<Document> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const createDoc = await client.document.create({
+        data: {
+          customerMasterId,
+          name,
+          originalName,
+          storeDocName,
+          mimeType,
+          sizeInBytes,
+          url,
+        },
+      });
+
+      return createDoc;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async getAllDocument(customerMasterId: number): Promise<Document[]> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const getAllDocs = await client.document.findMany({
+        where: {
+          customerMasterId,
+        },
+      });
+
+      return getAllDocs;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async deleteDocument(id: number): Promise<Document> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      return await client.document.delete({
+        where: {
+          id,
+        },
+      });
     } catch (error) {
       this._loggerService.getLogger().error(`Error ${error}`);
       throw new InternalServerError(

@@ -3,7 +3,7 @@ import { ICustomerService } from "../interfaces/ICustomerService";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { TYPES } from "../config/types";
 import { ICustomerRepository } from "../interfaces/ICustomerRepository";
-import { Customer, CustomerMaster } from "@prisma/client";
+import { Customer, CustomerMaster, Document } from "@prisma/client";
 import {
   CreateCustomerRepoInput,
   CreateCustomerServiceInput,
@@ -13,6 +13,7 @@ import { NotFound } from "../errors/NotFound";
 import { ICustomerTemplateRepository } from "../interfaces/ICustomerTemplateRepository";
 import { unlinkSync } from "fs";
 import { join } from "path";
+import { BadRequest } from "../errors/BadRequest";
 
 @injectable()
 export class CustomerService implements ICustomerService {
@@ -175,6 +176,11 @@ export class CustomerService implements ICustomerService {
     userId: number,
     id: number
   ): Promise<CustomerMaster> {
+    const getAllDocs = await this.getAllDocument(id);
+
+    if (getAllDocs.length > 0) {
+      throw new BadRequest("Please delete all documents.");
+    }
     const getAllCustomers = await this._customerRepository.getCustomers(
       userId,
       id
@@ -186,5 +192,37 @@ export class CustomerService implements ICustomerService {
     }
 
     return await this._customerRepository.deleteCustomerMaster(id);
+  }
+
+  async createDocument(
+    customerMasterId: number,
+    name: string | null,
+    originalName: string | null,
+    storeDocName: string | null,
+    mimeType: string | null,
+    sizeInBytes: string | null,
+    url: string | null
+  ): Promise<Document> {
+    return await this._customerRepository.createDocument(
+      customerMasterId,
+      name,
+      originalName,
+      storeDocName,
+      mimeType,
+      sizeInBytes,
+      url
+    );
+  }
+
+  async getAllDocument(customerMasterId: number): Promise<Document[]> {
+    return await this._customerRepository.getAllDocument(customerMasterId);
+  }
+
+  async deleteDocument(id: number): Promise<Document> {
+    const deleteDoc = await this._customerRepository.deleteDocument(id);
+
+    await unlinkSync(join("./src/public/", deleteDoc.storeDocName!));
+
+    return deleteDoc;
   }
 }

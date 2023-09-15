@@ -1,3 +1,4 @@
+import env from "../config/env";
 import { ICustomerService } from "../interfaces/ICustomerService";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { CreateCustomerServiceInput } from "../types/Customer";
@@ -198,6 +199,80 @@ export class CustomerController extends BaseController {
           size: 1,
         },
         data
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async createDocument(req: any, res: express.Response) {
+    try {
+      const { name, customerMasterId } = req.body;
+      const originalName = req.file.originalname;
+      const storeDocName = req.file.filename;
+      const mimeType = req.file.mimetype;
+      const sizeInBytes = req.file.size.toString();
+      const url = `${env.API_BASEURL}/doc/${storeDocName}`;
+
+      const uploadDoc = await this._customerService.createDocument(
+        Number(customerMasterId),
+        name,
+        originalName,
+        storeDocName,
+        mimeType,
+        sizeInBytes,
+        url
+      );
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Document uploaded successfully.",
+        {
+          size: 1,
+        },
+        uploadDoc
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async getAllDocument(req: any, res: express.Response) {
+    try {
+      const { customerMasterId } = req.query;
+
+      const getAllDocs = await this._customerService.getAllDocument(
+        Number(customerMasterId)
+      );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Documents.",
+        {
+          size: getAllDocs.length,
+        },
+        getAllDocs
+      );
+    } catch (error) {
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async deleteDocument(req: any, res: express.Response) {
+    try {
+      const { id } = req.query;
+
+      const deleteDoc = await this._customerService.deleteDocument(Number(id));
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Document deleted successfully.",
+        {
+          size: 1,
+        },
+        deleteDoc
       );
     } catch (error) {
       return this.sendErrorResponse(req, res, error);

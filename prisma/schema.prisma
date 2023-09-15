@@ -45,6 +45,20 @@ model RefreshToken {
   updatedAt DateTime? @updatedAt
 }
 
+model Document {
+  id               Int            @id @default(autoincrement())
+  customerMasterId Int
+  CustomerMaster   CustomerMaster @relation(fields: [customerMasterId], references: [id])
+  name             String?
+  originalName     String?
+  storeDocName     String?
+  mimeType         String?
+  sizeInBytes      String?
+  url              String?
+  createdAt        DateTime       @default(now()) @db.Timestamp(6)
+  updatedAt        DateTime?      @updatedAt
+}
+
 model CustomerMaster {
   id          Int        @id @default(autoincrement())
   userId      Int
@@ -54,6 +68,7 @@ model CustomerMaster {
   createdAt   DateTime   @default(now()) @db.Timestamp(6)
   updatedAt   DateTime?  @updatedAt
   Customer    Customer[]
+  Document    Document[]
 }
 
 model Customer {
