@@ -316,4 +316,31 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
       // await this._databaseService.disconnect();
     }
   }
+
+  async getLetterCount(companyCount: boolean): Promise<number> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      const countData = await client.customerTemplateMaster.count({
+        where: companyCount
+          ? {
+              status: "COMPANY REPLY",
+            }
+          : {
+              status: {
+                not: "COMPANY REPLY",
+              },
+            },
+      });
+      return countData;
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
 }

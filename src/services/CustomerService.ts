@@ -139,7 +139,9 @@ export class CustomerService implements ICustomerService {
 
     for (let i = 0; i < getCustomerTemplateMaster.length; i++) {
       const data = getCustomerTemplateMaster[i];
-      await unlinkSync(join("./src/public", data.storeDocName!));
+      if (data.storeDocName) {
+        await unlinkSync(join("./src/public", data.storeDocName));
+      }
     }
     return await this._customerRepository.deleteCustomer(id, userId);
   }

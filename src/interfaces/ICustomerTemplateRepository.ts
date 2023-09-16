@@ -58,4 +58,6 @@ export interface ICustomerTemplateRepository {
   ): Promise<CustomerTemplateMaster>;
 
   deleteCustomerTemplateMasterById(id: number): Promise<CustomerTemplateMaster>;
+
+  getLetterCount(companyCount: boolean): Promise<number>;
 }

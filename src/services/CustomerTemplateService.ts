@@ -1791,6 +1791,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     url: string | null,
     status: string | null
   ): Promise<CustomerTemplateMaster> {
+    const count = await this._customerTemplateRepository.getLetterCount(
+      status === "COMPANY REPLY"
+    );
+    console.log("count", count);
     return await this._customerTemplateRepository.createCustomerTemplateMaster(
       userId,
       customerId,
@@ -1817,7 +1821,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       await this._customerTemplateRepository.deleteCustomerTemplateMasterById(
         id
       );
-    await unlinkSync(join("./src/public", deletData.storeDocName!));
+
+    if (deletData.storeDocName) {
+      await unlinkSync(join("./src/public", deletData.storeDocName));
+    }
 
     return deletData;
   }
