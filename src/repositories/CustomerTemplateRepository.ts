@@ -180,7 +180,8 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
     originalName: string | null,
     storeDocName: string | null,
     url: string | null,
-    status: string | null
+    status: string | null,
+    letterNo: string | null
   ): Promise<CustomerTemplateMaster> {
     try {
       // Get the database clinte
@@ -195,6 +196,7 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
           storeDocName,
           url,
           status,
+          letterNo,
         },
       });
     } catch (error) {
@@ -317,20 +319,25 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
     }
   }
 
-  async getLetterCount(companyCount: boolean): Promise<number> {
+  async getLetterCount(
+    companyCount: boolean,
+    customerId: number
+  ): Promise<number> {
     try {
       // Get the database clinte
       const client = this._databaseService.Client();
-
+      console.log("companyCount", companyCount);
       const countData = await client.customerTemplateMaster.count({
         where: companyCount
           ? {
               status: "COMPANY REPLY",
+              customerId,
             }
           : {
               status: {
-                not: "COMPANY REPLY",
+                not: { equals: "COMPANY REPLY" },
               },
+              customerId,
             },
       });
       return countData;

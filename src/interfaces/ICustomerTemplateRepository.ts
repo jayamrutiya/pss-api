@@ -35,7 +35,8 @@ export interface ICustomerTemplateRepository {
     originalName: string | null,
     storeDocName: string | null,
     url: string | null,
-    status: string | null
+    status: string | null,
+    letterNo: string | null
   ): Promise<CustomerTemplateMaster>;
 
   getCustomerTemplateMasters(
@@ -59,5 +60,5 @@ export interface ICustomerTemplateRepository {
 
   deleteCustomerTemplateMasterById(id: number): Promise<CustomerTemplateMaster>;
 
-  getLetterCount(companyCount: boolean): Promise<number>;
+  getLetterCount(companyCount: boolean, customerId: number): Promise<number>;
 }

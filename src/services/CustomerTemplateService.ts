@@ -1791,10 +1791,16 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     url: string | null,
     status: string | null
   ): Promise<CustomerTemplateMaster> {
+    console.log("status", status);
     const count = await this._customerTemplateRepository.getLetterCount(
-      status === "COMPANY REPLY"
+      status === "COMPANY REPLY",
+      customerId
     );
     console.log("count", count);
+    const letterNo =
+      status === "COMPANY REPLY"
+        ? `Company Letter - ${count + 1}`
+        : `Letter - ${count + 1}`;
     return await this._customerTemplateRepository.createCustomerTemplateMaster(
       userId,
       customerId,
@@ -1802,7 +1808,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       originalName,
       storeDocName,
       url,
-      status
+      status,
+      letterNo
     );
   }
 
