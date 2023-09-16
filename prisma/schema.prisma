@@ -139,6 +139,7 @@ model Customer {
   fhbankEmail                                String?                  @db.VarChar(50)
   fhnineDigitMICRNumber                      String?                  @db.VarChar(50)
   fhnameAsPerBankAccount                     String?                  @db.VarChar(50)
+  fhRelationship                             String?                  @db.VarChar(50)
   jhbankName                                 String?                  @db.VarChar(30)
   jhbankAddress                              String?                  @db.Text
   jhholderAddressInBank                      String?                  @db.Text
@@ -150,6 +151,7 @@ model Customer {
   jhbankEmail                                String?                  @db.VarChar(50)
   jhnineDigitMICRNumber                      String?                  @db.VarChar(50)
   jhnameAsPerBankAccount                     String?                  @db.VarChar(50)
+  jhRelationship                             String?                  @db.VarChar(50)
   dpName                                     String?                  @db.VarChar(50)
   dematNumber                                String?                  @db.VarChar(50)
   cdslOrNsdl                                 String?                  @db.VarChar(50)
@@ -186,6 +188,8 @@ model Customer {
   newname                                    String?                  @db.VarChar(50)
   deathHolderName1                           String?                  @db.VarChar(50)
   deathHolderName2                           String?                  @db.VarChar(50)
+  deceasedHolderAsPerShareCertificate        String?                  @db.VarChar(50)
+  deceasedHolderAsPerMunicipalityCertificate String?                  @db.VarChar(50)
   deathOfAddress                             String?                  @db.Text
   certificateDeathHolderName1                String?                  @db.VarChar(50)
   certificateDeathHolderName2                String?                  @db.VarChar(50)

@@ -836,6 +836,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     replace = customer.fhnameInAadharcardExactSpeling;
     str = replaceAll(str, find, replace);
 
+    find = "[[fhRelationship]]";
+    replace = customer.fhRelationship;
+    str = replaceAll(str, find, replace);
+
     //3.	joint  Holder
 
     find = "[[jhnameInPancardExactSpelling]]";
@@ -892,6 +896,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     find = "[[jhnameInAadharcardExactSpeling]]";
     replace = customer.jhnameInAadharcardExactSpeling;
+    str = replaceAll(str, find, replace);
+
+    find = "[[jhRelationship]]";
+    replace = customer.jhRelationship;
     str = replaceAll(str, find, replace);
 
     //4.	first holder Bank Details Holder
@@ -1181,6 +1189,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     find = "[[successionCertificateCourtOrderDateAndYear]]";
     replace = customer.successionCertificateCourtOrderDateAndYear;
+    str = replaceAll(str, find, replace);
+
+    find = "[[deceasedHolderAsPerShareCertificate]]";
+    replace = customer.deceasedHolderAsPerShareCertificate;
+    str = replaceAll(str, find, replace);
+
+    find = "[[deceasedHolderAsPerMunicipalityCertificate]]";
+    replace = customer.deceasedHolderAsPerMunicipalityCertificate;
     str = replaceAll(str, find, replace);
 
     // 14.	Legal Heir Applicant
