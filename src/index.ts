@@ -20,5 +20,5 @@ app.listen(ENV.PORT, () => {
 });
 
 app.use("/api/doc/:name", (req, res) => {
-  res.sendFile(`./public/${req.params.name}`, { root: __dirname });
+  res.sendFile(`../src/public/${req.params.name}`, { root: __dirname });
 });
