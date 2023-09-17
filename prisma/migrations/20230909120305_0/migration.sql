@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `customer` MODIFY `emailId` VARCHAR(50) NULL;
+ALTER TABLE `Customer` MODIFY `emailId` VARCHAR(50) NULL;
