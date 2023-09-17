@@ -3,6 +3,7 @@ import ENV from "./config/env";
 import { iocContainer as Container } from "./config/container";
 import { ILoggerService } from "./interfaces/ILoggerService";
 import { TYPES } from "./config/types";
+import path from "path";
 
 app.listen(ENV.PORT, () => {
   const loggerService = Container.get<ILoggerService>(TYPES.LoggerService);
@@ -20,5 +21,7 @@ app.listen(ENV.PORT, () => {
 });
 
 app.use("/api/doc/:name", (req, res) => {
-  res.sendFile(`../src/public/${req.params.name}`, { root: __dirname });
+  res.sendFile(path.resolve(`src/public/${req.params.name}`), {
+    root: __dirname,
+  });
 });
