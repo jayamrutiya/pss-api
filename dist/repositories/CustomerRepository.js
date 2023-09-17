@@ -59,14 +59,17 @@ let CustomerRepository = class CustomerRepository {
             // await this._databaseService.disconnect();
         }
     }
-    async getCustomers(userId) {
+    async getCustomers(userId, customerMasterId) {
         try {
             // Get the database clinte
             const client = this._databaseService.Client();
             const getAllCustomer = await client.customer.findMany({
-                where: {
-                    userId,
-                },
+                where: customerMasterId
+                    ? {
+                        userId,
+                        customerMasterId,
+                    }
+                    : { userId },
             });
             return getAllCustomer;
         }
@@ -102,6 +105,11 @@ let CustomerRepository = class CustomerRepository {
         try {
             // Get the database clinte
             const client = this._databaseService.Client();
+            await client.customerTemplateMaster.deleteMany({
+                where: {
+                    customerId: id,
+                },
+            });
             await client.customerTemplate.deleteMany({
                 where: {
                     customerId: id,
@@ -113,6 +121,162 @@ let CustomerRepository = class CustomerRepository {
                 },
             });
             return deleteCUstomer;
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async createCustomerMaster(name, companyName, userId) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            const createCusMas = await client.customerMaster.create({
+                data: {
+                    name,
+                    companyName,
+                    userId,
+                },
+            });
+            await client.customer.create({
+                data: {
+                    userId,
+                    customerMasterId: createCusMas.id,
+                    fhnameInPancardExactSpelling: name,
+                    ywdATabelData: JSON.stringify([]),
+                    otherLegalHears: JSON.stringify([]),
+                    tableSDT: JSON.stringify([]),
+                    totalShares: "0",
+                },
+            });
+            return createCusMas;
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async updateCustomerMaster(id, name, companyName, userId) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            const createCusMas = await client.customerMaster.update({
+                where: {
+                    id,
+                },
+                data: {
+                    name,
+                    companyName,
+                    userId,
+                },
+            });
+            return createCusMas;
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async getAllMasterCustomers(userId) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            const createCusMas = await client.customerMaster.findMany({
+                where: {
+                    userId,
+                },
+            });
+            return createCusMas;
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async deleteCustomerMaster(id) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            const createCusMas = await client.customerMaster.delete({
+                where: {
+                    id,
+                },
+            });
+            return createCusMas;
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async createDocument(customerMasterId, name, originalName, storeDocName, mimeType, sizeInBytes, url) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            const createDoc = await client.document.create({
+                data: {
+                    customerMasterId,
+                    name,
+                    originalName,
+                    storeDocName,
+                    mimeType,
+                    sizeInBytes,
+                    url,
+                },
+            });
+            return createDoc;
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async getAllDocument(customerMasterId) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            const getAllDocs = await client.document.findMany({
+                where: {
+                    customerMasterId,
+                },
+            });
+            return getAllDocs;
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async deleteDocument(id) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            return await client.document.delete({
+                where: {
+                    id,
+                },
+            });
         }
         catch (error) {
             this._loggerService.getLogger().error(`Error ${error}`);

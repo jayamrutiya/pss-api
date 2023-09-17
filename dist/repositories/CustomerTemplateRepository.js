@@ -40,7 +40,7 @@ let CustomerTemplateRepository = class CustomerTemplateRepository {
             // await this._databaseService.disconnect();
         }
     }
-    async getCustomerTemplateByTypeAndCustomerId(customerId, templateType) {
+    async getCustomerTemplateByTypeAndCustomerId(customerId, templateType, customerTemplateMasterId) {
         try {
             // Get the database clinte
             const client = this._databaseService.Client();
@@ -48,9 +48,10 @@ let CustomerTemplateRepository = class CustomerTemplateRepository {
                 where: {
                     customerId,
                     templateType,
+                    customerTemplateMasterId,
                 },
                 orderBy: {
-                    order: 'asc'
+                    order: "asc",
                 },
                 include: {
                     Template: true,
@@ -88,13 +89,13 @@ let CustomerTemplateRepository = class CustomerTemplateRepository {
             // await this._databaseService.disconnect();
         }
     }
-    async createWordFileCustomerTemplate(customerId) {
+    async createWordFileCustomerTemplate(customerTemplateMasterId) {
         try {
             // Get the database clinte
             const client = this._databaseService.Client();
             const getData = await client.customerTemplate.findMany({
                 where: {
-                    customerId,
+                    customerTemplateMasterId,
                 },
             });
             return getData;
@@ -136,6 +137,145 @@ let CustomerTemplateRepository = class CustomerTemplateRepository {
                 },
             });
             return getdata;
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async createCustomerTemplateMaster(userId, customerId, name, originalName, storeDocName, url, status, letterNo) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            return await client.customerTemplateMaster.create({
+                data: {
+                    userId,
+                    customerId,
+                    name,
+                    originalName,
+                    storeDocName,
+                    url,
+                    status,
+                    letterNo,
+                },
+            });
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async getCustomerTemplateMasters(customerId) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            return await client.customerTemplateMaster.findMany({
+                where: {
+                    customerId,
+                },
+            });
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async getCustomerTemplateMasterById(id) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            return await client.customerTemplateMaster.findFirst({
+                where: {
+                    id,
+                },
+            });
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async updateCustomerTemplateMaster(id, userId, customerId, name, originalName, storeDocName, url, status) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            return await client.customerTemplateMaster.update({
+                where: {
+                    id,
+                },
+                data: {
+                    userId,
+                    customerId,
+                    name,
+                    originalName,
+                    storeDocName,
+                    url,
+                    status,
+                },
+            });
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async deleteCustomerTemplateMasterById(id) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            await client.customerTemplate.deleteMany({
+                where: {
+                    customerTemplateMasterId: id,
+                },
+            });
+            return await client.customerTemplateMaster.delete({
+                where: {
+                    id,
+                },
+            });
+        }
+        catch (error) {
+            this._loggerService.getLogger().error(`Error ${error}`);
+            throw new InternalServerError_1.InternalServerError("An error occurred while interacting with the database.");
+        }
+        finally {
+            // await this._databaseService.disconnect();
+        }
+    }
+    async getLetterCount(companyCount, customerId) {
+        try {
+            // Get the database clinte
+            const client = this._databaseService.Client();
+            console.log("companyCount", companyCount);
+            const countData = await client.customerTemplateMaster.count({
+                where: companyCount
+                    ? {
+                        status: "COMPANY REPLY",
+                        customerId,
+                    }
+                    : {
+                        status: {
+                            not: { equals: "COMPANY REPLY" },
+                        },
+                        customerId,
+                    },
+            });
+            return countData;
         }
         catch (error) {
             this._loggerService.getLogger().error(`Error ${error}`);

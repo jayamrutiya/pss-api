@@ -16,5 +16,6 @@ exports.default = {
     REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
     ACCESS_TOKEN_EXPIRES_IN: process.env.ACCESS_TOKEN_EXPIRES_IN,
     REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN,
+    API_BASEURL: process.env.API_BASEURL,
 };
 //# sourceMappingURL=env.js.map

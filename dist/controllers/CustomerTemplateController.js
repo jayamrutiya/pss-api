@@ -8,6 +8,7 @@ const BadRequest_1 = require("../errors/BadRequest");
 const BaseController_1 = __importDefault(require("./BaseController"));
 const fs_1 = require("fs");
 const mysqldump_1 = __importDefault(require("mysqldump"));
+const env_1 = __importDefault(require("../config/env"));
 class CustomerTemplateController extends BaseController_1.default {
     constructor(loggerService, customerTemplateService) {
         super();
@@ -45,11 +46,11 @@ class CustomerTemplateController extends BaseController_1.default {
             // validate input
             this.validateRequest(req);
             const token = req.user;
-            const { customerId, templateType } = req.query;
+            const { customerId, templateType, customerTemplateMasterId } = req.query;
             if (!customerId || !templateType) {
                 throw new BadRequest_1.BadRequest("Invalid argument.");
             }
-            const getCustomerTemplate = await this._customerTemplateService.getCustomerTemplateByTypeAndCustomerId(Number(customerId), templateType, Number(token.id));
+            const getCustomerTemplate = await this._customerTemplateService.getCustomerTemplateByTypeAndCustomerId(Number(customerId), templateType, Number(token.id), Number(customerTemplateMasterId));
             // Return the response
             return this.sendJSONResponse(res, "Customer Template.", {
                 size: getCustomerTemplate.length,
@@ -63,9 +64,10 @@ class CustomerTemplateController extends BaseController_1.default {
         try {
             // validate input
             this.validateRequest(req);
+            const customerTemplateMasterId = Number(req.query.customerTemplateMasterId);
             const customerId = Number(req.query.customerId);
             const token = req.user;
-            const saveCustomerTemplateData = await this._customerTemplateService.createWordFileCustomerTemplate(customerId);
+            const saveCustomerTemplateData = await this._customerTemplateService.createWordFileCustomerTemplate(customerTemplateMasterId, customerId);
             // res.setHeader(
             //   "Content-Type",
             //   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -84,7 +86,7 @@ class CustomerTemplateController extends BaseController_1.default {
                     console.log(err); // Check error if you want
                 }
                 else {
-                    (0, fs_1.unlinkSync)(saveCustomerTemplateData.filePath);
+                    // unlinkSync(saveCustomerTemplateData.filePath);
                 }
             });
             return res;
@@ -104,8 +106,8 @@ class CustomerTemplateController extends BaseController_1.default {
     async getCustomerTemplateStatus(req, res) {
         try {
             const token = req.user;
-            const { customerId, templateType } = req.query;
-            const getCustomerTemplate = await this._customerTemplateService.getCustomerTemplateStatus(Number(customerId), templateType, Number(token.id));
+            const { customerId, templateType, customerTemplateMasterId } = req.query;
+            const getCustomerTemplate = await this._customerTemplateService.getCustomerTemplateStatus(Number(customerId), templateType, Number(token.id), Number(customerTemplateMasterId));
             // Return the response
             return this.sendJSONResponse(res, "Customer Template Status.", {
                 size: 1,
@@ -131,8 +133,8 @@ class CustomerTemplateController extends BaseController_1.default {
     async getFiltterTemplate(req, res) {
         try {
             const token = req.user;
-            const { customerId, templateType } = req.query;
-            const getFilterTemplate = await this._customerTemplateService.getFiltterTemplate(Number(customerId), templateType, Number(token.id));
+            const { customerId, templateType, customerTemplateMasterId } = req.query;
+            const getFilterTemplate = await this._customerTemplateService.getFiltterTemplate(Number(customerId), templateType, Number(token.id), Number(customerTemplateMasterId));
             // Return the response
             return this.sendJSONResponse(res, "Filter Customer Template.", {
                 size: getFilterTemplate.length,
@@ -180,6 +182,65 @@ class CustomerTemplateController extends BaseController_1.default {
             });
         }
         catch (error) {
+            console.log("Error", error);
+            return this.sendErrorResponse(req, res, error);
+        }
+    }
+    async createCustomerTemplateMaster(req, res) {
+        try {
+            const token = req.user;
+            console.log("File", req.file);
+            const userId = Number(token.id);
+            const customerId = Number(req.body.customerId);
+            let originalName = null;
+            let storeDocName = null;
+            let status = "PENDING";
+            let url;
+            const name = req.body.name;
+            if (req.file) {
+                status = "COMPANY REPLY";
+                originalName = req.file.originalname;
+                storeDocName = req.file.filename;
+                url = `${env_1.default.API_BASEURL}/doc/${storeDocName}`;
+            }
+            console.log("url", url);
+            // const name = req.body.
+            const createCustomerTemplateMaster = await this._customerTemplateService.createCustomerTemplateMaster(userId, customerId, name, originalName, storeDocName, url, status);
+            // Return the response
+            return this.sendJSONResponse(res, "Customer Template.", {
+                size: 1,
+            }, createCustomerTemplateMaster);
+        }
+        catch (error) {
+            console.log("Error", error);
+            return this.sendErrorResponse(req, res, error);
+        }
+    }
+    async getCustomerTemplateMasters(req, res) {
+        try {
+            const { customerId } = req.query;
+            const getCustomerTemplateMasters = await this._customerTemplateService.getCustomerTemplateMasters(Number(customerId));
+            // Return the response
+            return this.sendJSONResponse(res, "Customer Template Master.", {
+                size: getCustomerTemplateMasters.length,
+            }, getCustomerTemplateMasters);
+        }
+        catch (error) {
+            console.log("Error", error);
+            return this.sendErrorResponse(req, res, error);
+        }
+    }
+    async deleteCustomerTemplateMasterById(req, res) {
+        try {
+            const { id } = req.query;
+            const deleteData = await this._customerTemplateService.deleteCustomerTemplateMasterById(Number(id));
+            // Return the response
+            return this.sendJSONResponse(res, "Customer Template Master deleted successfully.", {
+                size: 1,
+            }, deleteData);
+        }
+        catch (error) {
+            console.log("Error", error);
             return this.sendErrorResponse(req, res, error);
         }
     }

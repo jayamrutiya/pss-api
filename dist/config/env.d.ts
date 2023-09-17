@@ -8,5 +8,6 @@ declare const _default: {
     REFRESH_TOKEN_SECRET: string;
     ACCESS_TOKEN_EXPIRES_IN: string;
     REFRESH_TOKEN_EXPIRES_IN: string;
+    API_BASEURL: string;
 };
 export default _default;
