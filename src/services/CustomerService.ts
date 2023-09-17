@@ -3,24 +3,32 @@ import { ICustomerService } from "../interfaces/ICustomerService";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { TYPES } from "../config/types";
 import { ICustomerRepository } from "../interfaces/ICustomerRepository";
-import { Customer, CustomerMaster } from "@prisma/client";
+import { Customer, CustomerMaster, Document } from "@prisma/client";
 import {
   CreateCustomerRepoInput,
   CreateCustomerServiceInput,
   CustomerData,
 } from "../types/Customer";
 import { NotFound } from "../errors/NotFound";
+import { ICustomerTemplateRepository } from "../interfaces/ICustomerTemplateRepository";
+import { unlinkSync } from "fs";
+import { join } from "path";
+import { BadRequest } from "../errors/BadRequest";
 
 @injectable()
 export class CustomerService implements ICustomerService {
   private _loggerService: ILoggerService;
   private _customerRepository: ICustomerRepository;
+  private _customerTemplateRepository: ICustomerTemplateRepository;
   constructor(
     @inject(TYPES.LoggerService) loggerService: ILoggerService,
-    @inject(TYPES.CustomerRepository) customerRepository: ICustomerRepository
+    @inject(TYPES.CustomerRepository) customerRepository: ICustomerRepository,
+    @inject(TYPES.CustomerTemplateRepository)
+    customerTemplateRepository: ICustomerTemplateRepository
   ) {
     this._loggerService = loggerService;
     this._customerRepository = customerRepository;
+    this._customerTemplateRepository = customerTemplateRepository;
     this._loggerService.getLogger().info(`Creating: ${this.constructor.name}`);
   }
 
@@ -126,6 +134,15 @@ export class CustomerService implements ICustomerService {
     if (!getCustomer) {
       throw new NotFound("Customer Not found.");
     }
+    const getCustomerTemplateMaster =
+      await this._customerTemplateRepository.getCustomerTemplateMasters(id);
+
+    for (let i = 0; i < getCustomerTemplateMaster.length; i++) {
+      const data = getCustomerTemplateMaster[i];
+      if (data.storeDocName) {
+        await unlinkSync(join("./src/public", data.storeDocName));
+      }
+    }
     return await this._customerRepository.deleteCustomer(id, userId);
   }
 
@@ -155,5 +172,59 @@ export class CustomerService implements ICustomerService {
 
   async getAllMasterCustomers(userId: number): Promise<CustomerMaster[]> {
     return await this._customerRepository.getAllMasterCustomers(userId);
+  }
+
+  async deleteCustomerMaster(
+    userId: number,
+    id: number
+  ): Promise<CustomerMaster> {
+    const getAllDocs = await this.getAllDocument(id);
+
+    if (getAllDocs.length > 0) {
+      throw new BadRequest("Please delete all documents.");
+    }
+    const getAllCustomers = await this._customerRepository.getCustomers(
+      userId,
+      id
+    );
+
+    for (let i = 0; i < getAllCustomers.length; i++) {
+      const data = getAllCustomers[i];
+      await this.deleteCustomer(data.id, userId);
+    }
+
+    return await this._customerRepository.deleteCustomerMaster(id);
+  }
+
+  async createDocument(
+    customerMasterId: number,
+    name: string | null,
+    originalName: string | null,
+    storeDocName: string | null,
+    mimeType: string | null,
+    sizeInBytes: string | null,
+    url: string | null
+  ): Promise<Document> {
+    return await this._customerRepository.createDocument(
+      customerMasterId,
+      name,
+      originalName,
+      storeDocName,
+      mimeType,
+      sizeInBytes,
+      url
+    );
+  }
+
+  async getAllDocument(customerMasterId: number): Promise<Document[]> {
+    return await this._customerRepository.getAllDocument(customerMasterId);
+  }
+
+  async deleteDocument(id: number): Promise<Document> {
+    const deleteDoc = await this._customerRepository.deleteDocument(id);
+
+    await unlinkSync(join("./src/public/", deleteDoc.storeDocName!));
+
+    return deleteDoc;
   }
 }

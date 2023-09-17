@@ -18,6 +18,14 @@ const customerTemplateController = new CustomerTemplateController(
   customerTemplateService
 );
 
+router.get(
+  "/master",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.getCustomerTemplateMasters(req, res);
+  }
+);
+
 router.get("/dbdump", (req, res) => {
   customerTemplateController.dumpMysqlFile(req, res);
 });
@@ -76,6 +84,14 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     customerTemplateController.createCustomerTemplateMaster(req, res);
+  }
+);
+
+router.delete(
+  "/master",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.deleteCustomerTemplateMasterById(req, res);
   }
 );
 

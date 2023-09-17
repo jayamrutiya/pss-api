@@ -39,4 +39,4 @@ reports/
 
 **/.terraform
 
-public/
+public/**

@@ -19,11 +19,12 @@ import { ITemplateRepository } from "../interfaces/ITemplateRepository";
 import { BadRequest } from "../errors/BadRequest";
 import { replaceAll } from "../config/helper";
 import moment from "moment";
-import fs, { writeFileSync } from "fs";
+import fs, { unlinkSync, writeFileSync } from "fs";
 import { join } from "path";
 import { NotFound } from "../errors/NotFound";
 import htmlToDocx from "html-to-docx";
 import htmlDocx from "html-docx-js";
+import env from "../config/env";
 
 @injectable()
 export class CustomerTemplateService implements ICustomerTemplateService {
@@ -89,7 +90,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling};`;
     }
     str = replaceAll(str, find, olhnameaadhar);
-    
+
     find = "[[olhnameInaadharcard1]]";
     let olhnameInaadharcard1 = olhnameaadhar.split(";")[0];
     str = replaceAll(str, find, olhnameInaadharcard1);
@@ -3531,6 +3532,10 @@ border: none;
     replace = customer.fhnameInAadharcardExactSpeling;
     str = replaceAll(str, find, replace);
 
+    find = "[[fhRelationship]]";
+    replace = customer.fhRelationship;
+    str = replaceAll(str, find, replace);
+
     //3.	joint  Holder
 
     find = "[[jhnameInPancardExactSpelling]]";
@@ -3587,6 +3592,10 @@ border: none;
 
     find = "[[jhnameInAadharcardExactSpeling]]";
     replace = customer.jhnameInAadharcardExactSpeling;
+    str = replaceAll(str, find, replace);
+
+    find = "[[jhRelationship]]";
+    replace = customer.jhRelationship;
     str = replaceAll(str, find, replace);
 
     //4.	first holder Bank Details Holder
@@ -3878,6 +3887,14 @@ border: none;
     replace = customer.successionCertificateCourtOrderDateAndYear;
     str = replaceAll(str, find, replace);
 
+    find = "[[deceasedHolderAsPerShareCertificate]]";
+    replace = customer.deceasedHolderAsPerShareCertificate;
+    str = replaceAll(str, find, replace);
+
+    find = "[[deceasedHolderAsPerMunicipalityCertificate]]";
+    replace = customer.deceasedHolderAsPerMunicipalityCertificate;
+    str = replaceAll(str, find, replace);
+
     // 14.	Legal Heir Applicant
 
     find = "[[nameInPancardExectSpelling]]";
@@ -4097,6 +4114,14 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
 
 
 
+    //photo
+    find = "[[affixPhoto]]";
+    let htmlAffixPhoto = `<table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:100px"> 	<tbody> 		<tr> 			<td style="text-align:center"><br /> 			Affix Photo<br /> 			&nbsp;</td> 		</tr> 	</tbody> </table>`;
+    str = replaceAll(str, find, htmlAffixPhoto);
+
+    find = "[[photo]]";
+    let htmlPhoto = `<table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:100px"> 	<tbody> 		<tr> 			<td style="text-align:center"><br /> 			Photo<br /> 			&nbsp;</td> 		</tr> 	</tbody> </table>  `;
+    str = replaceAll(str, find, htmlPhoto);
 
     return str;
   }
@@ -4117,7 +4142,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       const getCustomerTemplates =
         await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
           customerTemplateData.customerId,
-          customerTemplateData.templateType
+          customerTemplateData.templateType,
+          customerTemplateData.customerTemplateMasterId
         );
       if (customerTemplateData.isCustomMainContentTemplate) {
         if (customerTemplateData.id) {
@@ -4127,6 +4153,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
               {
                 id: customerTemplateData.id,
                 customerId: customerTemplateData.customerId,
+                customerTemplateMasterId:
+                  customerTemplateData.customerTemplateMasterId,
                 isCustomMainContentTemplate:
                   customerTemplateData.isCustomMainContentTemplate,
                 order: customerTemplateData.order,
@@ -4142,6 +4170,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             await this._customerTemplateRepository.createCustomerTemplate({
               id: customerTemplateData.id,
               customerId: customerTemplateData.customerId,
+              customerTemplateMasterId:
+                customerTemplateData.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateData.isCustomMainContentTemplate,
               order: getCustomerTemplates.length + 1,
@@ -4174,6 +4204,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
               {
                 id: customerTemplateData.id,
                 customerId: customerTemplateData.customerId,
+                customerTemplateMasterId:
+                  customerTemplateData.customerTemplateMasterId,
                 isCustomMainContentTemplate:
                   customerTemplateData.isCustomMainContentTemplate,
                 order: customerTemplateData.order,
@@ -4203,7 +4235,10 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
 
     return response;
   }
-  async createWordFileCustomerTemplate(customerId: number): Promise<any> {
+  async createWordFileCustomerTemplate(
+    customerTemplateMasterId: number,
+    customerId: number
+  ): Promise<any> {
     try {
       const types = [
         "COMMON_CONTENT",
@@ -4212,11 +4247,12 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         "MAIN_CONTENT",
         "SUMMARY",
         "AGREEMENT",
+        "SUMMARY1",
       ];
 
       const getTemplateData: CustomerTemplate[] =
         await this._customerTemplateRepository.createWordFileCustomerTemplate(
-          customerId
+          customerTemplateMasterId
         );
 
       let body = "";
@@ -4269,7 +4305,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       let scount = 0;
       // body += "<div style='margin-left:40px;'>"
       let SUTitleData = getTemplateData.map((d) => {
-        if (d.templateType === "SUMMARY") {
+        if (d.templateType === "SUMMARY1") {
           scount = scount + 1;
           // body += scount + ". " + d.templateTitle;
           body += `<p style='margin-left:40px;'>${scount}. ${d.templateTitle}</p>`;
@@ -4293,19 +4329,52 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           body += d.templateData;
         }
       });
-      
+
 
       let agreementData = getTemplateData.map((d) => {
         if (d.templateType === "AGREEMENT") {
           body += d.templateData;
         }
       });
-
+      console.log("body", body);
       const converted = await htmlDocx.asBlob(body).arrayBuffer();
-      const fileName = `Forwarding-Letter_${customerId}.docx`;
-      const folderPath = join(__dirname, "/document");
-      await fs.mkdirSync(folderPath, { recursive: true });
-      const docxFilePath = join(folderPath, fileName);
+      let fileName:
+        | string
+        | null = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
+      let url: string | null = `${env.API_BASEURL}/doc/${fileName}`;
+      let originalName: string | null = fileName;
+      let status: string | null = "PENDING";
+
+      const getCustomerTemplateMaster =
+        await this._customerTemplateRepository.getCustomerTemplateMasterById(
+          customerTemplateMasterId
+        );
+
+      if (getCustomerTemplateMaster === null) {
+        throw new NotFound("Customer Template Not found.");
+      }
+
+      if (getCustomerTemplateMaster.url) {
+        fileName = getCustomerTemplateMaster.storeDocName;
+        url = `${env.API_BASEURL}/doc/${fileName}`;
+        originalName = fileName;
+        status = getCustomerTemplateMaster.status;
+      }
+      await this._customerTemplateRepository.updateCustomerTemplateMaster(
+        getCustomerTemplateMaster.id,
+        getCustomerTemplateMaster.userId,
+        getCustomerTemplateMaster.customerId,
+        getCustomerTemplateMaster.name,
+        originalName,
+        fileName,
+        url,
+        status
+      );
+
+      // const folderPath = join(__dirname, "/document");
+      // await fs.mkdirSync(folderPath, { recursive: true });
+      const docxFilePath = join("./src/public/", fileName!);
+      console.log("docxFilePath", docxFilePath);
       const saveFile = await writeFileSync(
         docxFilePath,
         Buffer.from(converted)
@@ -4320,12 +4389,14 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
   async getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<UpdateCustomerTemplate[]> {
     const getCustomerTemplates =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
     const response: UpdateCustomerTemplate[] = [];
 
@@ -4339,6 +4410,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             {
               id: customerTemplateent.id,
               customerId: customerTemplateent.customerId,
+              customerTemplateMasterId:
+                customerTemplateent.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateent.isCustomMainContentTemplate,
               order: customerTemplateent.order,
@@ -4362,6 +4435,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             {
               id: customerTemplateent.id,
               customerId: customerTemplateent.customerId,
+              customerTemplateMasterId:
+                customerTemplateent.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateent.isCustomMainContentTemplate,
               order: customerTemplateent.order,
@@ -4405,6 +4480,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         await this._customerTemplateRepository.createCustomerTemplate({
           id: null,
           customerId,
+          customerTemplateMasterId,
           isCustomMainContentTemplate: false,
           order: null,
           templateId: getTemplate[0].id,
@@ -4422,12 +4498,14 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
   async getCustomerTemplateStatus(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<{ isAvailable: boolean }> {
     const getCustomerTemplates =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
 
     return { isAvailable: getCustomerTemplates.length > 0 };
@@ -4442,7 +4520,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
   async getFiltterTemplate(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<Template[]> {
     const all = await this._templateRepository.getTemplatesByType(
       templateType,
@@ -4451,7 +4530,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     const selected =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
 
     return await all.filter(
@@ -4478,6 +4558,16 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     url: string | null,
     status: string | null
   ): Promise<CustomerTemplateMaster> {
+    console.log("status", status);
+    const count = await this._customerTemplateRepository.getLetterCount(
+      status === "COMPANY REPLY",
+      customerId
+    );
+    console.log("count", count);
+    const letterNo =
+      status === "COMPANY REPLY"
+        ? `Company Letter - ${count + 1}`
+        : `Letter - ${count + 1}`;
     return await this._customerTemplateRepository.createCustomerTemplateMaster(
       userId,
       customerId,
@@ -4485,7 +4575,31 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       originalName,
       storeDocName,
       url,
-      status
+      status,
+      letterNo
     );
+  }
+
+  async getCustomerTemplateMasters(
+    customerId: number
+  ): Promise<CustomerTemplateMaster[]> {
+    return await this._customerTemplateRepository.getCustomerTemplateMasters(
+      customerId
+    );
+  }
+
+  async deleteCustomerTemplateMasterById(
+    id: number
+  ): Promise<CustomerTemplateMaster> {
+    const deletData =
+      await this._customerTemplateRepository.deleteCustomerTemplateMasterById(
+        id
+      );
+
+    if (deletData.storeDocName) {
+      await unlinkSync(join("./src/public", deletData.storeDocName));
+    }
+
+    return deletData;
   }
 }

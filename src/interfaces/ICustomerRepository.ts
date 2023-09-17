@@ -1,4 +1,4 @@
-import { Customer, CustomerMaster } from "@prisma/client";
+import { Customer, CustomerMaster, Document } from "@prisma/client";
 import { CreateCustomerRepoInput } from "../types/Customer";
 
 export interface ICustomerRepository {
@@ -32,4 +32,20 @@ export interface ICustomerRepository {
   ): Promise<CustomerMaster>;
 
   getAllMasterCustomers(userId: number): Promise<CustomerMaster[]>;
+
+  deleteCustomerMaster(id: number): Promise<CustomerMaster>;
+
+  createDocument(
+    customerMasterId: number,
+    name: string | null,
+    originalName: string | null,
+    storeDocName: string | null,
+    mimeType: string | null,
+    sizeInBytes: string | null,
+    url: string | null
+  ): Promise<Document>;
+
+  getAllDocument(customerMasterId: number): Promise<Document[]>;
+
+  deleteDocument(id: number): Promise<Document>;
 }

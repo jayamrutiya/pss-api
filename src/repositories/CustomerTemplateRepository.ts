@@ -50,7 +50,8 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
 
   async getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
-    templateType: string
+    templateType: string,
+    customerTemplateMasterId: number
   ): Promise<CustomerTemplateWithCustomerTemplateRepo[]> {
     try {
       // Get the database clinte
@@ -60,6 +61,7 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
         where: {
           customerId,
           templateType,
+          customerTemplateMasterId,
         },
         orderBy: {
           order: "asc",
@@ -107,13 +109,15 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
     }
   }
 
-  async createWordFileCustomerTemplate(customerId: number): Promise<any> {
+  async createWordFileCustomerTemplate(
+    customerTemplateMasterId: number
+  ): Promise<any> {
     try {
       // Get the database clinte
       const client = this._databaseService.Client();
       const getData = await client.customerTemplate.findMany({
         where: {
-          customerId,
+          customerTemplateMasterId,
         },
       });
       return getData;
@@ -176,7 +180,8 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
     originalName: string | null,
     storeDocName: string | null,
     url: string | null,
-    status: string | null
+    status: string | null,
+    letterNo: string | null
   ): Promise<CustomerTemplateMaster> {
     try {
       // Get the database clinte
@@ -191,8 +196,151 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
           storeDocName,
           url,
           status,
+          letterNo,
         },
       });
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async getCustomerTemplateMasters(
+    customerId: number
+  ): Promise<CustomerTemplateMaster[]> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      return await client.customerTemplateMaster.findMany({
+        where: {
+          customerId,
+        },
+      });
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async getCustomerTemplateMasterById(
+    id: number
+  ): Promise<CustomerTemplateMaster | null> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      return await client.customerTemplateMaster.findFirst({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async updateCustomerTemplateMaster(
+    id: number,
+    userId: number,
+    customerId: number,
+    name: string,
+    originalName: string | null,
+    storeDocName: string | null,
+    url: string | null,
+    status: string | null
+  ): Promise<CustomerTemplateMaster> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      return await client.customerTemplateMaster.update({
+        where: {
+          id,
+        },
+        data: {
+          userId,
+          customerId,
+          name,
+          originalName,
+          storeDocName,
+          url,
+          status,
+        },
+      });
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async deleteCustomerTemplateMasterById(
+    id: number
+  ): Promise<CustomerTemplateMaster> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+
+      await client.customerTemplate.deleteMany({
+        where: {
+          customerTemplateMasterId: id,
+        },
+      });
+
+      return await client.customerTemplateMaster.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      this._loggerService.getLogger().error(`Error ${error}`);
+      throw new InternalServerError(
+        "An error occurred while interacting with the database."
+      );
+    } finally {
+      // await this._databaseService.disconnect();
+    }
+  }
+
+  async getLetterCount(
+    companyCount: boolean,
+    customerId: number
+  ): Promise<number> {
+    try {
+      // Get the database clinte
+      const client = this._databaseService.Client();
+      console.log("companyCount", companyCount);
+      const countData = await client.customerTemplateMaster.count({
+        where: companyCount
+          ? {
+              status: "COMPANY REPLY",
+              customerId,
+            }
+          : {
+              status: {
+                not: { equals: "COMPANY REPLY" },
+              },
+              customerId,
+            },
+      });
+      return countData;
     } catch (error) {
       this._loggerService.getLogger().error(`Error ${error}`);
       throw new InternalServerError(

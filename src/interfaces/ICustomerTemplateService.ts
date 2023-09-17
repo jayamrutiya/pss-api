@@ -18,15 +18,20 @@ export interface ICustomerTemplateService {
   getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<UpdateCustomerTemplate[]>;
 
-  createWordFileCustomerTemplate(customerId: number): Promise<any>;
+  createWordFileCustomerTemplate(
+    customerTemplateMasterId: number,
+    customerId: number
+  ): Promise<any>;
 
   getCustomerTemplateStatus(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<{ isAvailable: boolean }>;
 
   deleteCustomerTemplateById(id: number): Promise<any>;
@@ -34,7 +39,8 @@ export interface ICustomerTemplateService {
   getFiltterTemplate(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<Template[]>;
 
   getCustomerTemplateById(id: number): Promise<UpdateCustomerTemplate | null>;
@@ -48,4 +54,10 @@ export interface ICustomerTemplateService {
     url: string | null,
     status: string | null
   ): Promise<CustomerTemplateMaster>;
+
+  getCustomerTemplateMasters(
+    customerId: number
+  ): Promise<CustomerTemplateMaster[]>;
+
+  deleteCustomerTemplateMasterById(id: number): Promise<CustomerTemplateMaster>;
 }
