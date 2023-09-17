@@ -21,7 +21,7 @@ express_1.default.listen(env_1.default.PORT, () => {
         .info(`⚡️[server]: API DOCS: http://localhost:${env_1.default.PORT}${env_1.default.API_ROOT}/docs`);
 });
 express_1.default.use("/api/doc/:name", (req, res) => {
-    res.sendFile(path_1.default.resolve(`src/public/${req.params.name}`), {
+    res.sendFile(path_1.default.resolve(`../src/public/${req.params.name}`), {
         root: __dirname,
     });
 });
