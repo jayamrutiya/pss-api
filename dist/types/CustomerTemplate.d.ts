@@ -2,6 +2,7 @@ import { Customer, Template } from "@prisma/client";
 export declare type CreateCustomerTemplateInput = {
     id: number | null;
     customerId: number;
+    customerTemplateMasterId: number | null;
     templateId: number | null;
     templateType: string;
     templateData: string | null;
@@ -12,6 +13,7 @@ export declare type CreateCustomerTemplateInput = {
 export declare type CustomerTemplateWithCustomerTemplate = {
     id: number;
     customerId: number;
+    customerTemplateMasterId: number | null;
     templateId: number | null;
     templateType: string;
     templateData: string | null;
@@ -24,6 +26,7 @@ export declare type CustomerTemplateWithCustomerTemplate = {
 export declare type CustomerTemplateWithCustomerTemplateRepo = {
     id: number;
     customerId: number;
+    customerTemplateMasterId: number | null;
     templateId: number | null;
     templateType: string;
     templateData: string | null;

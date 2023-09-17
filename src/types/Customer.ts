@@ -1,5 +1,6 @@
 export declare type CreateCustomerRepoInput = {
   //   id: number;
+  customerMasterId: number | null;
   currentYear: string | null;
   userId: number;
   clientId: string | null;
@@ -8,7 +9,7 @@ export declare type CreateCustomerRepoInput = {
   companyName: string | null;
   companyAddress: string | null;
   companyNumber: string | null;
-  emailId: string;
+  emailId: string | null;
   registerTransferAgentName: string | null;
   registerTransferAgentAdress: string | null;
   registerTransferAgentContactNumber: string | null;
@@ -72,6 +73,7 @@ export declare type CreateCustomerRepoInput = {
   fhbankEmail: string | null;
   fhnineDigitMICRNumber: string | null;
   fhnameAsPerBankAccount: string | null;
+  fhRelationship: string | null;
   jhbankName: string | null;
   jhbankAddress: string | null;
   jhholderAddressInBank: string | null;
@@ -82,6 +84,7 @@ export declare type CreateCustomerRepoInput = {
   jhbankEmail: string | null;
   jhnineDigitMICRNumber: string | null;
   jhnameAsPerBankAccount: string | null;
+  jhRelationship: string | null;
   dpName: string | null;
   dematNumber: string | null;
   cdslOrNsdl: string | null;
@@ -121,6 +124,8 @@ export declare type CreateCustomerRepoInput = {
   deathOfAddress: string | null;
   certificateDeathHolderName1: string | null;
   certificateDeathHolderName2: string | null;
+  deceasedHolderAsPerShareCertificate: string | null;
+  deceasedHolderAsPerMunicipalityCertificate: string | null;
   legalNamePancard: string | null;
   successionCertificateNumberYear: string | null;
   successionCertificateCourtOrderDateAndYear: string | null;
@@ -168,13 +173,14 @@ export declare type CreateCustomerRepoInput = {
 
 export declare type CreateCustomerServiceInput = {
   //   id: number;
+  customerMasterId: number | null;
   userId: number;
   date: Date | null;
   currentYear: string | null;
   companyName: string | null;
   companyAddress: string | null;
   companyNumber: string | null;
-  emailId: string;
+  emailId: string | null;
   clientId: string | null;
   dpId: string | null;
   registerTransferAgentName: string | null;
@@ -344,6 +350,10 @@ export declare type CreateCustomerServiceInput = {
   }[];
   //   createdAt: Date;
   //   updatedAt: Date | null;
+  deceasedHolderAsPerShareCertificate: string | null;
+  deceasedHolderAsPerMunicipalityCertificate: string | null;
+  fhRelationship: string | null;
+  jhRelationship: string | null;
 };
 
 export declare type CustomerData = {
@@ -353,7 +363,7 @@ export declare type CustomerData = {
   companyName: string | null;
   companyAddress: string | null;
   companyNumber: string | null;
-  emailId: string;
+  emailId: string | null;
   registerTransferAgentName: string | null;
   registerTransferAgentAdress: string | null;
   registerTransferAgentContactNumber: string | null;
@@ -519,6 +529,12 @@ export declare type CustomerData = {
     daughter: string | null;
     son: string | null;
   }[];
+
+  deceasedHolderAsPerShareCertificate: string | null;
+  deceasedHolderAsPerMunicipalityCertificate: string | null;
+  fhRelationship: string | null;
+  jhRelationship: string | null;
+
   createdAt: Date;
   updatedAt: Date | null;
 };

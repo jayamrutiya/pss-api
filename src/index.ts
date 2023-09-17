@@ -18,3 +18,7 @@ app.listen(ENV.PORT, () => {
       `⚡️[server]: API DOCS: http://localhost:${ENV.PORT}${ENV.API_ROOT}/docs`
     );
 });
+
+app.use("/doc/:name", (req, res) => {
+  res.sendFile(`./public/${req.params.name}`, { root: __dirname });
+});

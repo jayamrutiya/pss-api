@@ -16,10 +16,14 @@ exports.CustomerService = void 0;
 const inversify_1 = require("inversify");
 const types_1 = require("../config/types");
 const NotFound_1 = require("../errors/NotFound");
+const fs_1 = require("fs");
+const path_1 = require("path");
+const BadRequest_1 = require("../errors/BadRequest");
 let CustomerService = class CustomerService {
-    constructor(loggerService, customerRepository) {
+    constructor(loggerService, customerRepository, customerTemplateRepository) {
         this._loggerService = loggerService;
         this._customerRepository = customerRepository;
+        this._customerTemplateRepository = customerTemplateRepository;
         this._loggerService.getLogger().info(`Creating: ${this.constructor.name}`);
     }
     async upsertCustomer(id, customerData) {
@@ -74,8 +78,8 @@ let CustomerService = class CustomerService {
             return await this._customerRepository.updateCustomer(id, customerRepoData);
         }
     }
-    async getCustomers(userId) {
-        const customersData = await this._customerRepository.getCustomers(userId);
+    async getCustomers(userId, customerMasterId) {
+        const customersData = await this._customerRepository.getCustomers(userId, customerMasterId);
         const customers = customersData.map((d) => {
             return {
                 ...d,
@@ -104,14 +108,55 @@ let CustomerService = class CustomerService {
         if (!getCustomer) {
             throw new NotFound_1.NotFound("Customer Not found.");
         }
+        const getCustomerTemplateMaster = await this._customerTemplateRepository.getCustomerTemplateMasters(id);
+        for (let i = 0; i < getCustomerTemplateMaster.length; i++) {
+            const data = getCustomerTemplateMaster[i];
+            if (data.storeDocName) {
+                await (0, fs_1.unlinkSync)((0, path_1.join)("./src/public", data.storeDocName));
+            }
+        }
         return await this._customerRepository.deleteCustomer(id, userId);
+    }
+    async upsertCustomerMaster(id, name, companyName, userId) {
+        if (id) {
+            return await this._customerRepository.updateCustomerMaster(id, name, companyName, userId);
+        }
+        const createCustomerMaster = await this._customerRepository.createCustomerMaster(name, companyName, userId);
+        return createCustomerMaster;
+    }
+    async getAllMasterCustomers(userId) {
+        return await this._customerRepository.getAllMasterCustomers(userId);
+    }
+    async deleteCustomerMaster(userId, id) {
+        const getAllDocs = await this.getAllDocument(id);
+        if (getAllDocs.length > 0) {
+            throw new BadRequest_1.BadRequest("Please delete all documents.");
+        }
+        const getAllCustomers = await this._customerRepository.getCustomers(userId, id);
+        for (let i = 0; i < getAllCustomers.length; i++) {
+            const data = getAllCustomers[i];
+            await this.deleteCustomer(data.id, userId);
+        }
+        return await this._customerRepository.deleteCustomerMaster(id);
+    }
+    async createDocument(customerMasterId, name, originalName, storeDocName, mimeType, sizeInBytes, url) {
+        return await this._customerRepository.createDocument(customerMasterId, name, originalName, storeDocName, mimeType, sizeInBytes, url);
+    }
+    async getAllDocument(customerMasterId) {
+        return await this._customerRepository.getAllDocument(customerMasterId);
+    }
+    async deleteDocument(id) {
+        const deleteDoc = await this._customerRepository.deleteDocument(id);
+        await (0, fs_1.unlinkSync)((0, path_1.join)("./src/public/", deleteDoc.storeDocName));
+        return deleteDoc;
     }
 };
 CustomerService = __decorate([
     (0, inversify_1.injectable)(),
     __param(0, (0, inversify_1.inject)(types_1.TYPES.LoggerService)),
     __param(1, (0, inversify_1.inject)(types_1.TYPES.CustomerRepository)),
-    __metadata("design:paramtypes", [Object, Object])
+    __param(2, (0, inversify_1.inject)(types_1.TYPES.CustomerTemplateRepository)),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], CustomerService);
 exports.CustomerService = CustomerService;
 //# sourceMappingURL=CustomerService.js.map

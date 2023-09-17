@@ -5,6 +5,7 @@ import { ILoggerService } from "../interfaces/ILoggerService";
 import { ICustomerTemplateService } from "../interfaces/ICustomerTemplateService";
 import { CustomerTemplateController } from "../controllers/CustomerTemplateController";
 import passport from "../middlewares/passport";
+import { uploadCompanyReply } from "../middlewares/multer";
 
 const router = express.Router();
 
@@ -15,6 +16,14 @@ const customerTemplateService = Container.get<ICustomerTemplateService>(
 const customerTemplateController = new CustomerTemplateController(
   loggerService,
   customerTemplateService
+);
+
+router.get(
+  "/master",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.getCustomerTemplateMasters(req, res);
+  }
 );
 
 router.get("/dbdump", (req, res) => {
@@ -66,6 +75,23 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     customerTemplateController.getCustomerTemplateById(req, res);
+  }
+);
+
+router.post(
+  "/master",
+  uploadCompanyReply.single("file"),
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.createCustomerTemplateMaster(req, res);
+  }
+);
+
+router.delete(
+  "/master",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    customerTemplateController.deleteCustomerTemplateMasterById(req, res);
   }
 );
 

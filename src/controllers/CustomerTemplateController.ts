@@ -8,6 +8,7 @@ import fs, { unlinkSync } from "fs";
 import { join } from "path";
 import { replaceAll } from "../config/helper";
 import mysqldump from "mysqldump";
+import env from "../config/env";
 export class CustomerTemplateController extends BaseController {
   private _loggerService: ILoggerService;
   private _customerTemplateService: ICustomerTemplateService;
@@ -76,7 +77,7 @@ export class CustomerTemplateController extends BaseController {
       this.validateRequest(req);
 
       const token = req.user as any;
-      const { customerId, templateType } = req.query;
+      const { customerId, templateType, customerTemplateMasterId } = req.query;
 
       if (!customerId || !templateType) {
         throw new BadRequest("Invalid argument.");
@@ -86,7 +87,8 @@ export class CustomerTemplateController extends BaseController {
         await this._customerTemplateService.getCustomerTemplateByTypeAndCustomerId(
           Number(customerId),
           templateType,
-          Number(token.id)
+          Number(token.id),
+          Number(customerTemplateMasterId)
         );
 
       // Return the response
@@ -106,10 +108,14 @@ export class CustomerTemplateController extends BaseController {
     try {
       // validate input
       this.validateRequest(req);
+      const customerTemplateMasterId = Number(
+        req.query.customerTemplateMasterId
+      );
       const customerId = Number(req.query.customerId);
       const token = req.user as any;
       const saveCustomerTemplateData =
         await this._customerTemplateService.createWordFileCustomerTemplate(
+          customerTemplateMasterId,
           customerId
         );
       // res.setHeader(
@@ -135,7 +141,7 @@ export class CustomerTemplateController extends BaseController {
           if (err) {
             console.log(err); // Check error if you want
           } else {
-            unlinkSync(saveCustomerTemplateData.filePath);
+            // unlinkSync(saveCustomerTemplateData.filePath);
           }
         }
       );
@@ -156,13 +162,14 @@ export class CustomerTemplateController extends BaseController {
   async getCustomerTemplateStatus(req: any, res: express.Response) {
     try {
       const token = req.user as any;
-      const { customerId, templateType } = req.query;
+      const { customerId, templateType, customerTemplateMasterId } = req.query;
 
       const getCustomerTemplate =
         await this._customerTemplateService.getCustomerTemplateStatus(
           Number(customerId),
           templateType,
-          Number(token.id)
+          Number(token.id),
+          Number(customerTemplateMasterId)
         );
 
       // Return the response
@@ -204,13 +211,14 @@ export class CustomerTemplateController extends BaseController {
   async getFiltterTemplate(req: any, res: express.Response) {
     try {
       const token = req.user as any;
-      const { customerId, templateType } = req.query;
+      const { customerId, templateType, customerTemplateMasterId } = req.query;
 
       const getFilterTemplate =
         await this._customerTemplateService.getFiltterTemplate(
           Number(customerId),
           templateType,
-          Number(token.id)
+          Number(token.id),
+          Number(customerTemplateMasterId)
         );
       // Return the response
       return this.sendJSONResponse(
@@ -269,6 +277,101 @@ export class CustomerTemplateController extends BaseController {
           unlinkSync(`${__dirname}/pss.sql`);
         }
       });
+    } catch (error) {
+      console.log("Error", error);
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async createCustomerTemplateMaster(req: any, res: express.Response) {
+    try {
+      const token = req.user as any;
+      console.log("File", req.file);
+      const userId = Number(token.id);
+      const customerId = Number(req.body.customerId);
+
+      let originalName = null;
+      let storeDocName = null;
+      let status = "PENDING";
+      let url;
+      const name = req.body.name;
+      if (req.file) {
+        status = "COMPANY REPLY";
+        originalName = req.file.originalname;
+        storeDocName = req.file.filename;
+        url = `${env.API_BASEURL}/doc/${storeDocName}`;
+      }
+      console.log("url", url);
+      // const name = req.body.
+
+      const createCustomerTemplateMaster =
+        await this._customerTemplateService.createCustomerTemplateMaster(
+          userId,
+          customerId,
+          name,
+          originalName,
+          storeDocName,
+          url,
+          status
+        );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template.",
+        {
+          size: 1,
+        },
+        createCustomerTemplateMaster
+      );
+    } catch (error) {
+      console.log("Error", error);
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async getCustomerTemplateMasters(req: any, res: express.Response) {
+    try {
+      const { customerId } = req.query;
+
+      const getCustomerTemplateMasters =
+        await this._customerTemplateService.getCustomerTemplateMasters(
+          Number(customerId)
+        );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template Master.",
+        {
+          size: getCustomerTemplateMasters.length,
+        },
+        getCustomerTemplateMasters
+      );
+    } catch (error) {
+      console.log("Error", error);
+      return this.sendErrorResponse(req, res, error);
+    }
+  }
+
+  async deleteCustomerTemplateMasterById(req: any, res: express.Response) {
+    try {
+      const { id } = req.query;
+
+      const deleteData =
+        await this._customerTemplateService.deleteCustomerTemplateMasterById(
+          Number(id)
+        );
+
+      // Return the response
+      return this.sendJSONResponse(
+        res,
+        "Customer Template Master deleted successfully.",
+        {
+          size: 1,
+        },
+        deleteData
+      );
     } catch (error) {
       console.log("Error", error);
       return this.sendErrorResponse(req, res, error);

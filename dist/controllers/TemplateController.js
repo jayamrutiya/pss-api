@@ -24,6 +24,7 @@ class TemplateController extends BaseController_1.default {
                 "MAIN_CONTENT",
                 "SUMMARY",
                 "AGREEMENT",
+                "SUMMARY1",
             ];
             if (!type || !types.includes(type)) {
                 throw new BadRequest_1.BadRequest("Please select valid type.");
@@ -57,6 +58,7 @@ class TemplateController extends BaseController_1.default {
                 "MAIN_CONTENT",
                 "SUMMARY",
                 "AGREEMENT",
+                "SUMMARY1",
             ];
             if (type.trim() && !types.includes(type.trim())) {
                 throw new BadRequest_1.BadRequest("Please select valid type.");

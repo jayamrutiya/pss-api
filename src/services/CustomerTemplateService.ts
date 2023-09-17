@@ -8,17 +8,23 @@ import {
   CustomerTemplateWithCustomerTemplate,
   UpdateCustomerTemplate,
 } from "../types/CustomerTemplate";
-import { Customer, CustomerTemplate, Template } from "@prisma/client";
+import {
+  Customer,
+  CustomerTemplate,
+  CustomerTemplateMaster,
+  Template,
+} from "@prisma/client";
 import { ICustomerRepository } from "../interfaces/ICustomerRepository";
 import { ITemplateRepository } from "../interfaces/ITemplateRepository";
 import { BadRequest } from "../errors/BadRequest";
 import { replaceAll } from "../config/helper";
 import moment from "moment";
-import fs, { writeFileSync } from "fs";
+import fs, { unlinkSync, writeFileSync } from "fs";
 import { join } from "path";
 import { NotFound } from "../errors/NotFound";
 import htmlToDocx from "html-to-docx";
 import htmlDocx from "html-docx-js";
+import env from "../config/env";
 
 @injectable()
 export class CustomerTemplateService implements ICustomerTemplateService {
@@ -66,17 +72,16 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, olhnamepan);
 
     find = "[[olhnameInPancard1]]";
-    let olhnamepan1 = olhnamepan.split(",")[0]
+    let olhnamepan1 = olhnamepan.split(",")[0];
     str = replaceAll(str, find, olhnamepan1);
 
     find = "[[olhnameInPancard2]]";
-    let olhnamepan2 = olhnamepan.split(",")[1]
+    let olhnamepan2 = olhnamepan.split(",")[1];
     str = replaceAll(str, find, olhnamepan2);
 
     find = "[[olhnameInPancard3]]";
-    let olhnamepan3 = olhnamepan.split(",")[2]
+    let olhnamepan3 = olhnamepan.split(",")[2];
     str = replaceAll(str, find, olhnamepan3);
-
 
     find = "[[olhnameInaadharcard]]";
     let olhnameaadhar = "";
@@ -87,18 +92,16 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, olhnameaadhar);
 
     find = "[[olhnameInaadharcard1]]";
-    let olhnameInaadharcard1 = olhnameaadhar.split(",")[0]
+    let olhnameInaadharcard1 = olhnameaadhar.split(";")[0];
     str = replaceAll(str, find, olhnameInaadharcard1);
 
     find = "[[olhnameInaadharcard2]]";
-    let olhnameInaadharcard2 = olhnameaadhar.split(",")[1]
+    let olhnameInaadharcard2 = olhnameaadhar.split(";")[1];
     str = replaceAll(str, find, olhnameInaadharcard2);
 
     find = "[[olhnameInaadharcard3]]";
-    let olhnameInaadharcard3 = olhnameaadhar.split(",")[2]
+    let olhnameInaadharcard3 = olhnameaadhar.split(";")[2];
     str = replaceAll(str, find, olhnameInaadharcard3);
-
-
 
     find = "[[olhaddressaddhar]]";
     let olhaddaadhar = "";
@@ -109,18 +112,16 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, olhaddaadhar);
 
     find = "[[olhaddressaddhar1]]";
-    let olhaddressaddhar1 = olhaddaadhar.split(",")[0]
+    let olhaddressaddhar1 = olhaddaadhar.split(";")[0];
     str = replaceAll(str, find, olhaddressaddhar1);
 
     find = "[[olhaddressaddhar2]]";
-    let olhaddressaddhar2 = olhaddaadhar.split(",")[1]
+    let olhaddressaddhar2 = olhaddaadhar.split(";")[1];
     str = replaceAll(str, find, olhaddressaddhar2);
 
     find = "[[olhaddressaddhar3]]";
-    let olhaddressaddhar3 = olhaddaadhar.split(",")[2]
+    let olhaddressaddhar3 = olhaddaadhar.split(";")[2];
     str = replaceAll(str, find, olhaddressaddhar3);
-
-
 
     find = "[[olhage]]";
     let olhage = "";
@@ -131,38 +132,39 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     str = replaceAll(str, find, olhage);
 
     find = "[[olhage1]]";
-    let olhage1 = olhage.split(",")[0]
+    let olhage1 = olhage.split(",")[0];
     str = replaceAll(str, find, olhage1);
 
     find = "[[olhage2]]";
-    let olhage2 = olhage.split(",")[1]
+    let olhage2 = olhage.split(",")[1];
     str = replaceAll(str, find, olhage2);
 
     find = "[[olhage3]]";
-    let olhage3 = olhage.split(",")[2]
+    let olhage3 = olhage.split(",")[2];
     str = replaceAll(str, find, olhage3);
 
     find = "[[olhdaughterson]]";
     let olhdaughterson = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
-      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son},`;
+      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+        },`;
     }
     str = replaceAll(str, find, olhdaughterson);
 
     find = "[[olhdaughterson1]]";
-    let olhdaughterson1 = olhdaughterson.split(",")[0]
+    let olhdaughterson1 = olhdaughterson.split(",")[0];
     str = replaceAll(str, find, olhdaughterson1);
 
     find = "[[olhdaughterson2]]";
-    let olhdaughterson2 = olhdaughterson.split(",")[1]
+    let olhdaughterson2 = olhdaughterson.split(",")[1];
     str = replaceAll(str, find, olhdaughterson2);
 
     find = "[[olhdaughterson3]]";
-    let olhdaughterson3 = olhdaughterson.split(",")[2]
+    let olhdaughterson3 = olhdaughterson.split(",")[2];
     str = replaceAll(str, find, olhdaughterson3);
 
-    //error 
+    //error
     // try SDT
 
     find = "[[distinctiveNumber]]";
@@ -170,7 +172,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bd += `${customerYWD.distinctiveNumber},`;
-
     }
     str = replaceAll(str, find, bd);
 
@@ -188,18 +189,111 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       const customerYWD = customer.tableSDT[index];
       bt += `${customerYWD.totalShareQuantity},`;
     }
+
     str = replaceAll(str, find, bt);
     //and error
 
     //noticeTable
     find = "[[noticeTable]]";
-    const headn = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
+
+    const headn = `<style>
+      div.MsoNoSpacing {
+        mso-style-link: "No Spacing Char";
+        margin: 0in;
+        font-size: 11pt;
+        font-family: "Calibri", sans-serif;
+      }
+
+      p.MsoNoSpacing {
+        mso-style-link: "No Spacing Char";
+        margin: 0in;
+        font-size: 11pt;
+        font-family: "Calibri", sans-serif;
+      }
+    </style>
+    <table
+    class="MsoTableGrid"
+    border="1"
+    cellspacing="0"
+    cellpadding="0"
+    width="624"
+    style="
+      width: 467.75pt;
+      margin-left: -0.25pt;
+      border-collapse: collapse;
+      border: none;
+    "
+  >
+
+
+
     <thead>
-      <tr>
-        <td style="text-align:center"  scope="col">Folio No.</td>
-        <td style="text-align:center"  scope="col">Certificate Number</td>
-        <td style="text-align:center"  scope="col">Distinctive Number(s)</td>
-        <td style="text-align:center"  scope="col">Shares held in each Certificate</td>
+       <tr style="height: 26.95pt">
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            padding: 0in 5.4pt 0in 5.4pt;
+            height: 26.95pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+          </p>
+        </td>
+        <td
+          width="156"
+          valign="top"
+          style="
+            width: 117pt;
+            border: solid windowtext 1pt;
+            border-left: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+            height: 26.95pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >Certificate Number</span
+            >
+          </p>
+        </td>
+        <td
+          width="156"
+          valign="top"
+          style="
+            width: 117pt;
+            border: solid windowtext 1pt;
+            border-left: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+            height: 26.95pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >Distinctive Number(s)</span
+            >
+          </p>
+        </td>
+        <td
+          width="168"
+          valign="top"
+          style="
+            width: 125.75pt;
+            border: solid windowtext 1pt;
+            border-left: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+            height: 26.95pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >Shares held in each Certificate</span
+            >
+          </p>
+        </td>
       </tr>
     </thead>
     <tbody>`;
@@ -210,10 +304,68 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bodyn += `<tr>
-			<td style="text-align:center" >${customer.ledgerFolio}</td>
-			<td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-			<td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
-			<td style="text-align:center" >${customerYWD.totalShareQuantity}of Rs.${customer.faceValueAsOnToday} /-FV</td>
+			<td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+          </p>
+        </td>
+
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+          </p>
+        </td>
+        
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+          </p>
+        </td>
+        
+        <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+        >
+          <p class="MsoNoSpacing">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-FV</span
+            >
+          </p>
+        </td>
+			
 		</tr>`;
     }
     const datan = headn + bodyn + footn;
@@ -221,14 +373,105 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     //folioCertiDistShareInCerti
     find = "[[folioCertiDistShareInCerti]]";
-    const headf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-    <thead>
-      <tr>
-        <td style="text-align:center"  scope="col">Folio No.</td>
-        <td style="text-align:center"  scope="col">Certificate Nos.</td>
-        <td style="text-align:center"  scope="col">Distinctive Nos. From</td>
-        <td style="text-align:center"  scope="col">Shares held in each Certificate</td>
-      </tr>
+    const headf = `<style>
+div.MsoNoSpacing {
+  mso-style-link: "No Spacing Char";
+  margin: 0in;
+  font-size: 11pt;
+  font-family: "Calibri", sans-serif;
+}
+
+p.MsoNoSpacing {
+  mso-style-link: "No Spacing Char";
+  margin: 0in;
+  font-size: 11pt;
+  font-family: "Calibri", sans-serif;
+}
+</style>
+<table
+class="MsoTableGrid"
+border="1"
+cellspacing="0"
+cellpadding="0"
+width="624"
+style="
+width: 467.75pt;
+margin-left: -0.25pt;
+border-collapse: collapse;
+border: none;
+"
+>
+
+
+
+<thead>
+<tr style="height: 26.95pt">
+<td
+  width="144"
+  valign="top"
+  style="
+    width: 1.5in;
+    border: solid windowtext 1pt;
+    padding: 0in 5.4pt 0in 5.4pt;
+    height: 26.95pt;
+  "
+>
+  <p class="MsoNoSpacing" align="center" style="text-align: center">
+    <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+  </p>
+</td>
+<td
+  width="156"
+  valign="top"
+  style="
+    width: 117pt;
+    border: solid windowtext 1pt;
+    border-left: none;
+    padding: 0in 5.4pt 0in 5.4pt;
+    height: 26.95pt;
+  "
+>
+  <p class="MsoNoSpacing" align="center" style="text-align: center">
+    <span style="font-family: 'Tahoma', sans-serif"
+      >Certificate Nos.</span
+    >
+  </p>
+</td>
+<td
+  width="156"
+  valign="top"
+  style="
+    width: 117pt;
+    border: solid windowtext 1pt;
+    border-left: none;
+    padding: 0in 5.4pt 0in 5.4pt;
+    height: 26.95pt;
+  "
+>
+  <p class="MsoNoSpacing" align="center" style="text-align: center">
+    <span style="font-family: 'Tahoma', sans-serif"
+      >Distinctive Nos.</span
+    >
+  </p>
+</td>
+<td
+  width="168"
+  valign="top"
+  style="
+    width: 125.75pt;
+    border: solid windowtext 1pt;
+    border-left: none;
+    padding: 0in 5.4pt 0in 5.4pt;
+    height: 26.95pt;
+  "
+>
+  <p class="MsoNoSpacing" align="center" style="text-align: center">
+    <span style="font-family: 'Tahoma', sans-serif"
+      >Shares held in each Certificate</span
+    >
+  </p>
+</td>
+</tr>
     </thead>
     <tbody>`;
     const footf = `</tbody>
@@ -238,28 +481,192 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bodyf += `<tr>
-			<td style="text-align:center" >${customer.ledgerFolio}</td>
-			<td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-			<td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
-			<td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-		</tr>`;
+      <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+          </p>
+        </td>
+    
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+          </p>
+        </td>
+        
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+          </p>
+        </td>
+        
+        <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+        >
+          <p class="MsoNoSpacing">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >${customerYWD.totalShareQuantity}</span
+            >
+          </p>
+        </td>
+      
+    </tr>`;
     }
     const dataf = headf + bodyf + footf;
     str = replaceAll(str, find, dataf);
 
+
     //folioShareCertiDist
     find = "[[folioShareCertiDist]]";
-    const hf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-      <thead>
-        <tr>
-          <td style="text-align:center"  scope="col">Folio Number</td>
-          <td style="text-align:center"  scope="col">No. of Shares</td>
-          <td style="text-align:center"  scope="col">Certificate Numbers</td>
-          <td style="text-align:center"  scope="col">Distinctive No. (From)</td>
-          <td style="text-align:center"  scope="col">Distinctive No. (To)</td>
-        </tr>
-      </thead>
-      <tbody>`;
+    const hf = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+  >
+  
+  
+  
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >
+           No. of Shares</td>
+           <td
+           width="156"
+           valign="top"
+           style="
+             width: 117pt;
+             border: solid windowtext 1pt;
+             border-left: none;
+             padding: 0in 5.4pt 0in 5.4pt;
+             height: 26.95pt;
+           "
+         >
+           <p class="MsoNoSpacing" align="center" style="text-align: center">
+             <span style="font-family: 'Tahoma', sans-serif"
+               >Certificate Numbers</span
+             >
+           </p>
+         </td>
+         <td
+         width="156"
+         valign="top"
+         style="
+           width: 117pt;
+           border: solid windowtext 1pt;
+           border-left: none;
+           padding: 0in 5.4pt 0in 5.4pt;
+           height: 26.95pt;
+         "
+       >
+         <p class="MsoNoSpacing" align="center" style="text-align: center">
+           <span style="font-family: 'Tahoma', sans-serif"
+             >Distinctive No. (From)</span
+           >
+         </p>
+       </td>
+       <td
+         width="168"
+         valign="top"
+         style="
+           width: 125.75pt;
+           border: solid windowtext 1pt;
+           border-left: none;
+           padding: 0in 5.4pt 0in 5.4pt;
+           height: 26.95pt;
+         "
+       >
+         <p class="MsoNoSpacing" align="center" style="text-align: center">
+           <span style="font-family: 'Tahoma', sans-serif"
+             >Distinctive No. (To)</span
+           >
+         </p>
+       </td>
+          </tr>
+        </thead>
+        <tbody>`;
     const ff = `</tbody>
       </table>`;
     let bf = "";
@@ -267,34 +674,415 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bf += `<tr>
-        <td style="text-align:center" >${customer.ledgerFolio}</td>
-        <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-        <td style="text-align:center" >${customerYWD.shareCertificateNumber
-        }</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      </tr>`;
+      <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+          </p>
+        </td>
+    
+      
+        <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+        >
+          <p class="MsoNoSpacing">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >${customerYWD.totalShareQuantity}</span
+            >
+          </p>
+        </td>
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+      </p>
+    </td>
+     
+    <td
+    width="144"
+    valign="top"
+    style="
+      width: 1.5in;
+      border: solid windowtext 1pt;
+      border-top: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+    "
+    >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+    </p>
+    </td>
+    <td
+    width="144"
+    valign="top"
+    style="
+      width: 1.5in;
+      border: solid windowtext 1pt;
+      border-top: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+    "
+    >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}</span>
+    </p>
+    </td>
+    
+    </tr>`;
     }
     const df = hf + bf + ff;
     str = replaceAll(str, find, df);
+    //folioShareCertiDistNos
+    find = "[[folioShareCertiDistNos]]";
+    const h1f = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+  >
+  
+  
+  
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >
+           No of Shares</td>
+           <td
+           width="156"
+           valign="top"
+           style="
+             width: 117pt;
+             border: solid windowtext 1pt;
+             border-left: none;
+             padding: 0in 5.4pt 0in 5.4pt;
+             height: 26.95pt;
+           "
+         >
+           <p class="MsoNoSpacing" align="center" style="text-align: center">
+             <span style="font-family: 'Tahoma', sans-serif"
+               >Certificate No.</span
+             >
+           </p>
+         </td>
+         <td
+         width="156"
+         valign="top"
+         style="
+           width: 117pt;
+           border: solid windowtext 1pt;
+           border-left: none;
+           padding: 0in 5.4pt 0in 5.4pt;
+           height: 26.95pt;
+         "
+       >
+         <p class="MsoNoSpacing" align="center" style="text-align: center">
+           <span style="font-family: 'Tahoma', sans-serif"
+             >Distinctive Nos. (from)</span
+           >
+         </p>
+       </td>
+       <td
+         width="168"
+         valign="top"
+         style="
+           width: 125.75pt;
+           border: solid windowtext 1pt;
+           border-left: none;
+           padding: 0in 5.4pt 0in 5.4pt;
+           height: 26.95pt;
+         "
+       >
+         <p class="MsoNoSpacing" align="center" style="text-align: center">
+           <span style="font-family: 'Tahoma', sans-serif"
+             >Distinctive Nos. (To)</span
+           >
+         </p>
+       </td>
+          </tr>
+        </thead>
+        <tbody>`;
+    const f1f = `</tbody>
+      </table>`;
+    let b1f = "";
+    b1f += "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      b1f += `<tr>
+      <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+          </p>
+        </td>
+    
+      
+        <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+        >
+          <p class="MsoNoSpacing">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >${customerYWD.totalShareQuantity}</span
+            >
+          </p>
+        </td>
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+      </p>
+    </td>
+     
+    <td
+    width="144"
+    valign="top"
+    style="
+      width: 1.5in;
+      border: solid windowtext 1pt;
+      border-top: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+    "
+    >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+    </p>
+    </td>
+    <td
+    width="144"
+    valign="top"
+    style="
+      width: 1.5in;
+      border: solid windowtext 1pt;
+      border-top: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+    "
+    >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}</span>
+    </p>
+    </td>
+    
+    </tr>`;
+    }
+    const d1f = h1f + b1f + f1f;
+    str = replaceAll(str, find, d1f);
 
     //folioCertiDistSharesNameShareHolder
     find = "[[folioCertiDistSharesNameShareHolder]]";
-    const hof = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-      <thead>
-        <tr>
-          <td style="text-align:center"  scope="col">Folio No</td>
-          <td style="text-align:center"  scope="col">Certificate No</td>
-          <td style="text-align:center"  scope="col">Distinctive Nos.</td>
-          <td style="text-align:center"  scope="col">No of Shares</td>
-          <td style="text-align:center"  scope="col">Name of the Shareholder/s</td>
-        </tr>
-      </thead>
-      <tbody>`;
+    const hof = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+  >
+  
+  
+  
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Certificate No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Distinctive Nos.</span
+          >
+        </p>
+      </td>
+      <td
+        width="168"
+        valign="top"
+        style="
+          width: 125.75pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >No of Shares</span
+          >
+        </p>
+      
+        <td
+        width="168"
+        valign="top"
+        style="
+          width: 125.75pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Name of the Shareholder/s</span
+          >
+        </p>
+      </td>
+  
+    </tr>
+  </thead>
+  <tbody>`;
     const fof = `</tbody>
       </table>`;
     let bof = "";
@@ -302,32 +1090,198 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bof += `<tr>
-        <td style="text-align:center" >${customer.ledgerFolio}</td>
-        <td style="text-align:center" >${customerYWD.shareCertificateNumber
-        }</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
-        <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-        <td style="text-align:center" >${customer.deathHolderName1
-        } (deceased) jointly ${customer.deathHolderName2 ? customer.deathHolderName2 + "(deceased)" : ""
-        }</td>
-      </tr>`;
+      <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+          </p>
+        </td>
+    
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+          </p>
+        </td>
+        
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+          </p>
+        </td>
+        
+        <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+        >
+          <p class="MsoNoSpacing">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >${customerYWD.totalShareQuantity}</span
+            >
+          </p>
+        </td>
+        <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+        >
+          <p class="MsoNoSpacing">
+            <span style="font-family: 'Tahoma', sans-serif"
+              >${customer.deathHolderName1
+        } (deceased) jointly ${customer.deathHolderName2
+          ? customer.deathHolderName2 + "(deceased)"
+          : ""
+        }</span
+            >
+          </p>
+        </td>
+    </tr>`;
     }
     const dof = hof + bof + fof;
     str = replaceAll(str, find, dof);
 
     //folioSecuCertiNoDisti
     find = "[[folioSecuCertiNoDisti]]";
-    const hdf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-      <thead>
-        <tr>
-          <td style="text-align:center"  scope="col"></td>
-          <td style="text-align:center"  scope="col">FOLIO NO.</td>
-          <td style="text-align:center"  scope="col">No. of securities </td>
-          <td style="text-align:center"  scope="col">Security Certificate No.</td>
-          <td style="text-align:center"  scope="col" colspan=2>Distinctive Nos. From-To</td>
-        </tr>
-      </thead>
-      <tbody>`;
+    const hdf = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+  >
+  
+  
+  
+  <thead>
+     <tr style="height: 26.95pt"><td></td>
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">FOLIO NO.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >No. of securities</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Security Certificate No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="168"
+        valign="top"
+        style="
+          width: 125.75pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+         colspan=2
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Distinctive Nos.<br /> From-To</span
+          >
+        </p>
+      </td>
+      
+        
+    </tr>
+  </thead>
+  <tbody>`;
     const fdf = `</tbody>
       </table>`;
     let bdf = "";
@@ -335,34 +1289,226 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bdf += `<tr>
-      <td style="text-align:center" >${index + 1})</td>
-      <td style="text-align:center" >${customer.ledgerFolio}</td>
-      <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-      <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-        <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      </tr>`;
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif">${index + 1})</span>
+      </p>
+    </td>
+    <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+        </p>
+      </td>
+    
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+      ><p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style-*+="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+    </p>
+  </td>
+      
+
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "> 
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+      </p>
+      </td>
+
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+      ><p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+      </p>
+      </td>
+      
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+      >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif">
+          ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}</span>
+      </p>
+      </td>
+      
+      
+    
+    </tr>`;
     }
     const dff = hdf + bdf + fdf;
     str = replaceAll(str, find, dff);
 
     //nameComCertiDistFolioSerHeld
     find = "[[nameComCertiDistFolioSerHeld]]";
-    const hedf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-      <thead>
-        <tr>
-          <td style="text-align:center"  scope="col">Name of the Company</td>
-          <td style="text-align:center"  scope="col">Certificate No.</td>
-          <td style="text-align:center"  scope="col">Distinctive No.</td>
-          <td style="text-align:center"  scope="col">Folio No.</td>
-          <td style="text-align:center"  scope="col">No. and Face value of securities held</td>
-        </tr>
-      </thead>
-      <tbody>`;
+    const hedf = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+  >
+  
+  
+  
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.55in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Name of the Company</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width:70pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Certificate No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 70pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Distinctive No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="168"
+        valign="top"
+        style="
+          width: 50.75pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+          
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Folio No.</span
+          >
+        </p>
+      </td>
+      <td
+      width="168"
+      valign="top"
+      style="
+        width: 125.75pt;
+        border: solid windowtext 1pt;
+        border-left: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+        height: 26.95pt;
+      "
+        
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif"
+          >
+        No. and Face value of securities held
+        </span>
+      </p>
+    </td>
+      
+        
+    </tr>
+  </thead>
+  <tbody>`;
     const fedf = `</tbody>
       </table>`;
     let bedf = "";
@@ -370,29 +1516,209 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bedf += `<tr>
-      <td style="text-align:center" >${customer.companyName}</td>
-      <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
-      <td style="text-align:center" >${customer.ledgerFolio}</td>
-      <td style="text-align:center" >${customerYWD.totalShareQuantity} OF F.V RS.${customer.faceValueAsOnToday}/-</td>
-      </tr>`;
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif">${customer.companyName}</span>
+      </p>
+    </td>
+    <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+        </p>
+      </td>
+    
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+      >
+        <p class="MsoNoSpacing">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >${customerYWD.distinctiveNumber}</span>
+        </p>
+      </td>
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">${customerYWD.ledgerFolio}</span>
+        </p>
+      </td>
+      <td
+      width="144"
+      valign="top"
+      style="
+        width: 1.5in;
+        border: solid windowtext 1pt;
+        border-top: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+      "
+      ><p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity} OF F.V 
+          RS.${customer.faceValueAsOnToday}/-</span>
+      </p>
+      </td> 
+    </tr>`;
     }
     const daaf = hedf + bedf + fedf;
     str = replaceAll(str, find, daaf);
 
     //folioCertiDistFDistTNoShare
     find = "[[folioCertiDistFDistTNoShare]]";
-    const heedf = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-      <thead>
-        <tr>
-          <td style="text-align:center"  scope="col">Folio No.</td>
-          <td style="text-align:center"  scope="col">Certificate No.</td>
-          <td style="text-align:center"  scope="col">Distinctive No. From</td>
-          <td style="text-align:center"  scope="col">Distinctive No. To</td>
-          <td style="text-align:center"  scope="col">No. of shares held</td>
-        </tr>
-      </thead>
-      <tbody>`;
+    const heedf = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+>
+
+
+
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Certificate No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Distinctive No. From</span
+          >
+        </p>
+      </td>
+      <td
+        width="168"
+        valign="top"
+        style="
+          width: 125.75pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+          
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Distinctive No. To</span
+          >
+        </p>
+      </td>
+      
+      <td
+      width="168"
+      valign="top"
+      style="
+        width: 125.75pt;
+        border: solid windowtext 1pt;
+        border-left: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+        height: 26.95pt;
+      "
+        
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif"
+          >No. of shares held</span
+        >
+      </p>
+    </td>
+    
+
+        
+    </tr>
+  </thead>
+  <tbody>`;
     const feedf = `</tbody>
       </table>`;
     let beedf = "";
@@ -400,63 +1726,393 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       beedf += `<tr>
-      <td style="text-align:center" >${customer.ledgerFolio}</td>
-      <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
+   
+			<td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+          </p>
+        </td>
+
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+          </p>
+        </td>
+        
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            
+<span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
+          </p>
+        </td>
+               
+        <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            
+<span style="font-family: 'Tahoma', sans-serif">
+  ${customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
           : customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      <td style="text-align:center" >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday
-        }/-</td>
-         
-      </tr>`;
+        }</span>
+          </p>
+        </td>
+        <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          
+<span style="font-family: 'Tahoma', sans-serif">
+  ${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-
+</span>
+        </p>
+      </td>
+      
+			
+		</tr>`;
     }
     const ddata = heedf + beedf + feedf;
     str = replaceAll(str, find, ddata);
 
     //nameComFolioNoSecperClaim
     find = "[[nameComFolioNoSecperClaim]]";
-    const hdata = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-      <thead>
-        <tr>
-          <td style="text-align:center"  scope="col">Name of the Company</td>
-          <td style="text-align:center"  scope="col">Folio No.</td>
-          <td style="text-align:center"  scope="col">No. of Securities</td>
-          <td style="text-align:center"  scope="col">% of Claim</td>
-        </tr>
-      </thead>
-      <tbody>`;
+    const hdata = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+  >
+  
+  
+  
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Name of the Company</span>
+        </p>
+      </td>
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >No. of Securities</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >% of Claim</span
+          >
+        </p>
+      </td>           
+    </tr>
+  </thead>
+  <tbody>`;
     const fdata = `</tbody>
       </table>`;
     let bdata = "";
     bdata += "";
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
-      bdata += `<tr>
-      <td style="text-align:center" >${customer.companyName}</td>
-      <td style="text-align:center" >${customer.ledgerFolio}</td>
-      <td style="text-align:center" >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-</td>
-      <td style="text-align:center" >100 %</td>
-      </tr>`;
+      bdata += `   
+      <tr>
+         
+        <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        ">
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">${customer.companyName}</span>
+        </p>
+      </td>
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                ">
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+                </p>
+              </td>
+      
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;">
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customerData.totalShares} of Rs.${customer.faceValueAsOnToday}/-</span>
+                </p>
+              </td>
+              
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                <span style="font-family: 'Tahoma', sans-serif">100 %</span>
+                </p>
+              </td> 
+            
+            
+          </tr>`;
     }
     const dataa = hdata + bdata + fdata;
     str = replaceAll(str, find, dataa);
 
     //nameComFolioCertDistNEDistShares
     find = "[[nameComFolioCertDistNEDistShares]]";
-    const headdata = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-      <thead>
-        <tr>
-        <td style="text-align:center"  scope="col">Folio No.</td>
-          <td style="text-align:center"  scope="col">Cert. No.</td>
-          <td style="text-align:center"  scope="col">Start Dist. No.</td>
-          <td style="text-align:center"  scope="col">End Dist. No.</td>
-          <td style="text-align:center"  scope="col">Shares</td>
-        </tr>
-      </thead>
-      <tbody>`;
+    const headdata = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+>
+
+
+
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Cert. No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Start Dist. No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="168"
+        valign="top"
+        style="
+          width: 125.75pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+         
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >End Dist. No.</span
+          >
+        </p>
+      </td>
+      
+      <td
+      width="168"
+      valign="top"
+      style="
+        width: 125.75pt;
+        border: solid windowtext 1pt;
+        border-left: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+        height: 26.95pt;
+      "
+       
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif"
+          >Shares</span
+        >
+      </p>
+    </td>
+    
+
+        
+    </tr>
+  </thead>
+  <tbody>`;
     const footerdata = `</tbody>
       </table>`;
     let bodydata = "";
@@ -464,33 +2120,215 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bodydata += `<tr>
-      <td style="text-align:center" >${customer.ledgerFolio}</td>
-      <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-      <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-      </tr>`;
+      <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+                </p>
+              </td>
+      
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber} of Rs.${customer.faceValueAsOnToday}/-</span>
+                </p>
+              </td>
+              
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+                </p>
+              </td> 
+              
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}
+      </span>
+                </p>
+              </td> 
+              <td
+              width="144"
+              valign="top"
+              style="
+                width: 1.5in;
+                border: solid windowtext 1pt;
+                border-top: none;
+                padding: 0in 5.4pt 0in 5.4pt;
+              "
+            >
+              <p class="MsoNoSpacing" align="center" style="text-align: center">
+                <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+              </p>
+            </td>
+            
+          </tr>`;
     }
     const dataData = headdata + bodydata + footerdata;
     str = replaceAll(str, find, dataData);
 
     //folioShareCertiDistFT
     find = "[[folioShareCertiDistFT]]";
-    const hdft = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-          <thead>
-            <tr>
-              <td style="text-align:center"  scope="col">Folio No.</td>
-              <td style="text-align:center"  scope="col">Certificate No.</td>
-              <td style="text-align:center"  scope="col">Distinctive No. From</td>
-              <td style="text-align:center"  scope="col">Distinctive No. To</td>
-              <td style="text-align:center"  scope="col">No. of shares held</td>
-            </tr>
-          </thead>
-          <tbody>`;
+    const hdft = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+>
+
+
+
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Certificate. No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Distinctive No. From</span
+          >
+        </p>
+      </td>
+      <td
+        width="168"
+        valign="top"
+        style="
+          width: 125.75pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+         
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Distinctive No. To</span
+          >
+        </p>
+      </td>
+      
+      <td
+      width="168"
+      valign="top"
+      style="
+        width: 125.75pt;
+        border: solid windowtext 1pt;
+        border-left: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+        height: 26.95pt;
+      "
+       
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif"
+          >No. of shares held</span
+        >
+      </p>
+    </td>
+    
+
+        
+    </tr>
+  </thead>
+  <tbody>`;
     const fdft = `</tbody>
           </table>`;
     let bdft = "";
@@ -498,17 +2336,85 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bdft += `<tr>
-          <td style="text-align:center" >${customer.ledgerFolio}</td>
-          <td style="text-align:center" >${customerYWD.shareCertificateNumber
-        }</td>
-          <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-          <td style="text-align:center" >${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</td>
-          <td style="text-align:center" >${customerYWD.totalShareQuantity
-        } of Rs.${customer.faceValueAsOnToday}/-</td>
+      <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+                </p>
+              </td>
+      
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber} of Rs.${customer.faceValueAsOnToday}/-</span>
+                </p>
+              </td>
+              
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+                </p>
+              </td> 
+              
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}
+      </span>
+                </p>
+              </td> 
+              <td
+              width="144"
+              valign="top"
+              style="
+                width: 1.5in;
+                border: solid windowtext 1pt;
+                border-top: none;
+                padding: 0in 5.4pt 0in 5.4pt;
+              "
+            >
+              <p class="MsoNoSpacing" align="center" style="text-align: center">
+                <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
+        } of Rs.${customer.faceValueAsOnToday}/-</span>
+              </p>
+            </td>
+            
           </tr>`;
     }
     const d1data = hdft + bdft + fdft;
@@ -516,143 +2422,950 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     // certiDistNoSecurity
     find = "[[certiDistNoSecurity]]";
-    const h1 = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary" bordercolor="black">
- <thead>
-   <tr>
-     <th scope="col">CERTIFICATE NO.</th>
-     <th scope="col">DISTINCTIVE NOS.</th>
-     <th scope="col">NO. OF SECURITIES</th>
-   </tr>
- </thead>
- <tbody>`;
+    const h1 = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+>
+
+
+
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">CERTIFICATE NO.</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >DISTINCTIVE NOS.</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >NO. OF SECURITIES</span
+          >
+        </p>
+      </td>
+    </tr>
+  </thead>
+  <tbody>`;
     const f1 = `</tbody>
  </table>`;
     let b1 = "";
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
-      b1 += `<tr>
-   <td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-   <td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
-   <td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
- </tr>`;
+      b1 += `
+      <tr>
+      <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+                </p>
+              </td>
+      
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+                </p>
+              </td>
+              
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+                </p>
+              </td> 
+    </tr>
+    `;
     }
     const datacdn = h1 + b1 + f1;
     str = replaceAll(str, find, datacdn);
 
-
-
     //tables nameFolioShareFVCertiDistNo:-
     find = "[[nameFolioShareFVCertiDistNo]]";
-    const hname = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary" bordercolor="black">
-    <thead>
-      <tr>
-        <th scope="col">NAME</th>
-        <th scope="col">FOLIO NUMBER</th>
-        <th scope="col">SHARES</th>
-        <th scope="col">FV</th>
-        <th scope="col">CERTIFICATE NO</th>
-        <th scope="col">DISTINCTIVE NO</th>
-      </tr>
-    </thead>
-    <tbody>`;
+    const hname = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+>
+
+
+
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">NAME</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >FOLIO NUMBER</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >SHARES</span
+          >
+        </p>
+      </td>
+      <td
+      width="156"
+      valign="top"
+      style="
+        width: 117pt;
+        border: solid windowtext 1pt;
+        border-left: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+        height: 26.95pt;
+      "
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif"
+          >FV</span
+        >
+      </p>
+    </td>       <td
+    width="156"
+    valign="top"
+    style="
+      width: 117pt;
+      border: solid windowtext 1pt;
+      border-left: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+      height: 26.95pt;
+    "
+  >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif"
+        >CERTIFICATE NO</span
+      >
+    </p>
+  </td>       <td
+  width="156"
+  valign="top"
+  style="
+    width: 117pt;
+    border: solid windowtext 1pt;
+    border-left: none;
+    padding: 0in 5.4pt 0in 5.4pt;
+    height: 26.95pt;
+  "
+>
+  <p class="MsoNoSpacing" align="center" style="text-align: center">
+    <span style="font-family: 'Tahoma', sans-serif"
+      >DISTINCTIVE NO</span
+    >
+  </p>
+</td>
+    </tr>
+  </thead>
+  <tbody>`;
     const fname = `</tbody>
     </table>`;
     let bname = "";
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       bname += `<tr>
-			<td style="text-align:center" >${customer.deathHolderName1} (Deceased) Jointly ${customer.deathHolderName2}</td>
-			<td style="text-align:center" >${customer.ledgerFolio}</td>
-			<td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-			<td style="text-align:center" >${customer.faceValueAsOnToday}</td>
-			<td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-			<td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
-		</tr>`;
+      <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">
+                    ${customer.deathHolderName1} (Deceased) Jointly ${customer.deathHolderName2}
+                  </span>
+                </p>
+              </td>
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customer.ledgerFolio}
+      </span>
+                </p>
+              </td> 
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+                </p>
+              </td> 
+            
+      
+            <td
+            width="144"
+            valign="top"
+            style="
+              width: 1.5in;
+              border: solid windowtext 1pt;
+              border-top: none;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNoSpacing" align="center" style="text-align: center">
+              <span style="font-family: 'Tahoma', sans-serif">${customer.faceValueAsOnToday}</span>
+            </p>
+          </td>
+      
+      
+          <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+          </p>
+        </td>
+      
+            
+            <td
+            width="144"
+            valign="top"
+            style="
+              width: 1.5in;
+              border: solid windowtext 1pt;
+              border-top: none;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNoSpacing" align="center" style="text-align: center">
+              <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+            </p>
+          </td>
+          </tr>`;
     }
     const dname = hname + bname + fname;
     str = replaceAll(str, find, dname);
 
-
-
     //tables ywdATable:-
     find = "[[ywdATable]]";
-    const header = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-    <thead>
-      <tr>
-        <th scope="col">Year</th>
-        <th scope="col">Warrant No.</th>
-        <th scope="col">DD/MICR No.</th>
-        <th scope="col">Amount</th>
-      </tr>
-    </thead>
-    <tbody>`;
+    const header = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+>
+
+
+
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Year</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Warrant No.</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >DD/MICR No.</span
+          >
+        </p>
+      </td>
+      <td
+      width="156"
+      valign="top"
+      style="
+        width: 117pt;
+        border: solid windowtext 1pt;
+        border-left: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+        height: 26.95pt;
+      "
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif"
+          >Amount</span
+        >
+      </p>
+    </td>
+    </tr>
+  </thead>
+  <tbody>`;
     const footer = `</tbody>
     </table>`;
     let body = "";
     for (let index = 0; index < customer.ywdATabelData.length; index++) {
       const customerYWD = customer.ywdATabelData[index];
-      body += `<tr>
-			<td style="text-align:center" >${customerYWD.year}</td>
-			<td style="text-align:center" >${customerYWD.warrantNo}</td>
-			<td style="text-align:center" >${customerYWD.ddMicrNo}</td>
-			<td style="text-align:center" >${customerYWD.amount}</td>
-		</tr>`;
+      body += `
+      <tr>
+  <td
+    width="144"
+    valign="top"
+    style="
+      width: 1.5in;
+      border: solid windowtext 1pt;
+      border-top: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+    "
+  >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customerYWD.year}
+      </span>
+    </p>
+  </td>
+  <td
+    width="144"
+    valign="top"
+    style="
+      width: 1.5in;
+      border: solid windowtext 1pt;
+      border-top: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+    "
+  >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customerYWD.warrantNo}
+      </span>
+    </p>
+  </td>
+  <td
+    width="144"
+    valign="top"
+    style="
+      width: 1.5in;
+      border: solid windowtext 1pt;
+      border-top: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+    "
+  >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customerYWD.ddMicrNo}
+      </span>
+    </p>
+  </td>
+
+  <td
+    width="144"
+    valign="top"
+    style="
+      width: 1.5in;
+      border: solid windowtext 1pt;
+      border-top: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+    "
+  >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif">
+        ${customerYWD.amount}
+      </span>
+    </p>
+  </td>
+  
+</tr>
+
+    `;
     }
     const data = header + body + footer;
     str = replaceAll(str, find, data);
 
     //tables tableSDT:-
     find = "[[tableSDT]]";
-    const h = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary" bordercolor="black">
-    <thead>
-      <tr>
-        <th scope="col">Share Certificate Number</th>
-        <th scope="col">Distinctive Number</th>
-        <th scope="col">Total Share Quantity</th>
-      </tr>
-    </thead>
-    <tbody>`;
+    const h = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+  >
+  
+  
+  
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">Share Certificate Number</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Distinctive Number</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Total Share Quantity</span
+          >
+        </p>
+      </td>
+    </tr>
+  </thead>
+  <tbody>`;
     const f = `</tbody>
     </table>`;
     let b = "";
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       b += `<tr>
-			<td style="text-align:center" >${customerYWD.shareCertificateNumber}</td>
-			<td style="text-align:center" >${customerYWD.distinctiveNumber}</td>
-			<td style="text-align:center" >${customerYWD.totalShareQuantity}</td>
-		</tr>`;
+      <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+                </p>
+              </td>
+      
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+                </p>
+              </td>
+              
+              <td
+                width="144"
+                valign="top"
+                style="
+                  width: 1.5in;
+                  border: solid windowtext 1pt;
+                  border-top: none;
+                  padding: 0in 5.4pt 0in 5.4pt;
+                "
+              >
+                <p class="MsoNoSpacing" align="center" style="text-align: center">
+                  
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+                </p>
+              </td> 
+    </tr>`;
     }
     const dataSDT = h + b + f;
     str = replaceAll(str, find, dataSDT);
 
     //table otherLegalHears :-
     find = "[[otherLegalHears]]";
-    const head = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px" summary="Summary">
-    <thead>
-      <tr>
-        <th scope="col">Name In Pancard Exact Spelling</th>
-        <th scope="col">Address Same In AadharCard</th>
-        <th scope="col">Name In Aadhar Card Exect Spelling</th>
-        <th scope="col">Age</th>
-        <th scope="col">Daughter</th>
-        <th scope="col">Son</th>
-      </tr>
-    </thead>
-    <tbody>`;
+    const head = `<style>
+    div.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  
+    p.MsoNoSpacing {
+      mso-style-link: "No Spacing Char";
+      margin: 0in;
+      font-size: 11pt;
+      font-family: "Calibri", sans-serif;
+    }
+  </style>
+  <table
+  class="MsoTableGrid"
+  border="1"
+  cellspacing="0"
+  cellpadding="0"
+  width="624"
+  style="
+    width: 467.75pt;
+    margin-left: -0.25pt;
+    border-collapse: collapse;
+    border: none;
+  "
+  >
+  
+  
+  
+  <thead>
+     <tr style="height: 26.95pt">
+      <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif">
+            Name In Pancard Exact Spelling</span>
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Address Same In AadharCard</span
+          >
+        </p>
+      </td>
+      <td
+        width="156"
+        valign="top"
+        style="
+          width: 117pt;
+          border: solid windowtext 1pt;
+          border-left: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+          height: 26.95pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          <span style="font-family: 'Tahoma', sans-serif"
+            >Name In Aadhar Card Exect Spelling</span
+          >
+        </p>
+      </td>
+      <td
+      width="156"
+      valign="top"
+      style="
+        width: 117pt;
+        border: solid windowtext 1pt;
+        border-left: none;
+        padding: 0in 5.4pt 0in 5.4pt;
+        height: 26.95pt;
+      "
+    >
+      <p class="MsoNoSpacing" align="center" style="text-align: center">
+        <span style="font-family: 'Tahoma', sans-serif"
+          >Age</span
+        >
+      </p>
+    </td>  <td
+    width="156"
+    valign="top"
+    style="
+      width: 117pt;
+      border: solid windowtext 1pt;
+      border-left: none;
+      padding: 0in 5.4pt 0in 5.4pt;
+      height: 26.95pt;
+    "
+  >
+    <p class="MsoNoSpacing" align="center" style="text-align: center">
+      <span style="font-family: 'Tahoma', sans-serif"
+        >Daughter</span
+      >
+    </p>
+  </td>  <td
+  width="156"
+  valign="top"
+  style="
+    width: 117pt;
+    border: solid windowtext 1pt;
+    border-left: none;
+    padding: 0in 5.4pt 0in 5.4pt;
+    height: 26.95pt;
+  "
+  >
+  <p class="MsoNoSpacing" align="center" style="text-align: center">
+    <span style="font-family: 'Tahoma', sans-serif"
+      >Son</span
+    >
+  </p>
+  </td>
+    </tr>
+  </thead>
+  <tbody>`;
     const foot = `</tbody>
     </table>`;
     let bod = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
-      bod += `<tr>
-			<td style="text-align:center" >${customerYWD.nameInPancardExactSpelling}</td>
-			<td style="text-align:center" >${customerYWD.addressSameInAadharcard}</td>
-			<td style="text-align:center" >${customerYWD.nameInAadharcardExactSpelling}</td>
-      <td style="text-align:center" >${customerYWD.age}</td>
-			<td style="text-align:center" >${customerYWD.daughter}</td>
-			<td style="text-align:center" >${customerYWD.son}</td>
-		</tr>`;
+      bod += `
+      <tr>
+  <td
+            width="144"
+            valign="top"
+            style="
+              width: 1.5in;
+              border: solid windowtext 1pt;
+              border-top: none;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNoSpacing" align="center" style="text-align: center">
+              <span style="font-family: 'Tahoma', sans-serif">${customerYWD.nameInPancardExactSpelling}</span>
+            </p>
+          </td>
+  
+          <td
+            width="144"
+            valign="top"
+            style="
+              width: 1.5in;
+              border: solid windowtext 1pt;
+              border-top: none;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNoSpacing" align="center" style="text-align: center">
+              <span style="font-family: 'Tahoma', sans-serif">${customerYWD.addressSameInAadharcard}</span>
+            </p>
+          </td>
+          
+          <td
+            width="144"
+            valign="top"
+            style="
+              width: 1.5in;
+              border: solid windowtext 1pt;
+              border-top: none;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNoSpacing" align="center" style="text-align: center">
+              
+  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.nameInAadharcardExactSpelling}</span>
+            </p>
+          </td> 
+
+          <td
+            width="144"
+            valign="top"
+            style="
+              width: 1.5in;
+              border: solid windowtext 1pt;
+              border-top: none;
+              padding: 0in 5.4pt 0in 5.4pt;
+            "
+          >
+            <p class="MsoNoSpacing" align="center" style="text-align: center">
+              
+  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.age}</span>
+            </p>
+          </td> <td
+          width="144"
+          valign="top"
+          style="
+            width: 1.5in;
+            border: solid windowtext 1pt;
+            border-top: none;
+            padding: 0in 5.4pt 0in 5.4pt;
+          "
+        >
+          <p class="MsoNoSpacing" align="center" style="text-align: center">
+            
+<span style="font-family: 'Tahoma', sans-serif">${customerYWD.daughter}</span>
+          </p>
+        </td> <td
+        width="144"
+        valign="top"
+        style="
+          width: 1.5in;
+          border: solid windowtext 1pt;
+          border-top: none;
+          padding: 0in 5.4pt 0in 5.4pt;
+        "
+      >
+        <p class="MsoNoSpacing" align="center" style="text-align: center">
+          
+<span style="font-family: 'Tahoma', sans-serif">${customerYWD.son}</span>
+        </p>
+      </td> 
+
+</tr>
+    `;
     }
     const dataOtherLegalHears = head + bod + foot;
     str = replaceAll(str, find, dataOtherLegalHears);
@@ -819,6 +3532,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     replace = customer.fhnameInAadharcardExactSpeling;
     str = replaceAll(str, find, replace);
 
+    find = "[[fhRelationship]]";
+    replace = customer.fhRelationship;
+    str = replaceAll(str, find, replace);
+
     //3.	joint  Holder
 
     find = "[[jhnameInPancardExactSpelling]]";
@@ -875,6 +3592,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     find = "[[jhnameInAadharcardExactSpeling]]";
     replace = customer.jhnameInAadharcardExactSpeling;
+    str = replaceAll(str, find, replace);
+
+    find = "[[jhRelationship]]";
+    replace = customer.jhRelationship;
     str = replaceAll(str, find, replace);
 
     //4.	first holder Bank Details Holder
@@ -1166,6 +3887,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     replace = customer.successionCertificateCourtOrderDateAndYear;
     str = replaceAll(str, find, replace);
 
+    find = "[[deceasedHolderAsPerShareCertificate]]";
+    replace = customer.deceasedHolderAsPerShareCertificate;
+    str = replaceAll(str, find, replace);
+
+    find = "[[deceasedHolderAsPerMunicipalityCertificate]]";
+    replace = customer.deceasedHolderAsPerMunicipalityCertificate;
+    str = replaceAll(str, find, replace);
+
     // 14.	Legal Heir Applicant
 
     find = "[[nameInPancardExectSpelling]]";
@@ -1312,6 +4041,88 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     replace = new Date().getFullYear();
     str = replaceAll(str, find, replace);
 
+    //MICRECSCode
+    let fhnineDigitMICRNumberSplit = customer.fhnineDigitMICRNumber!.split("");
+    find = "[[MICRECSCode]]";
+    const mhf = `
+<style>
+  <!--
+   /* Font Definitions */
+   @font-face
+    {font-family:Mangal;
+    panose-1:2 4 5 3 5 2 3 3 2 2;}
+  @font-face
+    {font-family:"Cambria Math";
+    panose-1:2 4 5 3 5 4 6 3 2 4;}
+  @font-face
+    {font-family:Calibri;
+    panose-1:2 15 5 2 2 2 4 3 2 4;}
+  @font-face
+    {font-family:Tahoma;
+    panose-1:2 11 6 4 3 5 4 4 2 4;}
+  @font-face
+    {font-family:"Lucida Sans Unicode";
+    panose-1:2 11 6 2 3 5 4 2 2 4;}
+   /* Style Definitions */
+   p.MsoNormal, li.MsoNormal, div.MsoNormal
+    {margin:0in;
+    font-size:12.0pt;
+    font-family:"Times New Roman",serif;}
+  a:link, span.MsoHyperlink
+    {color:#0563C1;
+    text-decoration:underline;}
+  p.MsoNoSpacing, li.MsoNoSpacing, div.MsoNoSpacing
+    {margin:0in;
+    font-size:11.0pt;
+    font-family:"Calibri",sans-serif;}
+   /* Page Definitions */
+   @page WordSection1
+    {size:8.5in 11.0in;
+    margin:1.0in 58.5pt 1.0in 1.25in;}
+  div.WordSection1
+    {page:WordSection1;}
+   /* List Definitions */
+   ol
+    {margin-bottom:0in;}
+  ul
+    {margin-bottom:0in;}
+  -->
+  </style>
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:.9pt;border-collapse:collapse;border:none'>
+ <tr>
+ `;
+    const mff = `</tr>
+  </table>`;
+    let mbf = "";
+    mbf += "";
+    for (let index = 0; index < fhnineDigitMICRNumberSplit.length; index++) {
+      const customerYWD = fhnineDigitMICRNumberSplit[index];
+
+      mbf += `
+ 
+<td width=69 valign=top style='width:52.05pt;border:solid windowtext 1.0pt;
+padding:0in 5.4pt 0in 5.4pt'>
+<p class=MsoNormal style='margin-top:3.0pt;margin-right:0in;margin-bottom:
+3.0pt;margin-left:0in;text-align:justify'><b><span style='font-size:10.0pt;
+font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
+</td>
+`;
+    }
+    const mdf = mhf + mbf + mff;
+    str = replaceAll(str, find, mdf);
+
+
+
+    //photo
+    find = "[[affixPhoto]]";
+    let htmlAffixPhoto = `<table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:100px"> 	<tbody> 		<tr> 			<td style="text-align:center"><br /> 			Affix Photo<br /> 			&nbsp;</td> 		</tr> 	</tbody> </table>`;
+    str = replaceAll(str, find, htmlAffixPhoto);
+
+    find = "[[photo]]";
+    let htmlPhoto = `<table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:100px"> 	<tbody> 		<tr> 			<td style="text-align:center"><br /> 			Photo<br /> 			&nbsp;</td> 		</tr> 	</tbody> </table>  `;
+    str = replaceAll(str, find, htmlPhoto);
+
     return str;
   }
 
@@ -1331,7 +4142,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       const getCustomerTemplates =
         await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
           customerTemplateData.customerId,
-          customerTemplateData.templateType
+          customerTemplateData.templateType,
+          customerTemplateData.customerTemplateMasterId
         );
       if (customerTemplateData.isCustomMainContentTemplate) {
         if (customerTemplateData.id) {
@@ -1341,6 +4153,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
               {
                 id: customerTemplateData.id,
                 customerId: customerTemplateData.customerId,
+                customerTemplateMasterId:
+                  customerTemplateData.customerTemplateMasterId,
                 isCustomMainContentTemplate:
                   customerTemplateData.isCustomMainContentTemplate,
                 order: customerTemplateData.order,
@@ -1356,6 +4170,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
             await this._customerTemplateRepository.createCustomerTemplate({
               id: customerTemplateData.id,
               customerId: customerTemplateData.customerId,
+              customerTemplateMasterId:
+                customerTemplateData.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateData.isCustomMainContentTemplate,
               order: getCustomerTemplates.length + 1,
@@ -1388,6 +4204,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
               {
                 id: customerTemplateData.id,
                 customerId: customerTemplateData.customerId,
+                customerTemplateMasterId:
+                  customerTemplateData.customerTemplateMasterId,
                 isCustomMainContentTemplate:
                   customerTemplateData.isCustomMainContentTemplate,
                 order: customerTemplateData.order,
@@ -1417,7 +4235,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     return response;
   }
-  async createWordFileCustomerTemplate(customerId: number): Promise<any> {
+  async createWordFileCustomerTemplate(
+    customerTemplateMasterId: number,
+    customerId: number
+  ): Promise<any> {
     try {
       const types = [
         "COMMON_CONTENT",
@@ -1426,11 +4247,12 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         "MAIN_CONTENT",
         "SUMMARY",
         "AGREEMENT",
+        "SUMMARY1",
       ];
 
       const getTemplateData: CustomerTemplate[] =
         await this._customerTemplateRepository.createWordFileCustomerTemplate(
-          customerId
+          customerTemplateMasterId
         );
 
       let body = "";
@@ -1472,7 +4294,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       check.map((d) => {
         // d.templateData = d.templateData?.replace("<p>", `<p style="margin-bottom: 0;">`)!;
         body += d.templateData;
-        body += "<br />";
+        // body += "<br />";
       });
       body += "</div>";
       body +=
@@ -1483,7 +4305,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
       let scount = 0;
       // body += "<div style='margin-left:40px;'>"
       let SUTitleData = getTemplateData.map((d) => {
-        if (d.templateType === "SUMMARY") {
+        if (d.templateType === "SUMMARY1") {
           scount = scount + 1;
           // body += scount + ". " + d.templateTitle;
           body += `<p style='margin-left:40px;'>${scount}. ${d.templateTitle}</p>`;
@@ -1497,31 +4319,62 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         1
       );
       body +=
-        "<p>Yours faithfully,</p><p>_______________________</p><p>" +
-        getCustomer?.fhnameInPancardExactSpelling +
-        "</p>";
-      body += `<p style="page-break-before: always;">&nbsp;</p>`;
+        "<p>Yours faithfully,</p><p>_______________________</p><p>" + getCustomer?.fhnameInPancardExactSpelling + "</p>";
+      // body += `<p style="page-break-before: always;">&nbsp;</p>`;
       let count1 = 0;
       let SUData = getTemplateData.map((d) => {
         if (d.templateType === "SUMMARY") {
           count1 += 1;
-          body += d.templateData;
           body += `<p style="page-break-before: always;">&nbsp;</p>`;
+          body += d.templateData;
         }
       });
-      // body += `<p style="page-break-before: always;">&nbsp;</p>`;
+
 
       let agreementData = getTemplateData.map((d) => {
         if (d.templateType === "AGREEMENT") {
           body += d.templateData;
         }
       });
-
+      console.log("body", body);
       const converted = await htmlDocx.asBlob(body).arrayBuffer();
-      const fileName = `Forwarding-Letter_${customerId}.docx`;
-      const folderPath = join(__dirname, "/document");
-      await fs.mkdirSync(folderPath, { recursive: true });
-      const docxFilePath = join(folderPath, fileName);
+      let fileName:
+        | string
+        | null = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
+      let url: string | null = `${env.API_BASEURL}/doc/${fileName}`;
+      let originalName: string | null = fileName;
+      let status: string | null = "PENDING";
+
+      const getCustomerTemplateMaster =
+        await this._customerTemplateRepository.getCustomerTemplateMasterById(
+          customerTemplateMasterId
+        );
+
+      if (getCustomerTemplateMaster === null) {
+        throw new NotFound("Customer Template Not found.");
+      }
+
+      if (getCustomerTemplateMaster.url) {
+        fileName = getCustomerTemplateMaster.storeDocName;
+        url = `${env.API_BASEURL}/doc/${fileName}`;
+        originalName = fileName;
+        status = getCustomerTemplateMaster.status;
+      }
+      await this._customerTemplateRepository.updateCustomerTemplateMaster(
+        getCustomerTemplateMaster.id,
+        getCustomerTemplateMaster.userId,
+        getCustomerTemplateMaster.customerId,
+        getCustomerTemplateMaster.name,
+        originalName,
+        fileName,
+        url,
+        status
+      );
+
+      // const folderPath = join(__dirname, "/document");
+      // await fs.mkdirSync(folderPath, { recursive: true });
+      const docxFilePath = join("./src/public/", fileName!);
+      console.log("docxFilePath", docxFilePath);
       const saveFile = await writeFileSync(
         docxFilePath,
         Buffer.from(converted)
@@ -1536,12 +4389,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
   async getCustomerTemplateByTypeAndCustomerId(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<UpdateCustomerTemplate[]> {
     const getCustomerTemplates =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
     const response: UpdateCustomerTemplate[] = [];
 
@@ -1555,6 +4410,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
             {
               id: customerTemplateent.id,
               customerId: customerTemplateent.customerId,
+              customerTemplateMasterId:
+                customerTemplateent.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateent.isCustomMainContentTemplate,
               order: customerTemplateent.order,
@@ -1578,6 +4435,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
             {
               id: customerTemplateent.id,
               customerId: customerTemplateent.customerId,
+              customerTemplateMasterId:
+                customerTemplateent.customerTemplateMasterId,
               isCustomMainContentTemplate:
                 customerTemplateent.isCustomMainContentTemplate,
               order: customerTemplateent.order,
@@ -1621,6 +4480,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
         await this._customerTemplateRepository.createCustomerTemplate({
           id: null,
           customerId,
+          customerTemplateMasterId,
           isCustomMainContentTemplate: false,
           order: null,
           templateId: getTemplate[0].id,
@@ -1638,12 +4498,14 @@ export class CustomerTemplateService implements ICustomerTemplateService {
   async getCustomerTemplateStatus(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<{ isAvailable: boolean }> {
     const getCustomerTemplates =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
 
     return { isAvailable: getCustomerTemplates.length > 0 };
@@ -1658,7 +4520,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
   async getFiltterTemplate(
     customerId: number,
     templateType: string,
-    userId: number
+    userId: number,
+    customerTemplateMasterId: number
   ): Promise<Template[]> {
     const all = await this._templateRepository.getTemplatesByType(
       templateType,
@@ -1667,7 +4530,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     const selected =
       await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(
         customerId,
-        templateType
+        templateType,
+        customerTemplateMasterId
       );
 
     return await all.filter(
@@ -1683,5 +4547,59 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     }
 
     return getData;
+  }
+
+  async createCustomerTemplateMaster(
+    userId: number,
+    customerId: number,
+    name: string,
+    originalName: string | null,
+    storeDocName: string | null,
+    url: string | null,
+    status: string | null
+  ): Promise<CustomerTemplateMaster> {
+    console.log("status", status);
+    const count = await this._customerTemplateRepository.getLetterCount(
+      status === "COMPANY REPLY",
+      customerId
+    );
+    console.log("count", count);
+    const letterNo =
+      status === "COMPANY REPLY"
+        ? `Company Letter - ${count + 1}`
+        : `Letter - ${count + 1}`;
+    return await this._customerTemplateRepository.createCustomerTemplateMaster(
+      userId,
+      customerId,
+      name,
+      originalName,
+      storeDocName,
+      url,
+      status,
+      letterNo
+    );
+  }
+
+  async getCustomerTemplateMasters(
+    customerId: number
+  ): Promise<CustomerTemplateMaster[]> {
+    return await this._customerTemplateRepository.getCustomerTemplateMasters(
+      customerId
+    );
+  }
+
+  async deleteCustomerTemplateMasterById(
+    id: number
+  ): Promise<CustomerTemplateMaster> {
+    const deletData =
+      await this._customerTemplateRepository.deleteCustomerTemplateMasterById(
+        id
+      );
+
+    if (deletData.storeDocName) {
+      await unlinkSync(join("./src/public", deletData.storeDocName));
+    }
+
+    return deletData;
   }
 }
