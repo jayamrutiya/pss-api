@@ -30,6 +30,12 @@ model Template {
   type             String
   title            String?
   details          String?            @db.Text
+  originalName     String?
+  storeDocName     String?
+  mimeType         String?
+  sizeInBytes      String?
+  url              String?
+  path             String?
   userId           Int
   User             User               @relation(fields: [userId], references: [id])
   createdAt        DateTime           @default(now()) @db.Timestamp(6)

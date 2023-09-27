@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE `Template` ADD COLUMN `mimeType` VARCHAR(191) NULL,
+    ADD COLUMN `originalName` VARCHAR(191) NULL,
+    ADD COLUMN `path` VARCHAR(191) NULL,
+    ADD COLUMN `sizeInBytes` VARCHAR(191) NULL,
+    ADD COLUMN `storeDocName` VARCHAR(191) NULL,
+    ADD COLUMN `url` VARCHAR(191) NULL;

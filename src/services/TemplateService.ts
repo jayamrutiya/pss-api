@@ -8,6 +8,8 @@ import { CreateTemplateService } from "../types/Template";
 import { BadRequest } from "../errors/BadRequest";
 import { NotFound } from "../errors/NotFound";
 import { replaceAll } from "../config/helper";
+import { unlinkSync } from "fs";
+import { join } from "path";
 
 @injectable()
 export class TemplateService implements ITemplateService {
@@ -24,31 +26,49 @@ export class TemplateService implements ITemplateService {
   }
 
   async upsertTemplate(templateData: CreateTemplateService): Promise<Template> {
-    let { id, ...withOutId } = templateData;
-    console.log("withOutId", withOutId);
-
-    let str, find, replace;
-    str = withOutId.details;
-
-    find = "<table>";
-    replace = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">`;
-    str = replaceAll(str, find, replace);
-
-    // find = "<td>";
-    // replace = `<td style="text-align:center" >`;
-    // str = replaceAll(str, find, replace);
-    const data = {
-      userId: withOutId.userId,
-      type: withOutId.type,
-      title: withOutId.title,
-      details: str,
-    };
     if (templateData.id) {
-      // update template
-      return await this._templateRepository.updateTemplate(id!, data);
+      const getTemplate = await this._templateRepository.getTemplateById(
+        templateData.id!,
+        templateData.userId
+      );
+
+      if (!getTemplate) {
+        throw new NotFound("No such record found");
+      }
+
+      if (templateData.originalName) {
+        getTemplate.storeDocName
+          ? await unlinkSync(
+              join("./src/public/Template", getTemplate.storeDocName)
+            )
+          : "";
+
+        // update template
+        return await this._templateRepository.updateTemplate(
+          templateData.id!,
+          templateData
+        );
+      } else {
+        const payload = {
+          ...templateData,
+          originalName: getTemplate.originalName,
+          storeDocName: getTemplate.storeDocName,
+          mimeType: getTemplate.mimeType,
+          sizeInBytes: getTemplate.sizeInBytes,
+          url: getTemplate.url,
+          path: getTemplate.path,
+        };
+
+        // update template
+        return await this._templateRepository.updateTemplate(
+          templateData.id!,
+          payload
+        );
+      }
     } else {
       // create template
-      return await this._templateRepository.createTemplate(data);
+      const { id, ...restData } = templateData;
+      return await this._templateRepository.createTemplate(restData);
     }
   }
 
@@ -66,6 +86,21 @@ export class TemplateService implements ITemplateService {
     return gettemplateById;
   }
   async deleteTemplate(id: number, userId: number): Promise<Template> {
+    const getTemplate = await this._templateRepository.getTemplateById(
+      id,
+      userId
+    );
+
+    if (!getTemplate) {
+      throw new NotFound("No such record found");
+    }
+
+    getTemplate.storeDocName
+      ? await unlinkSync(
+          join("./src/public/Template", getTemplate.storeDocName)
+        )
+      : "";
+
     return await this._templateRepository.deleteTemplate(id, userId);
   }
 }

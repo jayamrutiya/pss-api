@@ -20,6 +20,12 @@ app.listen(ENV.PORT, () => {
     );
 });
 
+app.use("/api/temp/:name", (req, res) => {
+  res.sendFile(
+    path.resolve(`../pss-api/src/public/Template/${req.params.name}`)
+  );
+});
+
 app.use("/api/doc/:name", (req, res) => {
   res.sendFile(path.resolve(`../pss-api/src/public/${req.params.name}`));
 });

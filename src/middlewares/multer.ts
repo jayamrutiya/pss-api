@@ -43,3 +43,24 @@ export const uploadDocument = multer({
     cb(null, true);
   },
 });
+
+export const uploadTemplate = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "./src/public/Template");
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${Date.now()}_${req.body.type}_${file.originalname}`);
+    },
+  }),
+  fileFilter: function (req, file, cb) {
+    var ext = path.extname(file.originalname);
+    // if (ext !== ".pdf" && ext !== ".jpg" && ext !== ".gif" && ext !== ".jpeg") {
+    //   return callback(new BadRequest("Only pdf are allowed"));
+    // }
+    if (ext !== ".docx") {
+      return cb(new BadRequest("Only DOCX is allowed"));
+    }
+    cb(null, true);
+  },
+});

@@ -5,6 +5,7 @@ import { ILoggerService } from "../interfaces/ILoggerService";
 import passport from "../middlewares/passport";
 import { ITemplateService } from "../interfaces/ITemplateService";
 import TemplateController from "../controllers/TemplateController";
+import { uploadTemplate } from "../middlewares/multer";
 
 const router = express.Router();
 
@@ -16,8 +17,11 @@ const templateController = new TemplateController(
   templateService
 );
 
-router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
-  templateController.upsertTemplate(req, res)
+router.post(
+  "/",
+  uploadTemplate.single("file"),
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => templateController.upsertTemplate(req, res)
 );
 
 router.get("/", passport.authenticate("jwt", { session: false }), (req, res) =>

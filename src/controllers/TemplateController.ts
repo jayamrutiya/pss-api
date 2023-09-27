@@ -1,3 +1,4 @@
+import env from "../config/env";
 import { BadRequest } from "../errors/BadRequest";
 import { ILoggerService } from "../interfaces/ILoggerService";
 import { ITemplateService } from "../interfaces/ITemplateService";
@@ -25,6 +26,8 @@ export default class TemplateController extends BaseController {
 
       const { id, type, title, details } = req.body;
 
+      console.log("File", req.file);
+
       const types = [
         "COMMON_CONTENT",
         "REFE_LINE",
@@ -46,6 +49,13 @@ export default class TemplateController extends BaseController {
       const upsertTemplate = await this._templateService.upsertTemplate({
         userId: token.id,
         ...req.body,
+        id: req.body.id ? Number(req.body.id) : null,
+        originalName: req.file.originalname,
+        storeDocName: req.file.filename,
+        mimeType: req.file.mimetype,
+        sizeInBytes: req.file.size.toString(),
+        url: `${env.API_BASEURL}/temp/${req.file.filename}`,
+        path: req.file.path,
       });
 
       // Return the response
