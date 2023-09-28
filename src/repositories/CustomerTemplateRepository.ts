@@ -119,6 +119,9 @@ export class CustomerTemplateRepository implements ICustomerTemplateRepository {
         where: {
           customerTemplateMasterId,
         },
+        include: {
+          Template: true,
+        },
       });
       return getData;
     } catch (error) {

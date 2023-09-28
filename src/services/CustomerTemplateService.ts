@@ -19,12 +19,16 @@ import { ITemplateRepository } from "../interfaces/ITemplateRepository";
 import { BadRequest } from "../errors/BadRequest";
 import { replaceAll } from "../config/helper";
 import moment from "moment";
-import fs, { unlinkSync, writeFileSync } from "fs";
-import { join } from "path";
+import fs, { readFileSync, unlinkSync, writeFileSync } from "fs";
+import path, { join } from "path";
 import { NotFound } from "../errors/NotFound";
 import htmlToDocx from "html-to-docx";
 import htmlDocx from "html-docx-js";
 import env from "../config/env";
+import PizZip from "pizzip";
+import Docxtemplater from "docxtemplater";
+import DocxMerger from "docx-merger";
+// var DocxMerger = require("docx-merger");
 
 @injectable()
 export class CustomerTemplateService implements ICustomerTemplateService {
@@ -147,8 +151,9 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     let olhdaughterson = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
-      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-        },`;
+      olhdaughterson += `${
+        customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+      },`;
     }
     str = replaceAll(str, find, olhdaughterson);
 
@@ -548,7 +553,6 @@ border: none;
     const dataf = headf + bodyf + footf;
     str = replaceAll(str, find, dataf);
 
-
     //folioShareCertiDist
     find = "[[folioShareCertiDist]]";
     const hf = `<style>
@@ -685,7 +689,9 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+            <span style="font-family: 'Tahoma', sans-serif">${
+              customer.ledgerFolio
+            }</span>
           </p>
         </td>
     
@@ -717,7 +723,9 @@ border: none;
       "
     >
       <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+        <span style="font-family: 'Tahoma', sans-serif">${
+          customerYWD.shareCertificateNumber
+        }</span>
       </p>
     </td>
      
@@ -732,7 +740,9 @@ border: none;
     "
     >
     <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+      <span style="font-family: 'Tahoma', sans-serif">${
+        customerYWD.distinctiveNumber?.split("-")[0]
+      }</span>
     </p>
     </td>
     <td
@@ -747,7 +757,11 @@ border: none;
     >
     <p class="MsoNoSpacing" align="center" style="text-align: center">
       <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}</span>
+        ${
+          customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
     </p>
     </td>
     
@@ -891,7 +905,9 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+            <span style="font-family: 'Tahoma', sans-serif">${
+              customer.ledgerFolio
+            }</span>
           </p>
         </td>
     
@@ -923,7 +939,9 @@ border: none;
       "
     >
       <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+        <span style="font-family: 'Tahoma', sans-serif">${
+          customerYWD.shareCertificateNumber
+        }</span>
       </p>
     </td>
      
@@ -938,7 +956,9 @@ border: none;
     "
     >
     <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+      <span style="font-family: 'Tahoma', sans-serif">${
+        customerYWD.distinctiveNumber?.split("-")[0]
+      }</span>
     </p>
     </td>
     <td
@@ -953,7 +973,11 @@ border: none;
     >
     <p class="MsoNoSpacing" align="center" style="text-align: center">
       <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}</span>
+        ${
+          customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
     </p>
     </td>
     
@@ -1101,7 +1125,9 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+            <span style="font-family: 'Tahoma', sans-serif">${
+              customer.ledgerFolio
+            }</span>
           </p>
         </td>
     
@@ -1116,7 +1142,9 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+            <span style="font-family: 'Tahoma', sans-serif">${
+              customerYWD.shareCertificateNumber
+            }</span>
           </p>
         </td>
         
@@ -1131,7 +1159,9 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+            <span style="font-family: 'Tahoma', sans-serif">${
+              customerYWD.distinctiveNumber
+            }</span>
           </p>
         </td>
         
@@ -1163,11 +1193,11 @@ border: none;
         >
           <p class="MsoNoSpacing">
             <span style="font-family: 'Tahoma', sans-serif"
-              >${customer.deathHolderName1
-        } (deceased) jointly ${customer.deathHolderName2
+              >${customer.deathHolderName1} (deceased) jointly ${
+        customer.deathHolderName2
           ? customer.deathHolderName2 + "(deceased)"
           : ""
-        }</span
+      }</span
             >
           </p>
         </td>
@@ -1314,7 +1344,9 @@ border: none;
         "
       >
         <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+          <span style="font-family: 'Tahoma', sans-serif">${
+            customer.ledgerFolio
+          }</span>
         </p>
       </td>
     
@@ -1328,7 +1360,9 @@ border: none;
           padding: 0in 5.4pt 0in 5.4pt;
         "
       ><p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style-*+="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+      <span style-*+="font-family: 'Tahoma', sans-serif">${
+        customerYWD.totalShareQuantity
+      }</span>
     </p>
   </td>
       
@@ -1343,7 +1377,9 @@ border: none;
         padding: 0in 5.4pt 0in 5.4pt;
       "> 
       <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+          <span style="font-family: 'Tahoma', sans-serif">${
+            customerYWD.shareCertificateNumber
+          }</span>
       </p>
       </td>
 
@@ -1357,7 +1393,9 @@ border: none;
         padding: 0in 5.4pt 0in 5.4pt;
       "
       ><p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+        <span style="font-family: 'Tahoma', sans-serif">${
+          customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
       </p>
       </td>
       
@@ -1373,7 +1411,11 @@ border: none;
       >
       <p class="MsoNoSpacing" align="center" style="text-align: center">
         <span style="font-family: 'Tahoma', sans-serif">
-          ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}</span>
+          ${
+            customerYWD.distinctiveNumber?.split("-")[1]
+              ? customerYWD.distinctiveNumber?.split("-")[1]
+              : customerYWD.distinctiveNumber?.split("-")[0]
+          }</span>
       </p>
       </td>
       
@@ -1738,7 +1780,9 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+            <span style="font-family: 'Tahoma', sans-serif">${
+              customer.ledgerFolio
+            }</span>
           </p>
         </td>
 
@@ -1753,7 +1797,9 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+            <span style="font-family: 'Tahoma', sans-serif">${
+              customerYWD.shareCertificateNumber
+            }</span>
           </p>
         </td>
         
@@ -1769,8 +1815,9 @@ border: none;
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
             
-<span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
+<span style="font-family: 'Tahoma', sans-serif">${
+        customerYWD.distinctiveNumber?.split("-")[0]
+      }</span>
           </p>
         </td>
                
@@ -1787,10 +1834,11 @@ border: none;
           <p class="MsoNoSpacing" align="center" style="text-align: center">
             
 <span style="font-family: 'Tahoma', sans-serif">
-  ${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
+  ${
+    customerYWD.distinctiveNumber?.split("-")[1]
+      ? customerYWD.distinctiveNumber?.split("-")[1]
+      : customerYWD.distinctiveNumber?.split("-")[0]
+  }</span>
           </p>
         </td>
         <td
@@ -2131,7 +2179,9 @@ border: none;
                 "
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+                  <span style="font-family: 'Tahoma', sans-serif">${
+                    customer.ledgerFolio
+                  }</span>
                 </p>
               </td>
       
@@ -2146,7 +2196,9 @@ border: none;
                 "
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber} of Rs.${customer.faceValueAsOnToday}/-</span>
+                  <span style="font-family: 'Tahoma', sans-serif">${
+                    customerYWD.shareCertificateNumber
+                  } of Rs.${customer.faceValueAsOnToday}/-</span>
                 </p>
               </td>
               
@@ -2162,7 +2214,9 @@ border: none;
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
                   
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+      <span style="font-family: 'Tahoma', sans-serif">${
+        customerYWD.distinctiveNumber?.split("-")[0]
+      }</span>
                 </p>
               </td> 
               
@@ -2179,7 +2233,11 @@ border: none;
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
                   
       <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}
+        ${
+          customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0]
+        }
       </span>
                 </p>
               </td> 
@@ -2194,7 +2252,9 @@ border: none;
               "
             >
               <p class="MsoNoSpacing" align="center" style="text-align: center">
-                <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+                <span style="font-family: 'Tahoma', sans-serif">${
+                  customerYWD.totalShareQuantity
+                }</span>
               </p>
             </td>
             
@@ -2347,7 +2407,9 @@ border: none;
                 "
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+                  <span style="font-family: 'Tahoma', sans-serif">${
+                    customer.ledgerFolio
+                  }</span>
                 </p>
               </td>
       
@@ -2362,7 +2424,9 @@ border: none;
                 "
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber} of Rs.${customer.faceValueAsOnToday}/-</span>
+                  <span style="font-family: 'Tahoma', sans-serif">${
+                    customerYWD.shareCertificateNumber
+                  } of Rs.${customer.faceValueAsOnToday}/-</span>
                 </p>
               </td>
               
@@ -2378,7 +2442,9 @@ border: none;
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
                   
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]}</span>
+      <span style="font-family: 'Tahoma', sans-serif">${
+        customerYWD.distinctiveNumber?.split("-")[0]
+      }</span>
                 </p>
               </td> 
               
@@ -2395,7 +2461,11 @@ border: none;
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
                   
       <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.distinctiveNumber?.split("-")[1] ? customerYWD.distinctiveNumber?.split("-")[1] : customerYWD.distinctiveNumber?.split("-")[0]}
+        ${
+          customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0]
+        }
       </span>
                 </p>
               </td> 
@@ -2410,8 +2480,9 @@ border: none;
               "
             >
               <p class="MsoNoSpacing" align="center" style="text-align: center">
-                <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
-        } of Rs.${customer.faceValueAsOnToday}/-</span>
+                <span style="font-family: 'Tahoma', sans-serif">${
+                  customerYWD.totalShareQuantity
+                } of Rs.${customer.faceValueAsOnToday}/-</span>
               </p>
             </td>
             
@@ -4112,8 +4183,6 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     const mdf = mhf + mbf + mff;
     str = replaceAll(str, find, mdf);
 
-
-
     //photo
     find = "[[affixPhoto]]";
     let htmlAffixPhoto = `<table border="1" cellpadding="1" cellspacing="1" style="height:100px; width:100px"> 	<tbody> 		<tr> 			<td style="text-align:center"><br /> 			Affix Photo<br /> 			&nbsp;</td> 		</tr> 	</tbody> </table>`;
@@ -4192,10 +4261,10 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           throw new BadRequest("Please select valid customer or template.");
         }
 
-        const replacedCustomerTemplateData = await this.replaceTemplateData(
-          getCustomer,
-          getTemplate
-        );
+        // const replacedCustomerTemplateData = await this.replaceTemplateData(
+        //   getCustomer,
+        //   getTemplate
+        // );
 
         if (customerTemplateData.id) {
           const d =
@@ -4211,7 +4280,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 order: customerTemplateData.order,
                 templateId: customerTemplateData.templateId,
                 templateType: customerTemplateData.templateType,
-                templateData: replacedCustomerTemplateData,
+                templateData: customerTemplateData.templateData,
                 templateTitle: getTemplate.title,
               }
             );
@@ -4226,7 +4295,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                   : null,
               templateTitle: getTemplate.title,
               templateType: getTemplate.type,
-              templateData: replacedCustomerTemplateData,
+              templateData: getTemplate.details,
             });
           response.push(d);
         }
@@ -4240,124 +4309,236 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     customerId: number
   ): Promise<any> {
     try {
-      const types = [
-        "COMMON_CONTENT",
-        "REFE_LINE",
-        "SUBJECT",
-        "MAIN_CONTENT",
-        "SUMMARY",
-        "AGREEMENT",
-        "SUMMARY1",
-      ];
+      // const types = [
+      //   "COMMON_CONTENT",
+      //   "REFE_LINE",
+      //   "SUBJECT",
+      //   "MAIN_CONTENT",
+      //   "SUMMARY",
+      //   "AGREEMENT",
+      //   "SUMMARY1",
+      // ];
 
-      const getTemplateData: CustomerTemplate[] =
+      // const getTemplateData: CustomerTemplate[] =
+      //   await this._customerTemplateRepository.createWordFileCustomerTemplate(
+      //     customerTemplateMasterId
+      //   );
+
+      // let body = "";
+
+      // let CCData = getTemplateData.map(async (d) => {
+      //   if (d.templateType === "COMMON_CONTENT") {
+      //     body += d.templateData;
+      //   }
+      // });
+
+      // // body += "<br />";
+
+      // let RLData = getTemplateData.map(async (d) => {
+      //   if (d.templateType === "REFE_LINE") {
+      //     body += d.templateData;
+      //   }
+      // });
+      // body += `
+      // <p><strong>Subject</strong>:</p>`;
+      // // subject
+      // let count = 0;
+      // let SData = getTemplateData.map(async (d) => {
+      //   if (d.templateType === "SUBJECT") {
+      //     count = count + 1;
+      //     d.templateData = d.templateData?.replace(
+      //       "<p>",
+      //       `<p style="margin-left:40px">${count}. `
+      //     )!;
+      //     body += d.templateData;
+      //   }
+      // });
+      // body +=
+      //   "<pre><span style='font-size:16px'><span style='font-family:Tahoma,Geneva,sans-serif'>Dear Sir / Madam,</span></span></pre><div style='margin-left:40px; text-align:justify;'>";
+      // //main content
+      // const MCData = getTemplateData.filter((d) => {
+      //   return d.templateType === "MAIN_CONTENT";
+      // });
+      // let check = MCData.sort((a, b) => (a.order! > b.order! ? 1 : -1));
+      // check.map((d) => {
+      //   // d.templateData = d.templateData?.replace("<p>", `<p style="margin-bottom: 0;">`)!;
+      //   body += d.templateData;
+      //   // body += "<br />";
+      // });
+      // body += "</div>";
+      // body +=
+      //   "<p>I am enclosing the following documents towards proof of my identification and address.</p><br />";
+      // // body += "<div style='page-break-after:always'></div>";
+
+      // //summary
+      // let scount = 0;
+      // // body += "<div style='margin-left:40px;'>"
+      // let SUTitleData = getTemplateData.map((d) => {
+      //   if (d.templateType === "SUMMARY1") {
+      //     scount = scount + 1;
+      //     // body += scount + ". " + d.templateTitle;
+      //     body += `<p style='margin-left:40px;'>${scount}. ${d.templateTitle}</p>`;
+      //   }
+      // });
+      // body += "<br />";
+
+      // //summary
+      // const getCustomer = await this._customerRepository.getCustomer(
+      //   customerId,
+      //   1
+      // );
+      // body +=
+      //   "<p>Yours faithfully,</p><p>_______________________</p><p>" +
+      //   getCustomer?.fhnameInPancardExactSpelling +
+      //   "</p>";
+      // // body += `<p style="page-break-before: always;">&nbsp;</p>`;
+      // let count1 = 0;
+      // let SUData = getTemplateData.map((d) => {
+      //   if (d.templateType === "SUMMARY") {
+      //     count1 += 1;
+      //     body += `<p style="page-break-before: always;">&nbsp;</p>`;
+      //     body += d.templateData;
+      //   }
+      // });
+
+      // let agreementData = getTemplateData.map((d) => {
+      //   if (d.templateType === "AGREEMENT") {
+      //     body += d.templateData;
+      //   }
+      // });
+      // console.log("body", body);
+      // const converted = await htmlDocx.asBlob(body).arrayBuffer();
+      // let fileName:
+      //   | string
+      //   | null = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
+      // let url: string | null = `${env.API_BASEURL}/doc/${fileName}`;
+      // let originalName: string | null = fileName;
+      // let status: string | null = "PENDING";
+
+      // const getCustomerTemplateMaster =
+      //   await this._customerTemplateRepository.getCustomerTemplateMasterById(
+      //     customerTemplateMasterId
+      //   );
+
+      // if (getCustomerTemplateMaster === null) {
+      //   throw new NotFound("Customer Template Not found.");
+      // }
+
+      // if (getCustomerTemplateMaster.url) {
+      //   fileName = getCustomerTemplateMaster.storeDocName;
+      //   url = `${env.API_BASEURL}/doc/${fileName}`;
+      //   originalName = fileName;
+      //   status = getCustomerTemplateMaster.status;
+      // }
+      // await this._customerTemplateRepository.updateCustomerTemplateMaster(
+      //   getCustomerTemplateMaster.id,
+      //   getCustomerTemplateMaster.userId,
+      //   getCustomerTemplateMaster.customerId,
+      //   getCustomerTemplateMaster.name,
+      //   originalName,
+      //   fileName,
+      //   url,
+      //   status
+      // );
+
+      // // const folderPath = join(__dirname, "/document");
+      // // await fs.mkdirSync(folderPath, { recursive: true });
+      // const docxFilePath = join("./src/public/", fileName!);
+      // console.log("docxFilePath", docxFilePath);
+      // const saveFile = await writeFileSync(
+      //   docxFilePath,
+      //   Buffer.from(converted)
+      // );
+
+      let finalFileName:
+        | string
+        | null = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
+      let url: string | null = `${env.API_BASEURL}/doc/${finalFileName}`;
+      let originalName: string | null = finalFileName;
+      let status: string | null = "PENDING";
+      const finalAllFiles: any = [];
+
+      const getTemplateDataa: CustomerTemplate[] =
         await this._customerTemplateRepository.createWordFileCustomerTemplate(
           customerTemplateMasterId
         );
+      console.log("getTemplateDataa", getTemplateDataa);
 
-      let body = "";
+      const mainContents: any = [];
+      const summaries: any = [];
 
-      let CCData = getTemplateData.map(async (d) => {
-        if (d.templateType === "COMMON_CONTENT") {
-          body += d.templateData;
+      for (let i = 0; i < getTemplateDataa.length; i++) {
+        const template = getTemplateDataa[i];
+        if (template.templateType === "MAIN_CONTENT") {
+          mainContents.push(template);
+        } else if (template.templateType === "SUMMARY") {
+          summaries.push(template);
         }
-      });
+      }
 
-      // body += "<br />";
+      // main content
+      const mainContentFiles: any = [];
+      for (let j = 0; j < mainContents.length; j++) {
+        const mainContent = mainContents[j];
+        const createDynamicWordFile = await this.createDynamicWord(
+          mainContent.Template.storeDocName,
+          mainContent.customerTemplateMasterId,
+          mainContent.templateType
+        );
 
-      let RLData = getTemplateData.map(async (d) => {
-        if (d.templateType === "REFE_LINE") {
-          body += d.templateData;
-        }
-      });
-      body += `
-      <p><strong>Subject</strong>:</p>`;
-      // subject
-      let count = 0;
-      let SData = getTemplateData.map(async (d) => {
-        if (d.templateType === "SUBJECT") {
-          count = count + 1;
-          d.templateData = d.templateData?.replace(
-            "<p>",
-            `<p style="margin-left:40px">${count}. `
-          )!;
-          body += d.templateData;
-        }
-      });
-      body +=
-        "<pre><span style='font-size:16px'><span style='font-family:Tahoma,Geneva,sans-serif'>Dear Sir / Madam,</span></span></pre><div style='margin-left:40px; text-align:justify;'>";
-      //main content
-      const MCData = getTemplateData.filter((d) => {
-        return d.templateType === "MAIN_CONTENT";
-      });
-      let check = MCData.sort((a, b) => (a.order! > b.order! ? 1 : -1));
-      check.map((d) => {
-        // d.templateData = d.templateData?.replace("<p>", `<p style="margin-bottom: 0;">`)!;
-        body += d.templateData;
-        // body += "<br />";
-      });
-      body += "</div>";
-      body +=
-        "<p>I am enclosing the following documents towards proof of my identification and address.</p><br />";
-      // body += "<div style='page-break-after:always'></div>";
+        mainContentFiles.push(createDynamicWordFile);
+      }
+      if (mainContentFiles.length > 0) {
+        const mainContentFile = `${Date.now()}_${customerTemplateMasterId}_MAIN_CONTENT_merge.docx`;
+        const docx = new DocxMerger({ pageBreak: false }, mainContentFiles);
+        await docx.save("nodebuffer", async function (data) {
+          // fs.writeFile("output.zip", data, function(err){/*...*/});
+          await writeFileSync(join(__dirname, mainContentFile), data);
+          console.log("merged MAIN_CONTENT");
+        });
+        const fileRead = await readFileSync(join(__dirname, mainContentFile));
+        finalAllFiles.push(fileRead);
+        await unlinkSync(join(__dirname, mainContentFile));
+      }
 
-      //summary
-      let scount = 0;
-      // body += "<div style='margin-left:40px;'>"
-      let SUTitleData = getTemplateData.map((d) => {
-        if (d.templateType === "SUMMARY1") {
-          scount = scount + 1;
-          // body += scount + ". " + d.templateTitle;
-          body += `<p style='margin-left:40px;'>${scount}. ${d.templateTitle}</p>`;
-        }
-      });
-      body += "<br />";
+      // summary
+      const summaryFiles: any = [];
+      for (let j = 0; j < summaries.length; j++) {
+        const summary = summaries[j];
+        const createDynamicWordFile = await this.createDynamicWord(
+          summary.Template.storeDocName,
+          summary.customerTemplateMasterId,
+          summary.templateType
+        );
 
-      //summary
-      const getCustomer = await this._customerRepository.getCustomer(
-        customerId,
-        1
-      );
-      body +=
-        "<p>Yours faithfully,</p><p>_______________________</p><p>" + getCustomer?.fhnameInPancardExactSpelling + "</p>";
-      // body += `<p style="page-break-before: always;">&nbsp;</p>`;
-      let count1 = 0;
-      let SUData = getTemplateData.map((d) => {
-        if (d.templateType === "SUMMARY") {
-          count1 += 1;
-          body += `<p style="page-break-before: always;">&nbsp;</p>`;
-          body += d.templateData;
-        }
-      });
+        summaryFiles.push(createDynamicWordFile);
+      }
+      if (summaryFiles.length > 0) {
+        const summaryFile = `${Date.now()}_${customerTemplateMasterId}_SUMMARY_merge.docx`;
+        const summarydocx = new DocxMerger({ pageBreak: true }, summaryFiles);
+        await summarydocx.save("nodebuffer", async function (data) {
+          // fs.writeFile("output.zip", data, function(err){/*...*/});
+          await writeFileSync(join(__dirname, summaryFile), data);
+          console.log("merged SUMMARY");
+        });
+        const fileRead = await readFileSync(join(__dirname, summaryFile));
+        finalAllFiles.push(fileRead);
+        await unlinkSync(join(__dirname, summaryFile));
+      }
+      console.log("end");
 
-
-      let agreementData = getTemplateData.map((d) => {
-        if (d.templateType === "AGREEMENT") {
-          body += d.templateData;
-        }
-      });
-      console.log("body", body);
-      const converted = await htmlDocx.asBlob(body).arrayBuffer();
-      let fileName:
-        | string
-        | null = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
-      let url: string | null = `${env.API_BASEURL}/doc/${fileName}`;
-      let originalName: string | null = fileName;
-      let status: string | null = "PENDING";
-
+      // db updates
       const getCustomerTemplateMaster =
         await this._customerTemplateRepository.getCustomerTemplateMasterById(
           customerTemplateMasterId
         );
-
       if (getCustomerTemplateMaster === null) {
         throw new NotFound("Customer Template Not found.");
       }
-
       if (getCustomerTemplateMaster.url) {
-        fileName = getCustomerTemplateMaster.storeDocName;
-        url = `${env.API_BASEURL}/doc/${fileName}`;
-        originalName = fileName;
+        finalFileName = getCustomerTemplateMaster.storeDocName;
+        url = `${env.API_BASEURL}/doc/${finalFileName}`;
+        originalName = finalFileName;
         status = getCustomerTemplateMaster.status;
       }
       await this._customerTemplateRepository.updateCustomerTemplateMaster(
@@ -4366,24 +4547,67 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         getCustomerTemplateMaster.customerId,
         getCustomerTemplateMaster.name,
         originalName,
-        fileName,
+        finalFileName,
         url,
         status
       );
 
-      // const folderPath = join(__dirname, "/document");
-      // await fs.mkdirSync(folderPath, { recursive: true });
-      const docxFilePath = join("./src/public/", fileName!);
-      console.log("docxFilePath", docxFilePath);
-      const saveFile = await writeFileSync(
-        docxFilePath,
-        Buffer.from(converted)
-      );
-      return { filePath: docxFilePath, fileName };
+      // all file merge
+      const docxFilePath = join("./src/public/", finalFileName!);
+      const summarydocx = new DocxMerger({ pageBreak: true }, finalAllFiles);
+      await summarydocx.save("nodebuffer", async function (data) {
+        // fs.writeFile("output.zip", data, function(err){/*...*/});
+        await writeFileSync(docxFilePath, data);
+        console.log("merged All Files");
+      });
+
+      return { filePath: docxFilePath, fileName: finalFileName };
     } catch (error) {
       console.log("error:-" + error);
       throw error;
     }
+  }
+
+  async createDynamicWord(docName, customerTemplateMasterId, templateType) {
+    const content = await readFileSync(
+      join("./src/public/Template", docName),
+      "binary"
+    );
+    const zip = new PizZip(content);
+    const doc = new Docxtemplater(zip, {
+      paragraphLoop: true,
+      linebreaks: true,
+    });
+    await doc.render({
+      first_name: "John",
+      last_name: "Doe",
+      phone: "0652455478",
+      description: "New Website",
+      users: [
+        {
+          fname: "Jay",
+          lname: "Amrutiya",
+        },
+        {
+          fname: "Dhruv",
+          lname: "Patel",
+        },
+      ],
+    });
+    const buf = doc.getZip().generate({
+      type: "nodebuffer",
+      // compression: DEFLATE adds a compression step.
+      // For a 50MB output document, expect 500ms additional CPU time
+      compression: "DEFLATE",
+    });
+    const fileName = `${Date.now()}_${customerTemplateMasterId}_${templateType}.docx`;
+    await writeFileSync(path.resolve(__dirname, fileName), buf);
+    const readFileData = await readFileSync(
+      path.resolve(__dirname, fileName),
+      "binary"
+    );
+    await unlinkSync(path.resolve(__dirname, fileName));
+    return readFileData;
   }
 
   async getCustomerTemplateByTypeAndCustomerId(
@@ -4424,10 +4648,10 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
 
         response.push(updateCustomerTemplate);
       } else {
-        const replacedCustomerTemplateData = await this.replaceTemplateData(
-          customerTemplateent.Customer,
-          customerTemplateent.Template!
-        );
+        // const replacedCustomerTemplateData = await this.replaceTemplateData(
+        //   customerTemplateent.Customer,
+        //   customerTemplateent.Template!
+        // );
 
         const updateCustomerTemplate =
           await this._customerTemplateRepository.updateCustomerTemplate(
@@ -4442,7 +4666,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
               order: customerTemplateent.order,
               templateId: customerTemplateent.templateId,
               templateType: customerTemplateent.templateType,
-              templateData: replacedCustomerTemplateData,
+              templateData: customerTemplateent.templateData,
               templateTitle: customerTemplateent.templateTitle,
             }
           );
@@ -4471,10 +4695,10 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         throw new BadRequest("Please select valid customer or template.");
       }
 
-      const replacedCustomerTemplateData = await this.replaceTemplateData(
-        getCustomer,
-        getTemplate[0]
-      );
+      // const replacedCustomerTemplateData = await this.replaceTemplateData(
+      //   getCustomer,
+      //   getTemplate[0]
+      // );
 
       const data =
         await this._customerTemplateRepository.createCustomerTemplate({
@@ -4485,7 +4709,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           order: null,
           templateId: getTemplate[0].id,
           templateType: getTemplate[0].type,
-          templateData: replacedCustomerTemplateData,
+          templateData: getTemplate[0].details,
           templateTitle: getTemplate[0].title,
         });
 
