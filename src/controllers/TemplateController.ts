@@ -50,12 +50,12 @@ export default class TemplateController extends BaseController {
         userId: token.id,
         ...req.body,
         id: req.body.id ? Number(req.body.id) : null,
-        originalName: req.file.originalname,
-        storeDocName: req.file.filename,
-        mimeType: req.file.mimetype,
-        sizeInBytes: req.file.size.toString(),
-        url: `${env.API_BASEURL}/temp/${req.file.filename}`,
-        path: req.file.path,
+        originalName: req.file?.originalname,
+        storeDocName: req.file?.filename,
+        mimeType: req.file?.mimetype,
+        sizeInBytes: req.file?.size.toString(),
+        url: `${env.API_BASEURL}/temp/${req.file?.filename}`,
+        path: req.file?.path,
       });
 
       // Return the response

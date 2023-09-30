@@ -4456,16 +4456,21 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       let url: string | null = `${env.API_BASEURL}/doc/${finalFileName}`;
       let originalName: string | null = finalFileName;
       let status: string | null = "PENDING";
+      const commonMainSummary1: any = [];
       const finalAllFiles: any = [];
 
       const getTemplateDataa: CustomerTemplate[] =
         await this._customerTemplateRepository.createWordFileCustomerTemplate(
           customerTemplateMasterId
         );
-      console.log("getTemplateDataa", getTemplateDataa);
+      // console.log("getTemplateDataa", getTemplateDataa);
+
+      let isReffLineAvailable = false;
 
       const mainContents: any = [];
       const summaries: any = [];
+      const subjects: any = [];
+      const summary1: any = [];
 
       for (let i = 0; i < getTemplateDataa.length; i++) {
         const template = getTemplateDataa[i];
@@ -4473,8 +4478,27 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           mainContents.push(template);
         } else if (template.templateType === "SUMMARY") {
           summaries.push(template);
+        } else if (template.templateType === "REFE_LINE") {
+          isReffLineAvailable = true;
+        } else if (template.templateType === "SUBJECT") {
+          subjects.push({
+            title: `${subjects.length + 1}. ${template.templateTitle}`,
+          });
+        } else if (template.templateType === "SUMMARY1") {
+          summary1.push({ title: template.templateTitle });
         }
       }
+
+      // COMMON CONTENT
+      const createDynamicWordFile = await this.createDynamicWord(
+        "COMMON_CONTENT.docx",
+        customerTemplateMasterId,
+        "COMMON_CONTENT",
+        isReffLineAvailable,
+        subjects
+      );
+      commonMainSummary1.push(createDynamicWordFile);
+      // const commonContentFileStream = createDynamicWordFile;
 
       // main content
       const mainContentFiles: any = [];
@@ -4497,8 +4521,37 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           console.log("merged MAIN_CONTENT");
         });
         const fileRead = await readFileSync(join(__dirname, mainContentFile));
-        finalAllFiles.push(fileRead);
+        // finalAllFiles.push(fileRead);
+        commonMainSummary1.push(fileRead);
         await unlinkSync(join(__dirname, mainContentFile));
+      }
+
+      // summary1
+      const createDynamicWordFileSummary1 = await this.createDynamicWord(
+        "SUMMARY_1.docx",
+        customerTemplateMasterId,
+        "SUMMARY1",
+        isReffLineAvailable,
+        subjects,
+        summary1
+      );
+      commonMainSummary1.push(createDynamicWordFileSummary1);
+
+      // merge COMMON CONTENT + main content + summary1
+      if (commonMainSummary1.length > 0) {
+        const CMS1File = `${Date.now()}_${customerTemplateMasterId}_CMS1_merge.docx`;
+        const CMS1docx = new DocxMerger(
+          { pageBreak: false },
+          commonMainSummary1
+        );
+        await CMS1docx.save("nodebuffer", async function (data) {
+          // fs.writeFile("output.zip", data, function(err){/*...*/});
+          await writeFileSync(join(__dirname, CMS1File), data);
+          console.log("merged COMMON CONTENT + main content + summary1");
+        });
+        const fileRead = await readFileSync(join(__dirname, CMS1File));
+        finalAllFiles.push(fileRead);
+        await unlinkSync(join(__dirname, CMS1File));
       }
 
       // summary
@@ -4553,6 +4606,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       );
 
       // all file merge
+      // TODO: merge COMMON CONTENT + main content + SUMMARY_1 + SUMMARY (final file)
       const docxFilePath = join("./src/public/", finalFileName!);
       const summarydocx = new DocxMerger({ pageBreak: true }, finalAllFiles);
       await summarydocx.save("nodebuffer", async function (data) {
@@ -4568,31 +4622,43 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     }
   }
 
-  async createDynamicWord(docName, customerTemplateMasterId, templateType) {
+  async createDynamicWord(
+    docName,
+    customerTemplateMasterId,
+    templateType,
+    hasReffLine = false,
+    subjects = [],
+    summary1 = []
+  ) {
     const content = await readFileSync(
       join("./src/public/Template", docName),
       "binary"
     );
     const zip = new PizZip(content);
     const doc = new Docxtemplater(zip, {
-      paragraphLoop: true,
+      paragraphLoop: false,
       linebreaks: true,
     });
+
     await doc.render({
-      first_name: "John",
-      last_name: "Doe",
-      phone: "0652455478",
-      description: "New Website",
-      users: [
-        {
-          fname: "Jay",
-          lname: "Amrutiya",
-        },
-        {
-          fname: "Dhruv",
-          lname: "Patel",
-        },
-      ],
+      hasReff: hasReffLine,
+      subjects: subjects,
+      summary1: summary1,
+      name: "Jay",
+      // first_name: "John",
+      // last_name: "Doe",
+      // phone: "0652455478",
+      // description: "New Website",
+      // users: [
+      //   {
+      //     fname: "Jay",
+      //     lname: "Amrutiya",
+      //   },
+      //   {
+      //     fname: "Dhruv",
+      //     lname: "Patel",
+      //   },
+      // ],
     });
     const buf = doc.getZip().generate({
       type: "nodebuffer",
