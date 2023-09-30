@@ -116,7 +116,8 @@ export class CustomerTemplateController extends BaseController {
       const saveCustomerTemplateData =
         await this._customerTemplateService.createWordFileCustomerTemplate(
           customerTemplateMasterId,
-          customerId
+          customerId,
+          token.id
         );
       // res.setHeader(
       //   "Content-Type",

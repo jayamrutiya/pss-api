@@ -24,7 +24,8 @@ export interface ICustomerTemplateService {
 
   createWordFileCustomerTemplate(
     customerTemplateMasterId: number,
-    customerId: number
+    customerId: number,
+    userId: number
   ): Promise<any>;
 
   getCustomerTemplateStatus(

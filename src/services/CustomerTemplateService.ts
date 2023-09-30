@@ -4306,7 +4306,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
   }
   async createWordFileCustomerTemplate(
     customerTemplateMasterId: number,
-    customerId: number
+    customerId: number,
+    userId: number
   ): Promise<any> {
     try {
       // const types = [
@@ -4465,6 +4466,11 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         );
       // console.log("getTemplateDataa", getTemplateDataa);
 
+      const getCustomer = await this._customerRepository.getCustomer(
+        customerId,
+        userId
+      );
+
       let isReffLineAvailable = false;
 
       const mainContents: any = [];
@@ -4491,6 +4497,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
 
       // COMMON CONTENT
       const createDynamicWordFile = await this.createDynamicWord(
+        getCustomer,
         "COMMON_CONTENT.docx",
         customerTemplateMasterId,
         "COMMON_CONTENT",
@@ -4505,6 +4512,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       for (let j = 0; j < mainContents.length; j++) {
         const mainContent = mainContents[j];
         const createDynamicWordFile = await this.createDynamicWord(
+          getCustomer,
           mainContent.Template.storeDocName,
           mainContent.customerTemplateMasterId,
           mainContent.templateType
@@ -4528,6 +4536,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
 
       // summary1
       const createDynamicWordFileSummary1 = await this.createDynamicWord(
+        getCustomer,
         "SUMMARY_1.docx",
         customerTemplateMasterId,
         "SUMMARY1",
@@ -4559,6 +4568,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       for (let j = 0; j < summaries.length; j++) {
         const summary = summaries[j];
         const createDynamicWordFile = await this.createDynamicWord(
+          getCustomer,
           summary.Template.storeDocName,
           summary.customerTemplateMasterId,
           summary.templateType
@@ -4623,6 +4633,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
   }
 
   async createDynamicWord(
+    customer,
     docName,
     customerTemplateMasterId,
     templateType,
