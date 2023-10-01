@@ -151,9 +151,8 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     let olhdaughterson = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
-      olhdaughterson += `${
-        customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-      },`;
+      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+        },`;
     }
     str = replaceAll(str, find, olhdaughterson);
 
@@ -689,9 +688,8 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${
-              customer.ledgerFolio
-            }</span>
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+        }</span>
           </p>
         </td>
     
@@ -723,8 +721,7 @@ border: none;
       "
     >
       <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${
-          customerYWD.shareCertificateNumber
+        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
         }</span>
       </p>
     </td>
@@ -740,9 +737,8 @@ border: none;
     "
     >
     <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">${
-        customerYWD.distinctiveNumber?.split("-")[0]
-      }</span>
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
     </p>
     </td>
     <td
@@ -757,10 +753,9 @@ border: none;
     >
     <p class="MsoNoSpacing" align="center" style="text-align: center">
       <span style="font-family: 'Tahoma', sans-serif">
-        ${
-          customerYWD.distinctiveNumber?.split("-")[1]
-            ? customerYWD.distinctiveNumber?.split("-")[1]
-            : customerYWD.distinctiveNumber?.split("-")[0]
+        ${customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
         }</span>
     </p>
     </td>
@@ -905,9 +900,8 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${
-              customer.ledgerFolio
-            }</span>
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+        }</span>
           </p>
         </td>
     
@@ -939,8 +933,7 @@ border: none;
       "
     >
       <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${
-          customerYWD.shareCertificateNumber
+        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
         }</span>
       </p>
     </td>
@@ -956,9 +949,8 @@ border: none;
     "
     >
     <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">${
-        customerYWD.distinctiveNumber?.split("-")[0]
-      }</span>
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
     </p>
     </td>
     <td
@@ -973,10 +965,9 @@ border: none;
     >
     <p class="MsoNoSpacing" align="center" style="text-align: center">
       <span style="font-family: 'Tahoma', sans-serif">
-        ${
-          customerYWD.distinctiveNumber?.split("-")[1]
-            ? customerYWD.distinctiveNumber?.split("-")[1]
-            : customerYWD.distinctiveNumber?.split("-")[0]
+        ${customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
         }</span>
     </p>
     </td>
@@ -1125,9 +1116,8 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${
-              customer.ledgerFolio
-            }</span>
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+        }</span>
           </p>
         </td>
     
@@ -1142,9 +1132,8 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${
-              customerYWD.shareCertificateNumber
-            }</span>
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+        }</span>
           </p>
         </td>
         
@@ -1159,9 +1148,8 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${
-              customerYWD.distinctiveNumber
-            }</span>
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber
+        }</span>
           </p>
         </td>
         
@@ -1193,11 +1181,10 @@ border: none;
         >
           <p class="MsoNoSpacing">
             <span style="font-family: 'Tahoma', sans-serif"
-              >${customer.deathHolderName1} (deceased) jointly ${
-        customer.deathHolderName2
+              >${customer.deathHolderName1} (deceased) jointly ${customer.deathHolderName2
           ? customer.deathHolderName2 + "(deceased)"
           : ""
-      }</span
+        }</span
             >
           </p>
         </td>
@@ -1344,9 +1331,8 @@ border: none;
         "
       >
         <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${
-            customer.ledgerFolio
-          }</span>
+          <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+        }</span>
         </p>
       </td>
     
@@ -1360,9 +1346,8 @@ border: none;
           padding: 0in 5.4pt 0in 5.4pt;
         "
       ><p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style-*+="font-family: 'Tahoma', sans-serif">${
-        customerYWD.totalShareQuantity
-      }</span>
+      <span style-*+="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
+        }</span>
     </p>
   </td>
       
@@ -1377,9 +1362,8 @@ border: none;
         padding: 0in 5.4pt 0in 5.4pt;
       "> 
       <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${
-            customerYWD.shareCertificateNumber
-          }</span>
+          <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+        }</span>
       </p>
       </td>
 
@@ -1393,8 +1377,7 @@ border: none;
         padding: 0in 5.4pt 0in 5.4pt;
       "
       ><p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${
-          customerYWD.distinctiveNumber?.split("-")[0]
+        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
         }</span>
       </p>
       </td>
@@ -1411,11 +1394,10 @@ border: none;
       >
       <p class="MsoNoSpacing" align="center" style="text-align: center">
         <span style="font-family: 'Tahoma', sans-serif">
-          ${
-            customerYWD.distinctiveNumber?.split("-")[1]
-              ? customerYWD.distinctiveNumber?.split("-")[1]
-              : customerYWD.distinctiveNumber?.split("-")[0]
-          }</span>
+          ${customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
       </p>
       </td>
       
@@ -1780,9 +1762,8 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${
-              customer.ledgerFolio
-            }</span>
+            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+        }</span>
           </p>
         </td>
 
@@ -1797,9 +1778,8 @@ border: none;
           "
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${
-              customerYWD.shareCertificateNumber
-            }</span>
+            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+        }</span>
           </p>
         </td>
         
@@ -1815,9 +1795,8 @@ border: none;
         >
           <p class="MsoNoSpacing" align="center" style="text-align: center">
             
-<span style="font-family: 'Tahoma', sans-serif">${
-        customerYWD.distinctiveNumber?.split("-")[0]
-      }</span>
+<span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
           </p>
         </td>
                
@@ -1834,11 +1813,10 @@ border: none;
           <p class="MsoNoSpacing" align="center" style="text-align: center">
             
 <span style="font-family: 'Tahoma', sans-serif">
-  ${
-    customerYWD.distinctiveNumber?.split("-")[1]
-      ? customerYWD.distinctiveNumber?.split("-")[1]
-      : customerYWD.distinctiveNumber?.split("-")[0]
-  }</span>
+  ${customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
           </p>
         </td>
         <td
@@ -2179,9 +2157,8 @@ border: none;
                 "
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${
-                    customer.ledgerFolio
-                  }</span>
+                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+        }</span>
                 </p>
               </td>
       
@@ -2196,9 +2173,8 @@ border: none;
                 "
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${
-                    customerYWD.shareCertificateNumber
-                  } of Rs.${customer.faceValueAsOnToday}/-</span>
+                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+        } of Rs.${customer.faceValueAsOnToday}/-</span>
                 </p>
               </td>
               
@@ -2214,9 +2190,8 @@ border: none;
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
                   
-      <span style="font-family: 'Tahoma', sans-serif">${
-        customerYWD.distinctiveNumber?.split("-")[0]
-      }</span>
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
                 </p>
               </td> 
               
@@ -2233,10 +2208,9 @@ border: none;
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
                   
       <span style="font-family: 'Tahoma', sans-serif">
-        ${
-          customerYWD.distinctiveNumber?.split("-")[1]
-            ? customerYWD.distinctiveNumber?.split("-")[1]
-            : customerYWD.distinctiveNumber?.split("-")[0]
+        ${customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
         }
       </span>
                 </p>
@@ -2252,9 +2226,8 @@ border: none;
               "
             >
               <p class="MsoNoSpacing" align="center" style="text-align: center">
-                <span style="font-family: 'Tahoma', sans-serif">${
-                  customerYWD.totalShareQuantity
-                }</span>
+                <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
+        }</span>
               </p>
             </td>
             
@@ -2407,9 +2380,8 @@ border: none;
                 "
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${
-                    customer.ledgerFolio
-                  }</span>
+                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+        }</span>
                 </p>
               </td>
       
@@ -2424,9 +2396,8 @@ border: none;
                 "
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${
-                    customerYWD.shareCertificateNumber
-                  } of Rs.${customer.faceValueAsOnToday}/-</span>
+                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+        } of Rs.${customer.faceValueAsOnToday}/-</span>
                 </p>
               </td>
               
@@ -2442,9 +2413,8 @@ border: none;
               >
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
                   
-      <span style="font-family: 'Tahoma', sans-serif">${
-        customerYWD.distinctiveNumber?.split("-")[0]
-      }</span>
+      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+        }</span>
                 </p>
               </td> 
               
@@ -2461,10 +2431,9 @@ border: none;
                 <p class="MsoNoSpacing" align="center" style="text-align: center">
                   
       <span style="font-family: 'Tahoma', sans-serif">
-        ${
-          customerYWD.distinctiveNumber?.split("-")[1]
-            ? customerYWD.distinctiveNumber?.split("-")[1]
-            : customerYWD.distinctiveNumber?.split("-")[0]
+        ${customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
         }
       </span>
                 </p>
@@ -2480,9 +2449,8 @@ border: none;
               "
             >
               <p class="MsoNoSpacing" align="center" style="text-align: center">
-                <span style="font-family: 'Tahoma', sans-serif">${
-                  customerYWD.totalShareQuantity
-                } of Rs.${customer.faceValueAsOnToday}/-</span>
+                <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
+        } of Rs.${customer.faceValueAsOnToday}/-</span>
               </p>
             </td>
             
@@ -4650,16 +4618,225 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       paragraphLoop: false,
       linebreaks: true,
     });
+    //noticeTable
+    let noticeTable: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("noticeTable data customerYWD:- ", customerYWD);
+      noticeTable.push({
+        folioNo: customer.ledgerFolio,
+        cNo: customerYWD.shareCertificateNumber,
+        dNo: customerYWD.distinctiveNumber,
+        shieCertificate: customerYWD.totalShareQuantity + " of Rs." + customer.faceValueAsOnToday + "/-FV",
+      })
+    }
+    //folioCertiDistShareInCerti/fCDSIC
+    let fCDSIC: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("folioCertiDistShareInCerti data customerYWD:- ", customerYWD);
+      fCDSIC.push({
+        folioNo: customer.ledgerFolio,
+        certificateNo: customerYWD.shareCertificateNumber,
+        distinctiveNo: customerYWD.distinctiveNumber,
+        Shares: customerYWD.totalShareQuantity,
+      })
+    }
+    //folioShareCertiDist//fSCD
+    let fSCD: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("folioShareCertiDist data customerYWD:- ", customerYWD);
+      fSCD.push({
+        folioNumber: customer.ledgerFolio,
+        no_ofShares: customerYWD.totalShareQuantity,
+        certificateNumbers: customerYWD.shareCertificateNumber,
+        distinctiveNo_f: customerYWD.distinctiveNumber?.split("-")[0],
+        distinctiveNo_t: customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
+      })
+    }
+
+    // folioCertiDistSharesNameShareHolder/fCDSNSH
+    let fCDSNSH: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("folioCertiDistSharesNameShareHolder data customerYWD:- ", customerYWD);
+      fCDSNSH.push({
+        folioNo: customer.ledgerFolio,
+        certificateNo: customerYWD.shareCertificateNumber,
+        distinctiveNos: customerYWD.distinctiveNumber,
+        noofShares: customerYWD.totalShareQuantity,
+        shareholder: customer.deathHolderName1
+          + " (deceased) jointly"
+          + customer.deathHolderName2 ? customer.deathHolderName2 + "(deceased)" : ""
+      })
+    }
+    //ywdATable
+    let ywdATable: any = []
+    for (let index = 0; index < customer.ywdATabelData.length; index++) {
+      const customerYWD = customer.ywdATabelData[index];
+      console.log("ywdATable data customerYWD:- ", customerYWD);
+      ywdATable.push({
+        year: customerYWD.year,
+        wNo: customerYWD.warrantNo,
+        ddMNo: customerYWD.ddMicrNo,
+        amount: customerYWD.amount
+      })
+    }
+    //folioSecuCertiNoDisti/fSCND
+    let fSCND: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("folioSecuCertiNoDisti data customerYWD:- ", customerYWD);
+      fSCND.push({
+        no: (index + 1) + ")",
+        FOLIONO: customer.ledgerFolio,
+        noofsecurities: customerYWD.totalShareQuantity,
+        securityCertificateNo: customerYWD.shareCertificateNumber,
+        distinctiveNosFrom: customerYWD.distinctiveNumber?.split("-")[0],
+        distinctiveNosTo: customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
+      })
+    }
+    //nameComCertiDistFolioSerHeld/nCCDFSH
+    let nCCDFSH: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("nameComCertiDistFolioSerHeld data customerYWD:- ", customerYWD);
+      nCCDFSH.push({
+        company: customer.companyName,
+        cNo: customerYWD.shareCertificateNumber,
+        dNo: customerYWD.distinctiveNumber,
+        fNo: customerYWD.ledgerFolio,
+        nofsh: customerYWD.totalShareQuantity + " OF F.V RS." + customer.faceValueAsOnToday + "/-"
+      })
+    }
+    // folioCertiDistFDistTNoShare/fCDFDNS
+    let fCDFDNS: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("folioCertiDistFDistTNoShare data customerYWD:- ", customerYWD);
+      fCDFDNS.push({
+        fNo: customer.ledgerFolio,
+        cNo: customerYWD.shareCertificateNumber,
+        dNF: customerYWD.distinctiveNumber?.split("-")[0],
+        dNT: customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0],
+        nSH: customerYWD.totalShareQuantity + " of Rs." + customer.faceValueAsOnToday + "/-"
+      })
+    }
+
+    // folioShareCertiDistNos/fSCDN
+    let fSCDN: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("folioShareCertiDistNos data customerYWD:- ", customerYWD);
+      fSCDN.push({
+        folioNumber: customer.ledgerFolio,
+        noofShares: customerYWD.totalShareQuantity,
+        certificateNo: customerYWD.shareCertificateNumber,
+        distinctiveNos_f: customerYWD.distinctiveNumber?.split("-")[0],
+        distinctiveNos_t: customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
+      })
+    }
+    // nameComFolioNoSecperClaim/nCFNSPC
+    let nCFNSPC: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("nameComFolioNoSecperClaim data customerYWD:- ", customerYWD);
+      nCFNSPC.push({
+        nameC: customer.companyName,
+        fNo: customer.ledgerFolio,
+        noS: customer.totalShares + " of Rs." + customer.faceValueAsOnToday + "/-",
+        per: "100 %"
+      })
+    }
+    //nameComFolioCertDistNEDistShares//nCFCDNEDS
+    let nCFCDNEDS: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("nameComFolioCertDistNEDistShares data customerYWD:- ", customerYWD);
+      nCFCDNEDS.push({
+        folioNo: customer.ledgerFolio,
+        certNo: customerYWD.shareCertificateNumber + " of Rs." + customer.faceValueAsOnToday + "/-",
+        startDistNo: customerYWD.distinctiveNumber?.split("-")[0],
+        endDistNo: customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0],
+        Shares: customerYWD.totalShareQuantity
+      })
+    }
+    // certiDistNoSecurity
+    let certiDistNoSecurity: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("certiDistNoSecurity data customerYWD:- ", customerYWD);
+      certiDistNoSecurity.push({
+        certiNo: customerYWD.shareCertificateNumber,
+        dNos: customerYWD.distinctiveNumber,
+        noS: customerYWD.totalShareQuantity
+      })
+    }
+
+    // folioShareCertiDistFT/fSCDFT
+    let fSCDFT: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("folioShareCertiDistFT data customerYWD:- ", customerYWD);
+      fSCDFT.push({
+        fOLIONO: customer.ledgerFolio,
+        SHARES: customerYWD.totalShareQuantity,
+        cNo: customerYWD.shareCertificateNumber + " of Rs." + customer.faceValueAsOnToday + "/-",
+        dNof: customerYWD.distinctiveNumber?.split("-")[0],
+        dNot: customerYWD.distinctiveNumber?.split("-")[1]
+          ? customerYWD.distinctiveNumber?.split("-")[1]
+          : customerYWD.distinctiveNumber?.split("-")[0]
+      })
+    }
+
+    // nameFolioShareFVCertiDistNo/nfSFCDN
+    let nfSFCDN: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("nameFolioShareFVCertiDistNo data customerYWD:- ", customerYWD);
+      nfSFCDN.push({
+        name: customer.deathHolderName1 + "  (Deceased) Jointly" + customer.deathHolderName2,
+        fNo: customer.ledgerFolio,
+        shares: customerYWD.totalShareQuantity,
+        fv: customer.faceValueAsOnToday,
+        cNo: customerYWD.shareCertificateNumber,
+        dNo: customerYWD.distinctiveNumber
+      })
+    }
 
     await doc.render({
-      hasReff: hasReffLine,
-      subjects: subjects,
-      summary1: summary1,
-      name: "Jay",
       // first_name: "John",
       // last_name: "Doe",
       // phone: "0652455478",
       // description: "New Website",
+      hasReff: hasReffLine,
+      subjects: subjects,
+      summary1: summary1,
+      name: "Jay",
+      noticeTable: noticeTable,
+      fCDSIC: fCDSIC,
+      fSCD: fSCD,
+      fCDSNSH: fCDSNSH,
+      ywdATable: ywdATable,
+      fSCND: fSCND,
+      nCCDFSH: nCCDFSH,
+      fCDFDNS: fCDFDNS,
+      nCFNSPC: nCFNSPC,
+      nCFCDNEDS: nCFCDNEDS,
+      certiDistNoSecurity: certiDistNoSecurity,
+      fSCDFT: fSCDFT,
+      nfSFCDN: nfSFCDN,
       // users: [
       //   {
       //     fname: "Jay",
