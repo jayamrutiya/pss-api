@@ -14,7 +14,7 @@ export interface ICustomerRepository {
     customerMasterId: number | null
   ): Promise<Customer[]>;
 
-  getCustomer(id: number, userId: number): Promise<Customer | null>;
+  getCustomer(id: number, userId: number | null): Promise<Customer | null>;
 
   deleteCustomer(id: number, userId: number): Promise<Customer | null>;
 

@@ -117,7 +117,7 @@ export class CustomerTemplateController extends BaseController {
         await this._customerTemplateService.createWordFileCustomerTemplate(
           customerTemplateMasterId,
           customerId,
-          token.id
+          token?.id
         );
       // res.setHeader(
       //   "Content-Type",
