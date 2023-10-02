@@ -67,3347 +67,3349 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //try OLH
 
     //table otherLegalHears :-
-    find = "[[olhnameInPancardExactSpelling]]";
-    let olhnamepan = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhnamepan += `${customerYWD.nameInPancardExactSpelling},`;
-    }
-    str = replaceAll(str, find, olhnamepan);
+    // find = "[[olhnameInPancardExactSpelling]]";
+    // let olhnamepan = "";
+    // for (let index = 0; index < customer.otherLegalHears.length; index++) {
+    //   const customerYWD = customer.otherLegalHears[index];
+    //   olhnamepan += `${customerYWD.nameInPancardExactSpelling},`;
+    // }
+    // str = replaceAll(str, find, olhnamepan);
 
-    find = "[[olhnameInPancard1]]";
-    let olhnamepan1 = olhnamepan.split(",")[0];
-    str = replaceAll(str, find, olhnamepan1);
 
-    find = "[[olhnameInPancard2]]";
-    let olhnamepan2 = olhnamepan.split(",")[1];
-    str = replaceAll(str, find, olhnamepan2);
+    // find = "[[olhnameInPancard1]]";
+    // let olhnamepan1 = olhnamepan.split(",")[0];
+    // str = replaceAll(str, find, olhnamepan1);
 
-    find = "[[olhnameInPancard3]]";
-    let olhnamepan3 = olhnamepan.split(",")[2];
-    str = replaceAll(str, find, olhnamepan3);
+    // find = "[[olhnameInPancard2]]";
+    // let olhnamepan2 = olhnamepan.split(",")[1];
+    // str = replaceAll(str, find, olhnamepan2);
 
-    find = "[[olhnameInaadharcard]]";
-    let olhnameaadhar = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling};`;
-    }
-    str = replaceAll(str, find, olhnameaadhar);
+    // find = "[[olhnameInPancard3]]";
+    // let olhnamepan3 = olhnamepan.split(",")[2];
+    // str = replaceAll(str, find, olhnamepan3);
 
-    find = "[[olhnameInaadharcard1]]";
-    let olhnameInaadharcard1 = olhnameaadhar.split(";")[0];
-    str = replaceAll(str, find, olhnameInaadharcard1);
 
-    find = "[[olhnameInaadharcard2]]";
-    let olhnameInaadharcard2 = olhnameaadhar.split(";")[1];
-    str = replaceAll(str, find, olhnameInaadharcard2);
+    // find = "[[olhnameInaadharcard]]";
+    // let olhnameaadhar = "";
+    // for (let index = 0; index < customer.otherLegalHears.length; index++) {
+    //   const customerYWD = customer.otherLegalHears[index];
+    //   olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling};`;
+    // }
+    // str = replaceAll(str, find, olhnameaadhar);
 
-    find = "[[olhnameInaadharcard3]]";
-    let olhnameInaadharcard3 = olhnameaadhar.split(";")[2];
-    str = replaceAll(str, find, olhnameInaadharcard3);
+    // find = "[[olhnameInaadharcard1]]";
+    // let olhnameInaadharcard1 = olhnameaadhar.split(";")[0];
+    // str = replaceAll(str, find, olhnameInaadharcard1);
 
-    find = "[[olhaddressaddhar]]";
-    let olhaddaadhar = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhaddaadhar += `${customerYWD.addressSameInAadharcard};`;
-    }
-    str = replaceAll(str, find, olhaddaadhar);
+    // find = "[[olhnameInaadharcard2]]";
+    // let olhnameInaadharcard2 = olhnameaadhar.split(";")[1];
+    // str = replaceAll(str, find, olhnameInaadharcard2);
 
-    find = "[[olhaddressaddhar1]]";
-    let olhaddressaddhar1 = olhaddaadhar.split(";")[0];
-    str = replaceAll(str, find, olhaddressaddhar1);
+    // find = "[[olhnameInaadharcard3]]";
+    // let olhnameInaadharcard3 = olhnameaadhar.split(";")[2];
+    // str = replaceAll(str, find, olhnameInaadharcard3);
 
-    find = "[[olhaddressaddhar2]]";
-    let olhaddressaddhar2 = olhaddaadhar.split(";")[1];
-    str = replaceAll(str, find, olhaddressaddhar2);
+    // find = "[[olhaddressaddhar]]";
+    // let olhaddaadhar = "";
+    // for (let index = 0; index < customer.otherLegalHears.length; index++) {
+    //   const customerYWD = customer.otherLegalHears[index];
+    //   olhaddaadhar += `${customerYWD.addressSameInAadharcard};`;
+    // }
+    // str = replaceAll(str, find, olhaddaadhar);
 
-    find = "[[olhaddressaddhar3]]";
-    let olhaddressaddhar3 = olhaddaadhar.split(";")[2];
-    str = replaceAll(str, find, olhaddressaddhar3);
+    // find = "[[olhaddressaddhar1]]";
+    // let olhaddressaddhar1 = olhaddaadhar.split(";")[0];
+    // str = replaceAll(str, find, olhaddressaddhar1);
 
-    find = "[[olhage]]";
-    let olhage = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhage += `${customerYWD.age},`;
-    }
-    str = replaceAll(str, find, olhage);
+    // find = "[[olhaddressaddhar2]]";
+    // let olhaddressaddhar2 = olhaddaadhar.split(";")[1];
+    // str = replaceAll(str, find, olhaddressaddhar2);
 
-    find = "[[olhage1]]";
-    let olhage1 = olhage.split(",")[0];
-    str = replaceAll(str, find, olhage1);
+    // find = "[[olhaddressaddhar3]]";
+    // let olhaddressaddhar3 = olhaddaadhar.split(";")[2];
+    // str = replaceAll(str, find, olhaddressaddhar3);
 
-    find = "[[olhage2]]";
-    let olhage2 = olhage.split(",")[1];
-    str = replaceAll(str, find, olhage2);
+    // find = "[[olhage]]";
+    // let olhage = "";
+    // for (let index = 0; index < customer.otherLegalHears.length; index++) {
+    //   const customerYWD = customer.otherLegalHears[index];
+    //   olhage += `${customerYWD.age},`;
+    // }
+    // str = replaceAll(str, find, olhage);
 
-    find = "[[olhage3]]";
-    let olhage3 = olhage.split(",")[2];
-    str = replaceAll(str, find, olhage3);
+    // find = "[[olhage1]]";
+    // let olhage1 = olhage.split(",")[0];
+    // str = replaceAll(str, find, olhage1);
 
-    find = "[[olhdaughterson]]";
-    let olhdaughterson = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-        },`;
-    }
-    str = replaceAll(str, find, olhdaughterson);
+    // find = "[[olhage2]]";
+    // let olhage2 = olhage.split(",")[1];
+    // str = replaceAll(str, find, olhage2);
 
-    find = "[[olhdaughterson1]]";
-    let olhdaughterson1 = olhdaughterson.split(",")[0];
-    str = replaceAll(str, find, olhdaughterson1);
+    // find = "[[olhage3]]";
+    // let olhage3 = olhage.split(",")[2];
+    // str = replaceAll(str, find, olhage3);
 
-    find = "[[olhdaughterson2]]";
-    let olhdaughterson2 = olhdaughterson.split(",")[1];
-    str = replaceAll(str, find, olhdaughterson2);
+    // find = "[[olhdaughterson]]";
+    // let olhdaughterson = "";
+    // for (let index = 0; index < customer.otherLegalHears.length; index++) {
+    //   const customerYWD = customer.otherLegalHears[index];
+    //   olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+    //     },`;
+    // }
+    // str = replaceAll(str, find, olhdaughterson);
 
-    find = "[[olhdaughterson3]]";
-    let olhdaughterson3 = olhdaughterson.split(",")[2];
-    str = replaceAll(str, find, olhdaughterson3);
+    // find = "[[olhdaughterson1]]";
+    // let olhdaughterson1 = olhdaughterson.split(",")[0];
+    // str = replaceAll(str, find, olhdaughterson1);
+
+    // find = "[[olhdaughterson2]]";
+    // let olhdaughterson2 = olhdaughterson.split(",")[1];
+    // str = replaceAll(str, find, olhdaughterson2);
+
+    // find = "[[olhdaughterson3]]";
+    // let olhdaughterson3 = olhdaughterson.split(",")[2];
+    // str = replaceAll(str, find, olhdaughterson3);
 
     //error
     // try SDT
 
-    find = "[[distinctiveNumber]]";
-    let bd = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bd += `${customerYWD.distinctiveNumber},`;
-    }
-    str = replaceAll(str, find, bd);
+    // find = "[[distinctiveNumber]]";
+    // let bd = "";
+    // for (let index = 0; index < customer.tableSDT.length; index++) {
+    //   const customerYWD = customer.tableSDT[index];
+    //   bd += `${customerYWD.distinctiveNumber},`;
+    // }
+    // str = replaceAll(str, find, bd);
 
-    find = "[[shareCertificateNumber]]";
-    let bs = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bs += `${customerYWD.shareCertificateNumber},`;
-    }
-    str = replaceAll(str, find, bs);
+    // find = "[[shareCertificateNumber]]";
+    // let bs = "";
+    // for (let index = 0; index < customer.tableSDT.length; index++) {
+    //   const customerYWD = customer.tableSDT[index];
+    //   bs += `${customerYWD.shareCertificateNumber},`;
+    // }
+    // str = replaceAll(str, find, bs);
 
-    find = "[[totalShareQuantity]]";
-    let bt = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bt += `${customerYWD.totalShareQuantity},`;
-    }
+    // find = "[[totalShareQuantity]]";
+    // let bt = "";
+    // for (let index = 0; index < customer.tableSDT.length; index++) {
+    //   const customerYWD = customer.tableSDT[index];
+    //   bt += `${customerYWD.totalShareQuantity},`;
+    // }
 
-    str = replaceAll(str, find, bt);
+    // str = replaceAll(str, find, bt);
     //and error
 
     //noticeTable
-    find = "[[noticeTable]]";
+    //   find = "[[noticeTable]]";
 
-    const headn = `<style>
-      div.MsoNoSpacing {
-        mso-style-link: "No Spacing Char";
-        margin: 0in;
-        font-size: 11pt;
-        font-family: "Calibri", sans-serif;
-      }
+    //   const headn = `<style>
+    //     div.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
 
-      p.MsoNoSpacing {
-        mso-style-link: "No Spacing Char";
-        margin: 0in;
-        font-size: 11pt;
-        font-family: "Calibri", sans-serif;
-      }
-    </style>
-    <table
-    class="MsoTableGrid"
-    border="1"
-    cellspacing="0"
-    cellpadding="0"
-    width="624"
-    style="
-      width: 467.75pt;
-      margin-left: -0.25pt;
-      border-collapse: collapse;
-      border: none;
-    "
-  >
+    //     p.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
+    //   </style>
+    //   <table
+    //   class="MsoTableGrid"
+    //   border="1"
+    //   cellspacing="0"
+    //   cellpadding="0"
+    //   width="624"
+    //   style="
+    //     width: 467.75pt;
+    //     margin-left: -0.25pt;
+    //     border-collapse: collapse;
+    //     border: none;
+    //   "
+    // >
 
 
 
-    <thead>
-       <tr style="height: 26.95pt">
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            padding: 0in 5.4pt 0in 5.4pt;
-            height: 26.95pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-          </p>
-        </td>
-        <td
-          width="156"
-          valign="top"
-          style="
-            width: 117pt;
-            border: solid windowtext 1pt;
-            border-left: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-            height: 26.95pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >Certificate Number</span
-            >
-          </p>
-        </td>
-        <td
-          width="156"
-          valign="top"
-          style="
-            width: 117pt;
-            border: solid windowtext 1pt;
-            border-left: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-            height: 26.95pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >Distinctive Number(s)</span
-            >
-          </p>
-        </td>
-        <td
-          width="168"
-          valign="top"
-          style="
-            width: 125.75pt;
-            border: solid windowtext 1pt;
-            border-left: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-            height: 26.95pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >Shares held in each Certificate</span
-            >
-          </p>
-        </td>
-      </tr>
-    </thead>
-    <tbody>`;
-    const footn = `</tbody>
-    </table>`;
-    let bodyn = "";
-    bodyn += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bodyn += `<tr>
-			<td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
-          </p>
-        </td>
+    //   <thead>
+    //      <tr style="height: 26.95pt">
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Certificate Number</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Distinctive Number(s)</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="168"
+    //         valign="top"
+    //         style="
+    //           width: 125.75pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Shares held in each Certificate</span
+    //           >
+    //         </p>
+    //       </td>
+    //     </tr>
+    //   </thead>
+    //   <tbody>`;
+    //   const footn = `</tbody>
+    //   </table>`;
+    //   let bodyn = "";
+    //   bodyn += "";
+    //   for (let index = 0; index < customer.tableSDT.length; index++) {
+    //     const customerYWD = customer.tableSDT[index];
+    //     bodyn += `<tr>
+    // 		<td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+    //         </p>
+    //       </td>
 
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
-          </p>
-        </td>
-        
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
-          </p>
-        </td>
-        
-        <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-        >
-          <p class="MsoNoSpacing">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-FV</span
-            >
-          </p>
-        </td>
-			
-		</tr>`;
-    }
-    const datan = headn + bodyn + footn;
-    str = replaceAll(str, find, datan);
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+    //         </p>
+    //       </td>
+
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+    //         </p>
+    //       </td>
+
+    //       <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       "
+    //       >
+    //         <p class="MsoNoSpacing">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-FV</span
+    //           >
+    //         </p>
+    //       </td>
+
+    // 	</tr>`;
+    //   }
+    //   const datan = headn + bodyn + footn;
+    //   str = replaceAll(str, find, datan);
 
     //folioCertiDistShareInCerti
-    find = "[[folioCertiDistShareInCerti]]";
-    const headf = `<style>
-div.MsoNoSpacing {
-  mso-style-link: "No Spacing Char";
-  margin: 0in;
-  font-size: 11pt;
-  font-family: "Calibri", sans-serif;
-}
+    //     find = "[[folioCertiDistShareInCerti]]";
+    //     const headf = `<style>
+    // div.MsoNoSpacing {
+    //   mso-style-link: "No Spacing Char";
+    //   margin: 0in;
+    //   font-size: 11pt;
+    //   font-family: "Calibri", sans-serif;
+    // }
 
-p.MsoNoSpacing {
-  mso-style-link: "No Spacing Char";
-  margin: 0in;
-  font-size: 11pt;
-  font-family: "Calibri", sans-serif;
-}
-</style>
-<table
-class="MsoTableGrid"
-border="1"
-cellspacing="0"
-cellpadding="0"
-width="624"
-style="
-width: 467.75pt;
-margin-left: -0.25pt;
-border-collapse: collapse;
-border: none;
-"
->
+    // p.MsoNoSpacing {
+    //   mso-style-link: "No Spacing Char";
+    //   margin: 0in;
+    //   font-size: 11pt;
+    //   font-family: "Calibri", sans-serif;
+    // }
+    // </style>
+    // <table
+    // class="MsoTableGrid"
+    // border="1"
+    // cellspacing="0"
+    // cellpadding="0"
+    // width="624"
+    // style="
+    // width: 467.75pt;
+    // margin-left: -0.25pt;
+    // border-collapse: collapse;
+    // border: none;
+    // "
+    // >
 
 
 
-<thead>
-<tr style="height: 26.95pt">
-<td
-  width="144"
-  valign="top"
-  style="
-    width: 1.5in;
-    border: solid windowtext 1pt;
-    padding: 0in 5.4pt 0in 5.4pt;
-    height: 26.95pt;
-  "
->
-  <p class="MsoNoSpacing" align="center" style="text-align: center">
-    <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-  </p>
-</td>
-<td
-  width="156"
-  valign="top"
-  style="
-    width: 117pt;
-    border: solid windowtext 1pt;
-    border-left: none;
-    padding: 0in 5.4pt 0in 5.4pt;
-    height: 26.95pt;
-  "
->
-  <p class="MsoNoSpacing" align="center" style="text-align: center">
-    <span style="font-family: 'Tahoma', sans-serif"
-      >Certificate Nos.</span
-    >
-  </p>
-</td>
-<td
-  width="156"
-  valign="top"
-  style="
-    width: 117pt;
-    border: solid windowtext 1pt;
-    border-left: none;
-    padding: 0in 5.4pt 0in 5.4pt;
-    height: 26.95pt;
-  "
->
-  <p class="MsoNoSpacing" align="center" style="text-align: center">
-    <span style="font-family: 'Tahoma', sans-serif"
-      >Distinctive Nos.</span
-    >
-  </p>
-</td>
-<td
-  width="168"
-  valign="top"
-  style="
-    width: 125.75pt;
-    border: solid windowtext 1pt;
-    border-left: none;
-    padding: 0in 5.4pt 0in 5.4pt;
-    height: 26.95pt;
-  "
->
-  <p class="MsoNoSpacing" align="center" style="text-align: center">
-    <span style="font-family: 'Tahoma', sans-serif"
-      >Shares held in each Certificate</span
-    >
-  </p>
-</td>
-</tr>
-    </thead>
-    <tbody>`;
-    const footf = `</tbody>
-    </table>`;
-    let bodyf = "";
-    bodyf += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bodyf += `<tr>
-      <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
-          </p>
-        </td>
-    
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
-          </p>
-        </td>
-        
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
-          </p>
-        </td>
-        
-        <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-        >
-          <p class="MsoNoSpacing">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >${customerYWD.totalShareQuantity}</span
-            >
-          </p>
-        </td>
-      
-    </tr>`;
-    }
-    const dataf = headf + bodyf + footf;
-    str = replaceAll(str, find, dataf);
+    // <thead>
+    // <tr style="height: 26.95pt">
+    // <td
+    //   width="144"
+    //   valign="top"
+    //   style="
+    //     width: 1.5in;
+    //     border: solid windowtext 1pt;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //     height: 26.95pt;
+    //   "
+    // >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //   </p>
+    // </td>
+    // <td
+    //   width="156"
+    //   valign="top"
+    //   style="
+    //     width: 117pt;
+    //     border: solid windowtext 1pt;
+    //     border-left: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //     height: 26.95pt;
+    //   "
+    // >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif"
+    //       >Certificate Nos.</span
+    //     >
+    //   </p>
+    // </td>
+    // <td
+    //   width="156"
+    //   valign="top"
+    //   style="
+    //     width: 117pt;
+    //     border: solid windowtext 1pt;
+    //     border-left: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //     height: 26.95pt;
+    //   "
+    // >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif"
+    //       >Distinctive Nos.</span
+    //     >
+    //   </p>
+    // </td>
+    // <td
+    //   width="168"
+    //   valign="top"
+    //   style="
+    //     width: 125.75pt;
+    //     border: solid windowtext 1pt;
+    //     border-left: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //     height: 26.95pt;
+    //   "
+    // >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif"
+    //       >Shares held in each Certificate</span
+    //     >
+    //   </p>
+    // </td>
+    // </tr>
+    //     </thead>
+    //     <tbody>`;
+    //     const footf = `</tbody>
+    //     </table>`;
+    //     let bodyf = "";
+    //     bodyf += "";
+    //     for (let index = 0; index < customer.tableSDT.length; index++) {
+    //       const customerYWD = customer.tableSDT[index];
+    //       bodyf += `<tr>
+    //       <td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //             <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+    //           </p>
+    //         </td>
+
+    //         <td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //             <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+    //           </p>
+    //         </td>
+
+    //         <td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //             <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+    //           </p>
+    //         </td>
+
+    //         <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //         >
+    //           <p class="MsoNoSpacing">
+    //             <span style="font-family: 'Tahoma', sans-serif"
+    //               >${customerYWD.totalShareQuantity}</span
+    //             >
+    //           </p>
+    //         </td>
+
+    //     </tr>`;
+    //     }
+    //     const dataf = headf + bodyf + footf;
+    //     str = replaceAll(str, find, dataf);
 
     //folioShareCertiDist
-    find = "[[folioShareCertiDist]]";
-    const hf = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
-  >
-  
-  
-  
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >
-           No. of Shares</td>
-           <td
-           width="156"
-           valign="top"
-           style="
-             width: 117pt;
-             border: solid windowtext 1pt;
-             border-left: none;
-             padding: 0in 5.4pt 0in 5.4pt;
-             height: 26.95pt;
-           "
-         >
-           <p class="MsoNoSpacing" align="center" style="text-align: center">
-             <span style="font-family: 'Tahoma', sans-serif"
-               >Certificate Numbers</span
-             >
-           </p>
-         </td>
-         <td
-         width="156"
-         valign="top"
-         style="
-           width: 117pt;
-           border: solid windowtext 1pt;
-           border-left: none;
-           padding: 0in 5.4pt 0in 5.4pt;
-           height: 26.95pt;
-         "
-       >
-         <p class="MsoNoSpacing" align="center" style="text-align: center">
-           <span style="font-family: 'Tahoma', sans-serif"
-             >Distinctive No. (From)</span
-           >
-         </p>
-       </td>
-       <td
-         width="168"
-         valign="top"
-         style="
-           width: 125.75pt;
-           border: solid windowtext 1pt;
-           border-left: none;
-           padding: 0in 5.4pt 0in 5.4pt;
-           height: 26.95pt;
-         "
-       >
-         <p class="MsoNoSpacing" align="center" style="text-align: center">
-           <span style="font-family: 'Tahoma', sans-serif"
-             >Distinctive No. (To)</span
-           >
-         </p>
-       </td>
-          </tr>
-        </thead>
-        <tbody>`;
-    const ff = `</tbody>
-      </table>`;
-    let bf = "";
-    bf += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bf += `<tr>
-      <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
-        }</span>
-          </p>
-        </td>
-    
-      
-        <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-        >
-          <p class="MsoNoSpacing">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >${customerYWD.totalShareQuantity}</span
-            >
-          </p>
-        </td>
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
-        }</span>
-      </p>
-    </td>
-     
-    <td
-    width="144"
-    valign="top"
-    style="
-      width: 1.5in;
-      border: solid windowtext 1pt;
-      border-top: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-    "
-    >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-    </p>
-    </td>
-    <td
-    width="144"
-    valign="top"
-    style="
-      width: 1.5in;
-      border: solid windowtext 1pt;
-      border-top: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-    "
-    >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-    </p>
-    </td>
-    
-    </tr>`;
-    }
-    const df = hf + bf + ff;
-    str = replaceAll(str, find, df);
+    //   find = "[[folioShareCertiDist]]";
+    //   const hf = `<style>
+    //   div.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+
+    //   p.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+    // </style>
+    // <table
+    // class="MsoTableGrid"
+    // border="1"
+    // cellspacing="0"
+    // cellpadding="0"
+    // width="624"
+    // style="
+    //   width: 467.75pt;
+    //   margin-left: -0.25pt;
+    //   border-collapse: collapse;
+    //   border: none;
+    // "
+    // >
+
+
+
+    // <thead>
+    //    <tr style="height: 26.95pt">
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >
+    //          No. of Shares</td>
+    //          <td
+    //          width="156"
+    //          valign="top"
+    //          style="
+    //            width: 117pt;
+    //            border: solid windowtext 1pt;
+    //            border-left: none;
+    //            padding: 0in 5.4pt 0in 5.4pt;
+    //            height: 26.95pt;
+    //          "
+    //        >
+    //          <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //            <span style="font-family: 'Tahoma', sans-serif"
+    //              >Certificate Numbers</span
+    //            >
+    //          </p>
+    //        </td>
+    //        <td
+    //        width="156"
+    //        valign="top"
+    //        style="
+    //          width: 117pt;
+    //          border: solid windowtext 1pt;
+    //          border-left: none;
+    //          padding: 0in 5.4pt 0in 5.4pt;
+    //          height: 26.95pt;
+    //        "
+    //      >
+    //        <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //          <span style="font-family: 'Tahoma', sans-serif"
+    //            >Distinctive No. (From)</span
+    //          >
+    //        </p>
+    //      </td>
+    //      <td
+    //        width="168"
+    //        valign="top"
+    //        style="
+    //          width: 125.75pt;
+    //          border: solid windowtext 1pt;
+    //          border-left: none;
+    //          padding: 0in 5.4pt 0in 5.4pt;
+    //          height: 26.95pt;
+    //        "
+    //      >
+    //        <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //          <span style="font-family: 'Tahoma', sans-serif"
+    //            >Distinctive No. (To)</span
+    //          >
+    //        </p>
+    //      </td>
+    //         </tr>
+    //       </thead>
+    //       <tbody>`;
+    //   const ff = `</tbody>
+    //     </table>`;
+    //   let bf = "";
+    //   bf += "";
+    //   for (let index = 0; index < customer.tableSDT.length; index++) {
+    //     const customerYWD = customer.tableSDT[index];
+    //     bf += `<tr>
+    //     <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+    //       }</span>
+    //         </p>
+    //       </td>
+
+
+    //       <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       "
+    //       >
+    //         <p class="MsoNoSpacing">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >${customerYWD.totalShareQuantity}</span
+    //           >
+    //         </p>
+    //       </td>
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+    //       }</span>
+    //     </p>
+    //   </td>
+
+    //   <td
+    //   width="144"
+    //   valign="top"
+    //   style="
+    //     width: 1.5in;
+    //     border: solid windowtext 1pt;
+    //     border-top: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //   "
+    //   >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+    //       }</span>
+    //   </p>
+    //   </td>
+    //   <td
+    //   width="144"
+    //   valign="top"
+    //   style="
+    //     width: 1.5in;
+    //     border: solid windowtext 1pt;
+    //     border-top: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //   "
+    //   >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif">
+    //       ${customerYWD.distinctiveNumber?.split("-")[1]
+    //         ? customerYWD.distinctiveNumber?.split("-")[1]
+    //         : customerYWD.distinctiveNumber?.split("-")[0]
+    //       }</span>
+    //   </p>
+    //   </td>
+
+    //   </tr>`;
+    //   }
+    //   const df = hf + bf + ff;
+    //   str = replaceAll(str, find, df);
     //folioShareCertiDistNos
-    find = "[[folioShareCertiDistNos]]";
-    const h1f = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
-  >
-  
-  
-  
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >
-           No of Shares</td>
-           <td
-           width="156"
-           valign="top"
-           style="
-             width: 117pt;
-             border: solid windowtext 1pt;
-             border-left: none;
-             padding: 0in 5.4pt 0in 5.4pt;
-             height: 26.95pt;
-           "
-         >
-           <p class="MsoNoSpacing" align="center" style="text-align: center">
-             <span style="font-family: 'Tahoma', sans-serif"
-               >Certificate No.</span
-             >
-           </p>
-         </td>
-         <td
-         width="156"
-         valign="top"
-         style="
-           width: 117pt;
-           border: solid windowtext 1pt;
-           border-left: none;
-           padding: 0in 5.4pt 0in 5.4pt;
-           height: 26.95pt;
-         "
-       >
-         <p class="MsoNoSpacing" align="center" style="text-align: center">
-           <span style="font-family: 'Tahoma', sans-serif"
-             >Distinctive Nos. (from)</span
-           >
-         </p>
-       </td>
-       <td
-         width="168"
-         valign="top"
-         style="
-           width: 125.75pt;
-           border: solid windowtext 1pt;
-           border-left: none;
-           padding: 0in 5.4pt 0in 5.4pt;
-           height: 26.95pt;
-         "
-       >
-         <p class="MsoNoSpacing" align="center" style="text-align: center">
-           <span style="font-family: 'Tahoma', sans-serif"
-             >Distinctive Nos. (To)</span
-           >
-         </p>
-       </td>
-          </tr>
-        </thead>
-        <tbody>`;
-    const f1f = `</tbody>
-      </table>`;
-    let b1f = "";
-    b1f += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      b1f += `<tr>
-      <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
-        }</span>
-          </p>
-        </td>
-    
-      
-        <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-        >
-          <p class="MsoNoSpacing">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >${customerYWD.totalShareQuantity}</span
-            >
-          </p>
-        </td>
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
-        }</span>
-      </p>
-    </td>
-     
-    <td
-    width="144"
-    valign="top"
-    style="
-      width: 1.5in;
-      border: solid windowtext 1pt;
-      border-top: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-    "
-    >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-    </p>
-    </td>
-    <td
-    width="144"
-    valign="top"
-    style="
-      width: 1.5in;
-      border: solid windowtext 1pt;
-      border-top: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-    "
-    >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-    </p>
-    </td>
-    
-    </tr>`;
-    }
-    const d1f = h1f + b1f + f1f;
-    str = replaceAll(str, find, d1f);
+    //   find = "[[folioShareCertiDistNos]]";
+    //   const h1f = `<style>
+    //   div.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+
+    //   p.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+    // </style>
+    // <table
+    // class="MsoTableGrid"
+    // border="1"
+    // cellspacing="0"
+    // cellpadding="0"
+    // width="624"
+    // style="
+    //   width: 467.75pt;
+    //   margin-left: -0.25pt;
+    //   border-collapse: collapse;
+    //   border: none;
+    // "
+    // >
+
+
+
+    // <thead>
+    //    <tr style="height: 26.95pt">
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >
+    //          No of Shares</td>
+    //          <td
+    //          width="156"
+    //          valign="top"
+    //          style="
+    //            width: 117pt;
+    //            border: solid windowtext 1pt;
+    //            border-left: none;
+    //            padding: 0in 5.4pt 0in 5.4pt;
+    //            height: 26.95pt;
+    //          "
+    //        >
+    //          <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //            <span style="font-family: 'Tahoma', sans-serif"
+    //              >Certificate No.</span
+    //            >
+    //          </p>
+    //        </td>
+    //        <td
+    //        width="156"
+    //        valign="top"
+    //        style="
+    //          width: 117pt;
+    //          border: solid windowtext 1pt;
+    //          border-left: none;
+    //          padding: 0in 5.4pt 0in 5.4pt;
+    //          height: 26.95pt;
+    //        "
+    //      >
+    //        <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //          <span style="font-family: 'Tahoma', sans-serif"
+    //            >Distinctive Nos. (from)</span
+    //          >
+    //        </p>
+    //      </td>
+    //      <td
+    //        width="168"
+    //        valign="top"
+    //        style="
+    //          width: 125.75pt;
+    //          border: solid windowtext 1pt;
+    //          border-left: none;
+    //          padding: 0in 5.4pt 0in 5.4pt;
+    //          height: 26.95pt;
+    //        "
+    //      >
+    //        <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //          <span style="font-family: 'Tahoma', sans-serif"
+    //            >Distinctive Nos. (To)</span
+    //          >
+    //        </p>
+    //      </td>
+    //         </tr>
+    //       </thead>
+    //       <tbody>`;
+    //   const f1f = `</tbody>
+    //     </table>`;
+    //   let b1f = "";
+    //   b1f += "";
+    //   for (let index = 0; index < customer.tableSDT.length; index++) {
+    //     const customerYWD = customer.tableSDT[index];
+    //     b1f += `<tr>
+    //     <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+    //       }</span>
+    //         </p>
+    //       </td>
+
+
+    //       <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       "
+    //       >
+    //         <p class="MsoNoSpacing">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >${customerYWD.totalShareQuantity}</span
+    //           >
+    //         </p>
+    //       </td>
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+    //       }</span>
+    //     </p>
+    //   </td>
+
+    //   <td
+    //   width="144"
+    //   valign="top"
+    //   style="
+    //     width: 1.5in;
+    //     border: solid windowtext 1pt;
+    //     border-top: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //   "
+    //   >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+    //       }</span>
+    //   </p>
+    //   </td>
+    //   <td
+    //   width="144"
+    //   valign="top"
+    //   style="
+    //     width: 1.5in;
+    //     border: solid windowtext 1pt;
+    //     border-top: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //   "
+    //   >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif">
+    //       ${customerYWD.distinctiveNumber?.split("-")[1]
+    //         ? customerYWD.distinctiveNumber?.split("-")[1]
+    //         : customerYWD.distinctiveNumber?.split("-")[0]
+    //       }</span>
+    //   </p>
+    //   </td>
+
+    //   </tr>`;
+    //   }
+    //   const d1f = h1f + b1f + f1f;
+    //   str = replaceAll(str, find, d1f);
 
     //folioCertiDistSharesNameShareHolder
-    find = "[[folioCertiDistSharesNameShareHolder]]";
-    const hof = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
-  >
-  
-  
-  
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Certificate No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Distinctive Nos.</span
-          >
-        </p>
-      </td>
-      <td
-        width="168"
-        valign="top"
-        style="
-          width: 125.75pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >No of Shares</span
-          >
-        </p>
-      
-        <td
-        width="168"
-        valign="top"
-        style="
-          width: 125.75pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Name of the Shareholder/s</span
-          >
-        </p>
-      </td>
-  
-    </tr>
-  </thead>
-  <tbody>`;
-    const fof = `</tbody>
-      </table>`;
-    let bof = "";
-    bof += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bof += `<tr>
-      <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
-        }</span>
-          </p>
-        </td>
-    
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
-        }</span>
-          </p>
-        </td>
-        
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber
-        }</span>
-          </p>
-        </td>
-        
-        <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-        >
-          <p class="MsoNoSpacing">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >${customerYWD.totalShareQuantity}</span
-            >
-          </p>
-        </td>
-        <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-        >
-          <p class="MsoNoSpacing">
-            <span style="font-family: 'Tahoma', sans-serif"
-              >${customer.deathHolderName1} (deceased) jointly ${customer.deathHolderName2
-          ? customer.deathHolderName2 + "(deceased)"
-          : ""
-        }</span
-            >
-          </p>
-        </td>
-    </tr>`;
-    }
-    const dof = hof + bof + fof;
-    str = replaceAll(str, find, dof);
+    //   find = "[[folioCertiDistSharesNameShareHolder]]";
+    //   const hof = `<style>
+    //   div.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+
+    //   p.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+    // </style>
+    // <table
+    // class="MsoTableGrid"
+    // border="1"
+    // cellspacing="0"
+    // cellpadding="0"
+    // width="624"
+    // style="
+    //   width: 467.75pt;
+    //   margin-left: -0.25pt;
+    //   border-collapse: collapse;
+    //   border: none;
+    // "
+    // >
+
+
+
+    // <thead>
+    //    <tr style="height: 26.95pt">
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Certificate No.</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Distinctive Nos.</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="168"
+    //       valign="top"
+    //       style="
+    //         width: 125.75pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >No of Shares</span
+    //         >
+    //       </p>
+
+    //       <td
+    //       width="168"
+    //       valign="top"
+    //       style="
+    //         width: 125.75pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Name of the Shareholder/s</span
+    //         >
+    //       </p>
+    //     </td>
+
+    //   </tr>
+    // </thead>
+    // <tbody>`;
+    //   const fof = `</tbody>
+    //     </table>`;
+    //   let bof = "";
+    //   bof += "";
+    //   for (let index = 0; index < customer.tableSDT.length; index++) {
+    //     const customerYWD = customer.tableSDT[index];
+    //     bof += `<tr>
+    //     <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+    //       }</span>
+    //         </p>
+    //       </td>
+
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+    //       }</span>
+    //         </p>
+    //       </td>
+
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber
+    //       }</span>
+    //         </p>
+    //       </td>
+
+    //       <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       "
+    //       >
+    //         <p class="MsoNoSpacing">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >${customerYWD.totalShareQuantity}</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       "
+    //       >
+    //         <p class="MsoNoSpacing">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >${customer.deathHolderName1} (deceased) jointly ${customer.deathHolderName2
+    //         ? customer.deathHolderName2 + "(deceased)"
+    //         : ""
+    //       }</span
+    //           >
+    //         </p>
+    //       </td>
+    //   </tr>`;
+    //   }
+    //   const dof = hof + bof + fof;
+    //   str = replaceAll(str, find, dof);
 
     //folioSecuCertiNoDisti
-    find = "[[folioSecuCertiNoDisti]]";
-    const hdf = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
-  >
-  
-  
-  
-  <thead>
-     <tr style="height: 26.95pt"><td></td>
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">FOLIO NO.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >No. of securities</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Security Certificate No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="168"
-        valign="top"
-        style="
-          width: 125.75pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-         colspan=2
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Distinctive Nos.<br /> From-To</span
-          >
-        </p>
-      </td>
-      
-        
-    </tr>
-  </thead>
-  <tbody>`;
-    const fdf = `</tbody>
-      </table>`;
-    let bdf = "";
-    bdf += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bdf += `<tr>
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${index + 1})</span>
-      </p>
-    </td>
-    <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
-        }</span>
-        </p>
-      </td>
-    
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-      ><p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style-*+="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
-        }</span>
-    </p>
-  </td>
-      
+    //   find = "[[folioSecuCertiNoDisti]]";
+    //   const hdf = `<style>
+    //   div.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
 
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "> 
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
-        }</span>
-      </p>
-      </td>
+    //   p.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+    // </style>
+    // <table
+    // class="MsoTableGrid"
+    // border="1"
+    // cellspacing="0"
+    // cellpadding="0"
+    // width="624"
+    // style="
+    //   width: 467.75pt;
+    //   margin-left: -0.25pt;
+    //   border-collapse: collapse;
+    //   border: none;
+    // "
+    // >
 
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-      ><p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-      </p>
-      </td>
-      
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-      >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">
-          ${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-      </p>
-      </td>
-      
-      
-    
-    </tr>`;
-    }
-    const dff = hdf + bdf + fdf;
-    str = replaceAll(str, find, dff);
+
+
+    // <thead>
+    //    <tr style="height: 26.95pt"><td></td>
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">FOLIO NO.</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >No. of securities</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Security Certificate No.</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="168"
+    //       valign="top"
+    //       style="
+    //         width: 125.75pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //        colspan=2
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Distinctive Nos.<br /> From-To</span
+    //         >
+    //       </p>
+    //     </td>
+
+
+    //   </tr>
+    // </thead>
+    // <tbody>`;
+    //   const fdf = `</tbody>
+    //     </table>`;
+    //   let bdf = "";
+    //   bdf += "";
+    //   for (let index = 0; index < customer.tableSDT.length; index++) {
+    //     const customerYWD = customer.tableSDT[index];
+    //     bdf += `<tr>
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">${index + 1})</span>
+    //     </p>
+    //   </td>
+    //   <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+    //       }</span>
+    //       </p>
+    //     </td>
+
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       "
+    //     ><p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style-*+="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
+    //       }</span>
+    //   </p>
+    // </td>
+
+
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "> 
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+    //       }</span>
+    //     </p>
+    //     </td>
+
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //     ><p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+    //       }</span>
+    //     </p>
+    //     </td>
+
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //     >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">
+    //         ${customerYWD.distinctiveNumber?.split("-")[1]
+    //         ? customerYWD.distinctiveNumber?.split("-")[1]
+    //         : customerYWD.distinctiveNumber?.split("-")[0]
+    //       }</span>
+    //     </p>
+    //     </td>
+
+
+
+    //   </tr>`;
+    //   }
+    //   const dff = hdf + bdf + fdf;
+    //   str = replaceAll(str, find, dff);
 
     //nameComCertiDistFolioSerHeld
-    find = "[[nameComCertiDistFolioSerHeld]]";
-    const hedf = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
-  >
-  
-  
-  
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.55in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Name of the Company</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width:70pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Certificate No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 70pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Distinctive No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="168"
-        valign="top"
-        style="
-          width: 50.75pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-          
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Folio No.</span
-          >
-        </p>
-      </td>
-      <td
-      width="168"
-      valign="top"
-      style="
-        width: 125.75pt;
-        border: solid windowtext 1pt;
-        border-left: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-        height: 26.95pt;
-      "
-        
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif"
-          >
-        No. and Face value of securities held
-        </span>
-      </p>
-    </td>
-      
-        
-    </tr>
-  </thead>
-  <tbody>`;
-    const fedf = `</tbody>
-      </table>`;
-    let bedf = "";
-    bedf += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bedf += `<tr>
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${customer.companyName}</span>
-      </p>
-    </td>
-    <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
-        </p>
-      </td>
-    
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-      >
-        <p class="MsoNoSpacing">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >${customerYWD.distinctiveNumber}</span>
-        </p>
-      </td>
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${customerYWD.ledgerFolio}</span>
-        </p>
-      </td>
-      <td
-      width="144"
-      valign="top"
-      style="
-        width: 1.5in;
-        border: solid windowtext 1pt;
-        border-top: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-      "
-      ><p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity} OF F.V 
-          RS.${customer.faceValueAsOnToday}/-</span>
-      </p>
-      </td> 
-    </tr>`;
-    }
-    const daaf = hedf + bedf + fedf;
-    str = replaceAll(str, find, daaf);
+    //   find = "[[nameComCertiDistFolioSerHeld]]";
+    //   const hedf = `<style>
+    //   div.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+
+    //   p.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+    // </style>
+    // <table
+    // class="MsoTableGrid"
+    // border="1"
+    // cellspacing="0"
+    // cellpadding="0"
+    // width="624"
+    // style="
+    //   width: 467.75pt;
+    //   margin-left: -0.25pt;
+    //   border-collapse: collapse;
+    //   border: none;
+    // "
+    // >
+
+
+
+    // <thead>
+    //    <tr style="height: 26.95pt">
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.55in;
+    //         border: solid windowtext 1pt;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">Name of the Company</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width:70pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Certificate No.</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 70pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Distinctive No.</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="168"
+    //       valign="top"
+    //       style="
+    //         width: 50.75pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Folio No.</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //     width="168"
+    //     valign="top"
+    //     style="
+    //       width: 125.75pt;
+    //       border: solid windowtext 1pt;
+    //       border-left: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //       height: 26.95pt;
+    //     "
+
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif"
+    //         >
+    //       No. and Face value of securities held
+    //       </span>
+    //     </p>
+    //   </td>
+
+
+    //   </tr>
+    // </thead>
+    // <tbody>`;
+    //   const fedf = `</tbody>
+    //     </table>`;
+    //   let bedf = "";
+    //   bedf += "";
+    //   for (let index = 0; index < customer.tableSDT.length; index++) {
+    //     const customerYWD = customer.tableSDT[index];
+    //     bedf += `<tr>
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">${customer.companyName}</span>
+    //     </p>
+    //   </td>
+    //   <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+    //       </p>
+    //     </td>
+
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //     >
+    //       <p class="MsoNoSpacing">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >${customerYWD.distinctiveNumber}</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">${customerYWD.ledgerFolio}</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //     ><p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity} OF F.V 
+    //         RS.${customer.faceValueAsOnToday}/-</span>
+    //     </p>
+    //     </td> 
+    //   </tr>`;
+    //   }
+    //   const daaf = hedf + bedf + fedf;
+    //   str = replaceAll(str, find, daaf);
 
     //folioCertiDistFDistTNoShare
-    find = "[[folioCertiDistFDistTNoShare]]";
-    const heedf = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
+    //     find = "[[folioCertiDistFDistTNoShare]]";
+    //     const heedf = `<style>
+    //     div.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
 
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
->
+    //     p.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
+    //   </style>
+    //   <table
+    //   class="MsoTableGrid"
+    //   border="1"
+    //   cellspacing="0"
+    //   cellpadding="0"
+    //   width="624"
+    //   style="
+    //     width: 467.75pt;
+    //     margin-left: -0.25pt;
+    //     border-collapse: collapse;
+    //     border: none;
+    //   "
+    // >
 
 
 
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Certificate No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Distinctive No. From</span
-          >
-        </p>
-      </td>
-      <td
-        width="168"
-        valign="top"
-        style="
-          width: 125.75pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-          
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Distinctive No. To</span
-          >
-        </p>
-      </td>
-      
-      <td
-      width="168"
-      valign="top"
-      style="
-        width: 125.75pt;
-        border: solid windowtext 1pt;
-        border-left: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-        height: 26.95pt;
-      "
-        
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif"
-          >No. of shares held</span
-        >
-      </p>
-    </td>
-    
+    //   <thead>
+    //      <tr style="height: 26.95pt">
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Certificate No.</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Distinctive No. From</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="168"
+    //         valign="top"
+    //         style="
+    //           width: 125.75pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
 
-        
-    </tr>
-  </thead>
-  <tbody>`;
-    const feedf = `</tbody>
-      </table>`;
-    let beedf = "";
-    beedf += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      beedf += `<tr>
-   
-			<td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
-        }</span>
-          </p>
-        </td>
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Distinctive No. To</span
+    //           >
+    //         </p>
+    //       </td>
 
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
-        }</span>
-          </p>
-        </td>
-        
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            
-<span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-          </p>
-        </td>
-               
-        <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            
-<span style="font-family: 'Tahoma', sans-serif">
-  ${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-          </p>
-        </td>
-        <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          
-<span style="font-family: 'Tahoma', sans-serif">
-  ${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-
-</span>
-        </p>
-      </td>
-      
-			
-		</tr>`;
-    }
-    const ddata = heedf + beedf + feedf;
-    str = replaceAll(str, find, ddata);
+    //       <td
+    //       width="168"
+    //       valign="top"
+    //       style="
+    //         width: 125.75pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >No. of shares held</span
+    //         >
+    //       </p>
+    //     </td>
+
+
+
+    //     </tr>
+    //   </thead>
+    //   <tbody>`;
+    //     const feedf = `</tbody>
+    //       </table>`;
+    //     let beedf = "";
+    //     beedf += "";
+    //     for (let index = 0; index < customer.tableSDT.length; index++) {
+    //       const customerYWD = customer.tableSDT[index];
+    //       beedf += `<tr>
+
+    // 			<td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //             <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+    //         }</span>
+    //           </p>
+    //         </td>
+
+    //         <td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //             <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+    //         }</span>
+    //           </p>
+    //         </td>
+
+    //         <td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    // <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+    //         }</span>
+    //           </p>
+    //         </td>
+
+    //         <td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    // <span style="font-family: 'Tahoma', sans-serif">
+    //   ${customerYWD.distinctiveNumber?.split("-")[1]
+    //           ? customerYWD.distinctiveNumber?.split("-")[1]
+    //           : customerYWD.distinctiveNumber?.split("-")[0]
+    //         }</span>
+    //           </p>
+    //         </td>
+    //         <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    // <span style="font-family: 'Tahoma', sans-serif">
+    //   ${customerYWD.totalShareQuantity} of Rs.${customer.faceValueAsOnToday}/-
+    // </span>
+    //         </p>
+    //       </td>
+
+
+    // 		</tr>`;
+    //     }
+    //     const ddata = heedf + beedf + feedf;
+    //     str = replaceAll(str, find, ddata);
 
     //nameComFolioNoSecperClaim
-    find = "[[nameComFolioNoSecperClaim]]";
-    const hdata = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
-  >
-  
-  
-  
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Name of the Company</span>
-        </p>
-      </td>
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >No. of Securities</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >% of Claim</span
-          >
-        </p>
-      </td>           
-    </tr>
-  </thead>
-  <tbody>`;
-    const fdata = `</tbody>
-      </table>`;
-    let bdata = "";
-    bdata += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bdata += `   
-      <tr>
-         
-        <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        ">
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">${customer.companyName}</span>
-        </p>
-      </td>
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                ">
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
-                </p>
-              </td>
-      
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;">
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerData.totalShares} of Rs.${customer.faceValueAsOnToday}/-</span>
-                </p>
-              </td>
-              
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                <span style="font-family: 'Tahoma', sans-serif">100 %</span>
-                </p>
-              </td> 
-            
-            
-          </tr>`;
-    }
-    const dataa = hdata + bdata + fdata;
-    str = replaceAll(str, find, dataa);
+    //   find = "[[nameComFolioNoSecperClaim]]";
+    //   const hdata = `<style>
+    //   div.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+
+    //   p.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+    // </style>
+    // <table
+    // class="MsoTableGrid"
+    // border="1"
+    // cellspacing="0"
+    // cellpadding="0"
+    // width="624"
+    // style="
+    //   width: 467.75pt;
+    //   margin-left: -0.25pt;
+    //   border-collapse: collapse;
+    //   border: none;
+    // "
+    // >
+
+
+
+    // <thead>
+    //    <tr style="height: 26.95pt">
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">Name of the Company</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >No. of Securities</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >% of Claim</span
+    //         >
+    //       </p>
+    //     </td>           
+    //   </tr>
+    // </thead>
+    // <tbody>`;
+    //   const fdata = `</tbody>
+    //     </table>`;
+    //   let bdata = "";
+    //   bdata += "";
+    //   for (let index = 0; index < customer.tableSDT.length; index++) {
+    //     const customerYWD = customer.tableSDT[index];
+    //     bdata += `   
+    //     <tr>
+
+    //       <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         border-top: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //       ">
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">${customer.companyName}</span>
+    //       </p>
+    //     </td>
+    //             <td
+    //               width="144"
+    //               valign="top"
+    //               style="
+    //                 width: 1.5in;
+    //                 border: solid windowtext 1pt;
+    //                 border-top: none;
+    //                 padding: 0in 5.4pt 0in 5.4pt;
+    //               ">
+    //               <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                 <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio}</span>
+    //               </p>
+    //             </td>
+
+    //             <td
+    //               width="144"
+    //               valign="top"
+    //               style="
+    //                 width: 1.5in;
+    //                 border: solid windowtext 1pt;
+    //                 border-top: none;
+    //                 padding: 0in 5.4pt 0in 5.4pt;">
+    //               <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                 <span style="font-family: 'Tahoma', sans-serif">${customerData.totalShares} of Rs.${customer.faceValueAsOnToday}/-</span>
+    //               </p>
+    //             </td>
+
+    //             <td
+    //               width="144"
+    //               valign="top"
+    //               style="
+    //                 width: 1.5in;
+    //                 border: solid windowtext 1pt;
+    //                 border-top: none;
+    //                 padding: 0in 5.4pt 0in 5.4pt;
+    //               "
+    //             >
+    //               <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //               <span style="font-family: 'Tahoma', sans-serif">100 %</span>
+    //               </p>
+    //             </td> 
+
+
+    //         </tr>`;
+    //   }
+    //   const dataa = hdata + bdata + fdata;
+    //   str = replaceAll(str, find, dataa);
 
     //nameComFolioCertDistNEDistShares
-    find = "[[nameComFolioCertDistNEDistShares]]";
-    const headdata = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
+    //     find = "[[nameComFolioCertDistNEDistShares]]";
+    //     const headdata = `<style>
+    //     div.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
 
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
->
+    //     p.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
+    //   </style>
+    //   <table
+    //   class="MsoTableGrid"
+    //   border="1"
+    //   cellspacing="0"
+    //   cellpadding="0"
+    //   width="624"
+    //   style="
+    //     width: 467.75pt;
+    //     margin-left: -0.25pt;
+    //     border-collapse: collapse;
+    //     border: none;
+    //   "
+    // >
 
 
 
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Cert. No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Start Dist. No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="168"
-        valign="top"
-        style="
-          width: 125.75pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-         
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >End Dist. No.</span
-          >
-        </p>
-      </td>
-      
-      <td
-      width="168"
-      valign="top"
-      style="
-        width: 125.75pt;
-        border: solid windowtext 1pt;
-        border-left: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-        height: 26.95pt;
-      "
-       
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif"
-          >Shares</span
-        >
-      </p>
-    </td>
-    
+    //   <thead>
+    //      <tr style="height: 26.95pt">
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Cert. No.</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Start Dist. No.</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="168"
+    //         valign="top"
+    //         style="
+    //           width: 125.75pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
 
-        
-    </tr>
-  </thead>
-  <tbody>`;
-    const footerdata = `</tbody>
-      </table>`;
-    let bodydata = "";
-    bodydata += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bodydata += `<tr>
-      <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
-        }</span>
-                </p>
-              </td>
-      
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
-        } of Rs.${customer.faceValueAsOnToday}/-</span>
-                </p>
-              </td>
-              
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-                </p>
-              </td> 
-              
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }
-      </span>
-                </p>
-              </td> 
-              <td
-              width="144"
-              valign="top"
-              style="
-                width: 1.5in;
-                border: solid windowtext 1pt;
-                border-top: none;
-                padding: 0in 5.4pt 0in 5.4pt;
-              "
-            >
-              <p class="MsoNoSpacing" align="center" style="text-align: center">
-                <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
-        }</span>
-              </p>
-            </td>
-            
-          </tr>`;
-    }
-    const dataData = headdata + bodydata + footerdata;
-    str = replaceAll(str, find, dataData);
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >End Dist. No.</span
+    //           >
+    //         </p>
+    //       </td>
+
+    //       <td
+    //       width="168"
+    //       valign="top"
+    //       style="
+    //         width: 125.75pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Shares</span
+    //         >
+    //       </p>
+    //     </td>
+
+
+
+    //     </tr>
+    //   </thead>
+    //   <tbody>`;
+    //     const footerdata = `</tbody>
+    //       </table>`;
+    //     let bodydata = "";
+    //     bodydata += "";
+    //     for (let index = 0; index < customer.tableSDT.length; index++) {
+    //       const customerYWD = customer.tableSDT[index];
+    //       bodydata += `<tr>
+    //       <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                   <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+    //         }</span>
+    //                 </p>
+    //               </td>
+
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                   <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+    //         } of Rs.${customer.faceValueAsOnToday}/-</span>
+    //                 </p>
+    //               </td>
+
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+    //         }</span>
+    //                 </p>
+    //               </td> 
+
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //       <span style="font-family: 'Tahoma', sans-serif">
+    //         ${customerYWD.distinctiveNumber?.split("-")[1]
+    //           ? customerYWD.distinctiveNumber?.split("-")[1]
+    //           : customerYWD.distinctiveNumber?.split("-")[0]
+    //         }
+    //       </span>
+    //                 </p>
+    //               </td> 
+    //               <td
+    //               width="144"
+    //               valign="top"
+    //               style="
+    //                 width: 1.5in;
+    //                 border: solid windowtext 1pt;
+    //                 border-top: none;
+    //                 padding: 0in 5.4pt 0in 5.4pt;
+    //               "
+    //             >
+    //               <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                 <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
+    //         }</span>
+    //               </p>
+    //             </td>
+
+    //           </tr>`;
+    //     }
+    //     const dataData = headdata + bodydata + footerdata;
+    //     str = replaceAll(str, find, dataData);
 
     //folioShareCertiDistFT
-    find = "[[folioShareCertiDistFT]]";
-    const hdft = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
+    //     find = "[[folioShareCertiDistFT]]";
+    //     const hdft = `<style>
+    //     div.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
 
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
->
+    //     p.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
+    //   </style>
+    //   <table
+    //   class="MsoTableGrid"
+    //   border="1"
+    //   cellspacing="0"
+    //   cellpadding="0"
+    //   width="624"
+    //   style="
+    //     width: 467.75pt;
+    //     margin-left: -0.25pt;
+    //     border-collapse: collapse;
+    //     border: none;
+    //   "
+    // >
 
 
 
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Certificate. No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Distinctive No. From</span
-          >
-        </p>
-      </td>
-      <td
-        width="168"
-        valign="top"
-        style="
-          width: 125.75pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-         
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Distinctive No. To</span
-          >
-        </p>
-      </td>
-      
-      <td
-      width="168"
-      valign="top"
-      style="
-        width: 125.75pt;
-        border: solid windowtext 1pt;
-        border-left: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-        height: 26.95pt;
-      "
-       
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif"
-          >No. of shares held</span
-        >
-      </p>
-    </td>
-    
+    //   <thead>
+    //      <tr style="height: 26.95pt">
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">Folio No.</span>
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Certificate. No.</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Distinctive No. From</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="168"
+    //         valign="top"
+    //         style="
+    //           width: 125.75pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
 
-        
-    </tr>
-  </thead>
-  <tbody>`;
-    const fdft = `</tbody>
-          </table>`;
-    let bdft = "";
-    bdft += "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bdft += `<tr>
-      <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
-        }</span>
-                </p>
-              </td>
-      
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
-        } of Rs.${customer.faceValueAsOnToday}/-</span>
-                </p>
-              </td>
-              
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
-        }</span>
-                </p>
-              </td> 
-              
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-        }
-      </span>
-                </p>
-              </td> 
-              <td
-              width="144"
-              valign="top"
-              style="
-                width: 1.5in;
-                border: solid windowtext 1pt;
-                border-top: none;
-                padding: 0in 5.4pt 0in 5.4pt;
-              "
-            >
-              <p class="MsoNoSpacing" align="center" style="text-align: center">
-                <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
-        } of Rs.${customer.faceValueAsOnToday}/-</span>
-              </p>
-            </td>
-            
-          </tr>`;
-    }
-    const d1data = hdft + bdft + fdft;
-    str = replaceAll(str, find, d1data);
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Distinctive No. To</span
+    //           >
+    //         </p>
+    //       </td>
+
+    //       <td
+    //       width="168"
+    //       valign="top"
+    //       style="
+    //         width: 125.75pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >No. of shares held</span
+    //         >
+    //       </p>
+    //     </td>
+
+
+
+    //     </tr>
+    //   </thead>
+    //   <tbody>`;
+    //     const fdft = `</tbody>
+    //           </table>`;
+    //     let bdft = "";
+    //     bdft += "";
+    //     for (let index = 0; index < customer.tableSDT.length; index++) {
+    //       const customerYWD = customer.tableSDT[index];
+    //       bdft += `<tr>
+    //       <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                   <span style="font-family: 'Tahoma', sans-serif">${customer.ledgerFolio
+    //         }</span>
+    //                 </p>
+    //               </td>
+
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                   <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
+    //         } of Rs.${customer.faceValueAsOnToday}/-</span>
+    //                 </p>
+    //               </td>
+
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
+    //         }</span>
+    //                 </p>
+    //               </td> 
+
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //       <span style="font-family: 'Tahoma', sans-serif">
+    //         ${customerYWD.distinctiveNumber?.split("-")[1]
+    //           ? customerYWD.distinctiveNumber?.split("-")[1]
+    //           : customerYWD.distinctiveNumber?.split("-")[0]
+    //         }
+    //       </span>
+    //                 </p>
+    //               </td> 
+    //               <td
+    //               width="144"
+    //               valign="top"
+    //               style="
+    //                 width: 1.5in;
+    //                 border: solid windowtext 1pt;
+    //                 border-top: none;
+    //                 padding: 0in 5.4pt 0in 5.4pt;
+    //               "
+    //             >
+    //               <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                 <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity
+    //         } of Rs.${customer.faceValueAsOnToday}/-</span>
+    //               </p>
+    //             </td>
+
+    //           </tr>`;
+    //     }
+    //     const d1data = hdft + bdft + fdft;
+    //     str = replaceAll(str, find, d1data);
 
     // certiDistNoSecurity
-    find = "[[certiDistNoSecurity]]";
-    const h1 = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
+    //     find = "[[certiDistNoSecurity]]";
+    //     const h1 = `<style>
+    //     div.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
 
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
->
+    //     p.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
+    //   </style>
+    //   <table
+    //   class="MsoTableGrid"
+    //   border="1"
+    //   cellspacing="0"
+    //   cellpadding="0"
+    //   width="624"
+    //   style="
+    //     width: 467.75pt;
+    //     margin-left: -0.25pt;
+    //     border-collapse: collapse;
+    //     border: none;
+    //   "
+    // >
 
 
 
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">CERTIFICATE NO.</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >DISTINCTIVE NOS.</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >NO. OF SECURITIES</span
-          >
-        </p>
-      </td>
-    </tr>
-  </thead>
-  <tbody>`;
-    const f1 = `</tbody>
- </table>`;
-    let b1 = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      b1 += `
-      <tr>
-      <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
-                </p>
-              </td>
-      
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
-                </p>
-              </td>
-              
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
-                </p>
-              </td> 
-    </tr>
-    `;
-    }
-    const datacdn = h1 + b1 + f1;
-    str = replaceAll(str, find, datacdn);
+    //   <thead>
+    //      <tr style="height: 26.95pt">
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">CERTIFICATE NO.</span>
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >DISTINCTIVE NOS.</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >NO. OF SECURITIES</span
+    //           >
+    //         </p>
+    //       </td>
+    //     </tr>
+    //   </thead>
+    //   <tbody>`;
+    //     const f1 = `</tbody>
+    //  </table>`;
+    //     let b1 = "";
+    //     for (let index = 0; index < customer.tableSDT.length; index++) {
+    //       const customerYWD = customer.tableSDT[index];
+    //       b1 += `
+    //       <tr>
+    //       <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                   <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+    //                 </p>
+    //               </td>
+
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                   <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+    //                 </p>
+    //               </td>
+
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+    //                 </p>
+    //               </td> 
+    //     </tr>
+    //     `;
+    //     }
+    //     const datacdn = h1 + b1 + f1;
+    //     str = replaceAll(str, find, datacdn);
 
     //tables nameFolioShareFVCertiDistNo:-
-    find = "[[nameFolioShareFVCertiDistNo]]";
-    const hname = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
+    //     find = "[[nameFolioShareFVCertiDistNo]]";
+    //     const hname = `<style>
+    //     div.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
 
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
->
+    //     p.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
+    //   </style>
+    //   <table
+    //   class="MsoTableGrid"
+    //   border="1"
+    //   cellspacing="0"
+    //   cellpadding="0"
+    //   width="624"
+    //   style="
+    //     width: 467.75pt;
+    //     margin-left: -0.25pt;
+    //     border-collapse: collapse;
+    //     border: none;
+    //   "
+    // >
 
 
 
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">NAME</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >FOLIO NUMBER</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >SHARES</span
-          >
-        </p>
-      </td>
-      <td
-      width="156"
-      valign="top"
-      style="
-        width: 117pt;
-        border: solid windowtext 1pt;
-        border-left: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-        height: 26.95pt;
-      "
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif"
-          >FV</span
-        >
-      </p>
-    </td>       <td
-    width="156"
-    valign="top"
-    style="
-      width: 117pt;
-      border: solid windowtext 1pt;
-      border-left: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-      height: 26.95pt;
-    "
-  >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif"
-        >CERTIFICATE NO</span
-      >
-    </p>
-  </td>       <td
-  width="156"
-  valign="top"
-  style="
-    width: 117pt;
-    border: solid windowtext 1pt;
-    border-left: none;
-    padding: 0in 5.4pt 0in 5.4pt;
-    height: 26.95pt;
-  "
->
-  <p class="MsoNoSpacing" align="center" style="text-align: center">
-    <span style="font-family: 'Tahoma', sans-serif"
-      >DISTINCTIVE NO</span
-    >
-  </p>
-</td>
-    </tr>
-  </thead>
-  <tbody>`;
-    const fname = `</tbody>
-    </table>`;
-    let bname = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      bname += `<tr>
-      <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">
-                    ${customer.deathHolderName1} (Deceased) Jointly ${customer.deathHolderName2}
-                  </span>
-                </p>
-              </td>
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customer.ledgerFolio}
-      </span>
-                </p>
-              </td> 
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
-                </p>
-              </td> 
-            
-      
-            <td
-            width="144"
-            valign="top"
-            style="
-              width: 1.5in;
-              border: solid windowtext 1pt;
-              border-top: none;
-              padding: 0in 5.4pt 0in 5.4pt;
-            "
-          >
-            <p class="MsoNoSpacing" align="center" style="text-align: center">
-              <span style="font-family: 'Tahoma', sans-serif">${customer.faceValueAsOnToday}</span>
-            </p>
-          </td>
-      
-      
-          <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
-          </p>
-        </td>
-      
-            
-            <td
-            width="144"
-            valign="top"
-            style="
-              width: 1.5in;
-              border: solid windowtext 1pt;
-              border-top: none;
-              padding: 0in 5.4pt 0in 5.4pt;
-            "
-          >
-            <p class="MsoNoSpacing" align="center" style="text-align: center">
-              <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
-            </p>
-          </td>
-          </tr>`;
-    }
-    const dname = hname + bname + fname;
-    str = replaceAll(str, find, dname);
+    //   <thead>
+    //      <tr style="height: 26.95pt">
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">NAME</span>
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >FOLIO NUMBER</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >SHARES</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >FV</span
+    //         >
+    //       </p>
+    //     </td>       <td
+    //     width="156"
+    //     valign="top"
+    //     style="
+    //       width: 117pt;
+    //       border: solid windowtext 1pt;
+    //       border-left: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //       height: 26.95pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif"
+    //         >CERTIFICATE NO</span
+    //       >
+    //     </p>
+    //   </td>       <td
+    //   width="156"
+    //   valign="top"
+    //   style="
+    //     width: 117pt;
+    //     border: solid windowtext 1pt;
+    //     border-left: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //     height: 26.95pt;
+    //   "
+    // >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif"
+    //       >DISTINCTIVE NO</span
+    //     >
+    //   </p>
+    // </td>
+    //     </tr>
+    //   </thead>
+    //   <tbody>`;
+    //     const fname = `</tbody>
+    //     </table>`;
+    //     let bname = "";
+    //     for (let index = 0; index < customer.tableSDT.length; index++) {
+    //       const customerYWD = customer.tableSDT[index];
+    //       bname += `<tr>
+    //       <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                   <span style="font-family: 'Tahoma', sans-serif">
+    //                     ${customer.deathHolderName1} (Deceased) Jointly ${customer.deathHolderName2}
+    //                   </span>
+    //                 </p>
+    //               </td>
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //       <span style="font-family: 'Tahoma', sans-serif">
+    //         ${customer.ledgerFolio}
+    //       </span>
+    //                 </p>
+    //               </td> 
+    //               <td
+    //                 width="144"
+    //                 valign="top"
+    //                 style="
+    //                   width: 1.5in;
+    //                   border: solid windowtext 1pt;
+    //                   border-top: none;
+    //                   padding: 0in 5.4pt 0in 5.4pt;
+    //                 "
+    //               >
+    //                 <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+    //                 </p>
+    //               </td> 
+
+
+    //             <td
+    //             width="144"
+    //             valign="top"
+    //             style="
+    //               width: 1.5in;
+    //               border: solid windowtext 1pt;
+    //               border-top: none;
+    //               padding: 0in 5.4pt 0in 5.4pt;
+    //             "
+    //           >
+    //             <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //               <span style="font-family: 'Tahoma', sans-serif">${customer.faceValueAsOnToday}</span>
+    //             </p>
+    //           </td>
+
+
+    //           <td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //             <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+    //           </p>
+    //         </td>
+
+
+    //             <td
+    //             width="144"
+    //             valign="top"
+    //             style="
+    //               width: 1.5in;
+    //               border: solid windowtext 1pt;
+    //               border-top: none;
+    //               padding: 0in 5.4pt 0in 5.4pt;
+    //             "
+    //           >
+    //             <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //               <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+    //             </p>
+    //           </td>
+    //           </tr>`;
+    //     }
+    //     const dname = hname + bname + fname;
+    //     str = replaceAll(str, find, dname);
 
     //tables ywdATable:-
-    find = "[[ywdATable]]";
-    const header = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
+    //     find = "[[ywdATable]]";
+    //     const header = `<style>
+    //     div.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
 
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
->
+    //     p.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
+    //   </style>
+    //   <table
+    //   class="MsoTableGrid"
+    //   border="1"
+    //   cellspacing="0"
+    //   cellpadding="0"
+    //   width="624"
+    //   style="
+    //     width: 467.75pt;
+    //     margin-left: -0.25pt;
+    //     border-collapse: collapse;
+    //     border: none;
+    //   "
+    // >
 
 
 
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Year</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Warrant No.</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >DD/MICR No.</span
-          >
-        </p>
-      </td>
-      <td
-      width="156"
-      valign="top"
-      style="
-        width: 117pt;
-        border: solid windowtext 1pt;
-        border-left: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-        height: 26.95pt;
-      "
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif"
-          >Amount</span
-        >
-      </p>
-    </td>
-    </tr>
-  </thead>
-  <tbody>`;
-    const footer = `</tbody>
-    </table>`;
-    let body = "";
-    for (let index = 0; index < customer.ywdATabelData.length; index++) {
-      const customerYWD = customer.ywdATabelData[index];
-      body += `
-      <tr>
-  <td
-    width="144"
-    valign="top"
-    style="
-      width: 1.5in;
-      border: solid windowtext 1pt;
-      border-top: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-    "
-  >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.year}
-      </span>
-    </p>
-  </td>
-  <td
-    width="144"
-    valign="top"
-    style="
-      width: 1.5in;
-      border: solid windowtext 1pt;
-      border-top: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-    "
-  >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.warrantNo}
-      </span>
-    </p>
-  </td>
-  <td
-    width="144"
-    valign="top"
-    style="
-      width: 1.5in;
-      border: solid windowtext 1pt;
-      border-top: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-    "
-  >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.ddMicrNo}
-      </span>
-    </p>
-  </td>
+    //   <thead>
+    //      <tr style="height: 26.95pt">
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">Year</span>
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Warrant No.</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >DD/MICR No.</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Amount</span
+    //         >
+    //       </p>
+    //     </td>
+    //     </tr>
+    //   </thead>
+    //   <tbody>`;
+    //     const footer = `</tbody>
+    //     </table>`;
+    //     let body = "";
+    //     for (let index = 0; index < customer.ywdATabelData.length; index++) {
+    //       const customerYWD = customer.ywdATabelData[index];
+    //       body += `
+    //       <tr>
+    //   <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">
+    //         ${customerYWD.year}
+    //       </span>
+    //     </p>
+    //   </td>
+    //   <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">
+    //         ${customerYWD.warrantNo}
+    //       </span>
+    //     </p>
+    //   </td>
+    //   <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">
+    //         ${customerYWD.ddMicrNo}
+    //       </span>
+    //     </p>
+    //   </td>
 
-  <td
-    width="144"
-    valign="top"
-    style="
-      width: 1.5in;
-      border: solid windowtext 1pt;
-      border-top: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-    "
-  >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif">
-        ${customerYWD.amount}
-      </span>
-    </p>
-  </td>
-  
-</tr>
+    //   <td
+    //     width="144"
+    //     valign="top"
+    //     style="
+    //       width: 1.5in;
+    //       border: solid windowtext 1pt;
+    //       border-top: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif">
+    //         ${customerYWD.amount}
+    //       </span>
+    //     </p>
+    //   </td>
 
-    `;
-    }
-    const data = header + body + footer;
-    str = replaceAll(str, find, data);
+    // </tr>
+
+    //     `;
+    //     }
+    //     const data = header + body + footer;
+    //     str = replaceAll(str, find, data);
 
     //tables tableSDT:-
-    find = "[[tableSDT]]";
-    const h = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
-  >
-  
-  
-  
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">Share Certificate Number</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Distinctive Number</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Total Share Quantity</span
-          >
-        </p>
-      </td>
-    </tr>
-  </thead>
-  <tbody>`;
-    const f = `</tbody>
-    </table>`;
-    let b = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      b += `<tr>
-      <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
-                </p>
-              </td>
-      
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
-                </p>
-              </td>
-              
-              <td
-                width="144"
-                valign="top"
-                style="
-                  width: 1.5in;
-                  border: solid windowtext 1pt;
-                  border-top: none;
-                  padding: 0in 5.4pt 0in 5.4pt;
-                "
-              >
-                <p class="MsoNoSpacing" align="center" style="text-align: center">
-                  
-      <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
-                </p>
-              </td> 
-    </tr>`;
-    }
-    const dataSDT = h + b + f;
-    str = replaceAll(str, find, dataSDT);
+    //   find = "[[tableSDT]]";
+    //   const h = `<style>
+    //   div.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+
+    //   p.MsoNoSpacing {
+    //     mso-style-link: "No Spacing Char";
+    //     margin: 0in;
+    //     font-size: 11pt;
+    //     font-family: "Calibri", sans-serif;
+    //   }
+    // </style>
+    // <table
+    // class="MsoTableGrid"
+    // border="1"
+    // cellspacing="0"
+    // cellpadding="0"
+    // width="624"
+    // style="
+    //   width: 467.75pt;
+    //   margin-left: -0.25pt;
+    //   border-collapse: collapse;
+    //   border: none;
+    // "
+    // >
+
+
+
+    // <thead>
+    //    <tr style="height: 26.95pt">
+    //     <td
+    //       width="144"
+    //       valign="top"
+    //       style="
+    //         width: 1.5in;
+    //         border: solid windowtext 1pt;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif">Share Certificate Number</span>
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Distinctive Number</span
+    //         >
+    //       </p>
+    //     </td>
+    //     <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Total Share Quantity</span
+    //         >
+    //       </p>
+    //     </td>
+    //   </tr>
+    // </thead>
+    // <tbody>`;
+    //   const f = `</tbody>
+    //   </table>`;
+    //   let b = "";
+    //   for (let index = 0; index < customer.tableSDT.length; index++) {
+    //     const customerYWD = customer.tableSDT[index];
+    //     b += `<tr>
+    //     <td
+    //               width="144"
+    //               valign="top"
+    //               style="
+    //                 width: 1.5in;
+    //                 border: solid windowtext 1pt;
+    //                 border-top: none;
+    //                 padding: 0in 5.4pt 0in 5.4pt;
+    //               "
+    //             >
+    //               <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                 <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
+    //               </p>
+    //             </td>
+
+    //             <td
+    //               width="144"
+    //               valign="top"
+    //               style="
+    //                 width: 1.5in;
+    //                 border: solid windowtext 1pt;
+    //                 border-top: none;
+    //                 padding: 0in 5.4pt 0in 5.4pt;
+    //               "
+    //             >
+    //               <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //                 <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber}</span>
+    //               </p>
+    //             </td>
+
+    //             <td
+    //               width="144"
+    //               valign="top"
+    //               style="
+    //                 width: 1.5in;
+    //                 border: solid windowtext 1pt;
+    //                 border-top: none;
+    //                 padding: 0in 5.4pt 0in 5.4pt;
+    //               "
+    //             >
+    //               <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //     <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
+    //               </p>
+    //             </td> 
+    //   </tr>`;
+    //   }
+    //   const dataSDT = h + b + f;
+    //   str = replaceAll(str, find, dataSDT);
 
     //table otherLegalHears :-
-    find = "[[otherLegalHears]]";
-    const head = `<style>
-    div.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  
-    p.MsoNoSpacing {
-      mso-style-link: "No Spacing Char";
-      margin: 0in;
-      font-size: 11pt;
-      font-family: "Calibri", sans-serif;
-    }
-  </style>
-  <table
-  class="MsoTableGrid"
-  border="1"
-  cellspacing="0"
-  cellpadding="0"
-  width="624"
-  style="
-    width: 467.75pt;
-    margin-left: -0.25pt;
-    border-collapse: collapse;
-    border: none;
-  "
-  >
-  
-  
-  
-  <thead>
-     <tr style="height: 26.95pt">
-      <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif">
-            Name In Pancard Exact Spelling</span>
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Address Same In AadharCard</span
-          >
-        </p>
-      </td>
-      <td
-        width="156"
-        valign="top"
-        style="
-          width: 117pt;
-          border: solid windowtext 1pt;
-          border-left: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-          height: 26.95pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          <span style="font-family: 'Tahoma', sans-serif"
-            >Name In Aadhar Card Exect Spelling</span
-          >
-        </p>
-      </td>
-      <td
-      width="156"
-      valign="top"
-      style="
-        width: 117pt;
-        border: solid windowtext 1pt;
-        border-left: none;
-        padding: 0in 5.4pt 0in 5.4pt;
-        height: 26.95pt;
-      "
-    >
-      <p class="MsoNoSpacing" align="center" style="text-align: center">
-        <span style="font-family: 'Tahoma', sans-serif"
-          >Age</span
-        >
-      </p>
-    </td>  <td
-    width="156"
-    valign="top"
-    style="
-      width: 117pt;
-      border: solid windowtext 1pt;
-      border-left: none;
-      padding: 0in 5.4pt 0in 5.4pt;
-      height: 26.95pt;
-    "
-  >
-    <p class="MsoNoSpacing" align="center" style="text-align: center">
-      <span style="font-family: 'Tahoma', sans-serif"
-        >Daughter</span
-      >
-    </p>
-  </td>  <td
-  width="156"
-  valign="top"
-  style="
-    width: 117pt;
-    border: solid windowtext 1pt;
-    border-left: none;
-    padding: 0in 5.4pt 0in 5.4pt;
-    height: 26.95pt;
-  "
-  >
-  <p class="MsoNoSpacing" align="center" style="text-align: center">
-    <span style="font-family: 'Tahoma', sans-serif"
-      >Son</span
-    >
-  </p>
-  </td>
-    </tr>
-  </thead>
-  <tbody>`;
-    const foot = `</tbody>
-    </table>`;
-    let bod = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      bod += `
-      <tr>
-  <td
-            width="144"
-            valign="top"
-            style="
-              width: 1.5in;
-              border: solid windowtext 1pt;
-              border-top: none;
-              padding: 0in 5.4pt 0in 5.4pt;
-            "
-          >
-            <p class="MsoNoSpacing" align="center" style="text-align: center">
-              <span style="font-family: 'Tahoma', sans-serif">${customerYWD.nameInPancardExactSpelling}</span>
-            </p>
-          </td>
-  
-          <td
-            width="144"
-            valign="top"
-            style="
-              width: 1.5in;
-              border: solid windowtext 1pt;
-              border-top: none;
-              padding: 0in 5.4pt 0in 5.4pt;
-            "
-          >
-            <p class="MsoNoSpacing" align="center" style="text-align: center">
-              <span style="font-family: 'Tahoma', sans-serif">${customerYWD.addressSameInAadharcard}</span>
-            </p>
-          </td>
-          
-          <td
-            width="144"
-            valign="top"
-            style="
-              width: 1.5in;
-              border: solid windowtext 1pt;
-              border-top: none;
-              padding: 0in 5.4pt 0in 5.4pt;
-            "
-          >
-            <p class="MsoNoSpacing" align="center" style="text-align: center">
-              
-  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.nameInAadharcardExactSpelling}</span>
-            </p>
-          </td> 
+    //     find = "[[otherLegalHears]]";
+    //     const head = `<style>
+    //     div.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
 
-          <td
-            width="144"
-            valign="top"
-            style="
-              width: 1.5in;
-              border: solid windowtext 1pt;
-              border-top: none;
-              padding: 0in 5.4pt 0in 5.4pt;
-            "
-          >
-            <p class="MsoNoSpacing" align="center" style="text-align: center">
-              
-  <span style="font-family: 'Tahoma', sans-serif">${customerYWD.age}</span>
-            </p>
-          </td> <td
-          width="144"
-          valign="top"
-          style="
-            width: 1.5in;
-            border: solid windowtext 1pt;
-            border-top: none;
-            padding: 0in 5.4pt 0in 5.4pt;
-          "
-        >
-          <p class="MsoNoSpacing" align="center" style="text-align: center">
-            
-<span style="font-family: 'Tahoma', sans-serif">${customerYWD.daughter}</span>
-          </p>
-        </td> <td
-        width="144"
-        valign="top"
-        style="
-          width: 1.5in;
-          border: solid windowtext 1pt;
-          border-top: none;
-          padding: 0in 5.4pt 0in 5.4pt;
-        "
-      >
-        <p class="MsoNoSpacing" align="center" style="text-align: center">
-          
-<span style="font-family: 'Tahoma', sans-serif">${customerYWD.son}</span>
-        </p>
-      </td> 
+    //     p.MsoNoSpacing {
+    //       mso-style-link: "No Spacing Char";
+    //       margin: 0in;
+    //       font-size: 11pt;
+    //       font-family: "Calibri", sans-serif;
+    //     }
+    //   </style>
+    //   <table
+    //   class="MsoTableGrid"
+    //   border="1"
+    //   cellspacing="0"
+    //   cellpadding="0"
+    //   width="624"
+    //   style="
+    //     width: 467.75pt;
+    //     margin-left: -0.25pt;
+    //     border-collapse: collapse;
+    //     border: none;
+    //   "
+    //   >
 
-</tr>
-    `;
-    }
-    const dataOtherLegalHears = head + bod + foot;
-    str = replaceAll(str, find, dataOtherLegalHears);
+
+
+    //   <thead>
+    //      <tr style="height: 26.95pt">
+    //       <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif">
+    //             Name In Pancard Exact Spelling</span>
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Address Same In AadharCard</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //         width="156"
+    //         valign="top"
+    //         style="
+    //           width: 117pt;
+    //           border: solid windowtext 1pt;
+    //           border-left: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //           height: 26.95pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //           <span style="font-family: 'Tahoma', sans-serif"
+    //             >Name In Aadhar Card Exect Spelling</span
+    //           >
+    //         </p>
+    //       </td>
+    //       <td
+    //       width="156"
+    //       valign="top"
+    //       style="
+    //         width: 117pt;
+    //         border: solid windowtext 1pt;
+    //         border-left: none;
+    //         padding: 0in 5.4pt 0in 5.4pt;
+    //         height: 26.95pt;
+    //       "
+    //     >
+    //       <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //         <span style="font-family: 'Tahoma', sans-serif"
+    //           >Age</span
+    //         >
+    //       </p>
+    //     </td>  <td
+    //     width="156"
+    //     valign="top"
+    //     style="
+    //       width: 117pt;
+    //       border: solid windowtext 1pt;
+    //       border-left: none;
+    //       padding: 0in 5.4pt 0in 5.4pt;
+    //       height: 26.95pt;
+    //     "
+    //   >
+    //     <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //       <span style="font-family: 'Tahoma', sans-serif"
+    //         >Daughter</span
+    //       >
+    //     </p>
+    //   </td>  <td
+    //   width="156"
+    //   valign="top"
+    //   style="
+    //     width: 117pt;
+    //     border: solid windowtext 1pt;
+    //     border-left: none;
+    //     padding: 0in 5.4pt 0in 5.4pt;
+    //     height: 26.95pt;
+    //   "
+    //   >
+    //   <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //     <span style="font-family: 'Tahoma', sans-serif"
+    //       >Son</span
+    //     >
+    //   </p>
+    //   </td>
+    //     </tr>
+    //   </thead>
+    //   <tbody>`;
+    //     const foot = `</tbody>
+    //     </table>`;
+    //     let bod = "";
+    //     for (let index = 0; index < customer.otherLegalHears.length; index++) {
+    //       const customerYWD = customer.otherLegalHears[index];
+    //       bod += `
+    //       <tr>
+    //   <td
+    //             width="144"
+    //             valign="top"
+    //             style="
+    //               width: 1.5in;
+    //               border: solid windowtext 1pt;
+    //               border-top: none;
+    //               padding: 0in 5.4pt 0in 5.4pt;
+    //             "
+    //           >
+    //             <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //               <span style="font-family: 'Tahoma', sans-serif">${customerYWD.nameInPancardExactSpelling}</span>
+    //             </p>
+    //           </td>
+
+    //           <td
+    //             width="144"
+    //             valign="top"
+    //             style="
+    //               width: 1.5in;
+    //               border: solid windowtext 1pt;
+    //               border-top: none;
+    //               padding: 0in 5.4pt 0in 5.4pt;
+    //             "
+    //           >
+    //             <p class="MsoNoSpacing" align="center" style="text-align: center">
+    //               <span style="font-family: 'Tahoma', sans-serif">${customerYWD.addressSameInAadharcard}</span>
+    //             </p>
+    //           </td>
+
+    //           <td
+    //             width="144"
+    //             valign="top"
+    //             style="
+    //               width: 1.5in;
+    //               border: solid windowtext 1pt;
+    //               border-top: none;
+    //               padding: 0in 5.4pt 0in 5.4pt;
+    //             "
+    //           >
+    //             <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //   <span style="font-family: 'Tahoma', sans-serif">${customerYWD.nameInAadharcardExactSpelling}</span>
+    //             </p>
+    //           </td> 
+
+    //           <td
+    //             width="144"
+    //             valign="top"
+    //             style="
+    //               width: 1.5in;
+    //               border: solid windowtext 1pt;
+    //               border-top: none;
+    //               padding: 0in 5.4pt 0in 5.4pt;
+    //             "
+    //           >
+    //             <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    //   <span style="font-family: 'Tahoma', sans-serif">${customerYWD.age}</span>
+    //             </p>
+    //           </td> <td
+    //           width="144"
+    //           valign="top"
+    //           style="
+    //             width: 1.5in;
+    //             border: solid windowtext 1pt;
+    //             border-top: none;
+    //             padding: 0in 5.4pt 0in 5.4pt;
+    //           "
+    //         >
+    //           <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    // <span style="font-family: 'Tahoma', sans-serif">${customerYWD.daughter}</span>
+    //           </p>
+    //         </td> <td
+    //         width="144"
+    //         valign="top"
+    //         style="
+    //           width: 1.5in;
+    //           border: solid windowtext 1pt;
+    //           border-top: none;
+    //           padding: 0in 5.4pt 0in 5.4pt;
+    //         "
+    //       >
+    //         <p class="MsoNoSpacing" align="center" style="text-align: center">
+
+    // <span style="font-family: 'Tahoma', sans-serif">${customerYWD.son}</span>
+    //         </p>
+    //       </td> 
+
+    // </tr>
+    //     `;
+    //     }
+    //     const dataOtherLegalHears = head + bod + foot;
+    //     str = replaceAll(str, find, dataOtherLegalHears);
 
     //basic details
     find = "[[companyName]]";
@@ -4601,7 +4603,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
   }
 
   async createDynamicWord(
-    customer,
+    customerData,
     docName,
     customerTemplateMasterId,
     templateType,
@@ -4618,6 +4620,15 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       paragraphLoop: false,
       linebreaks: true,
     });
+
+    const customer = {
+      ...customerData,
+      tableSDT: JSON.parse(customerData.tableSDT!),
+      ywdATabelData: JSON.parse(customerData.ywdATabelData!),
+      otherLegalHears: JSON.parse(customerData.otherLegalHears!),
+    };
+
+
     //noticeTable
     let noticeTable: any = []
     for (let index = 0; index < customer.tableSDT.length; index++) {
@@ -4815,7 +4826,293 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       })
     }
 
+    //table otherLegalHears :-
+    let olhnamepan = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhnamepan += `${customerYWD.nameInPancardExactSpelling},`;
+    }
+
+    let olhnameaadhar = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling};`;
+    }
+
+    let olhaddaadhar = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhaddaadhar += `${customerYWD.addressSameInAadharcard};`;
+    }
+
+    let olhage = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhage += `${customerYWD.age},`;
+    }
+
+    let olhdaughterson = "";
+    for (let index = 0; index < customer.otherLegalHears.length; index++) {
+      const customerYWD = customer.otherLegalHears[index];
+      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+        },`;
+    }
+
+    //table sdt
+    let tableSDT: any = []
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      console.log("sdt data customerYWD:- ", customerYWD);
+      tableSDT.push({
+        shareCertificateNumber: customerYWD.shareCertificateNumber,
+        distinctiveNumber: customerYWD.distinctiveNumber,
+        totalShareQuantity: customerYWD.totalShareQuantity
+      })
+    }
+
+
+
+    //SDT
+    let dN = "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      dN += `${customerYWD.distinctiveNumber},`;
+    }
+
+    let sCN = "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      sCN += `${customerYWD.shareCertificateNumber},`;
+    }
+
+    let tSQ = "";
+    for (let index = 0; index < customer.tableSDT.length; index++) {
+      const customerYWD = customer.tableSDT[index];
+      tSQ += `${customerYWD.totalShareQuantity},`;
+    }
+    const date = new Date(customer.date!);
+    console.log('date:- ' + date);
+
+    let bonusSplitDate = "";
+    let bonusSplit = "";
+    if (customer.bonusDate) {
+      bonusSplitDate = moment(customer.bonusDate).format("DD MMM YYYY");
+      bonusSplit = "bonus";
+    } else if (customer.splitDate) {
+      bonusSplitDate = moment(customer.splitDate).format("DD MMM YYYY");
+      bonusSplit = "split";
+    }
+
+    let fhnineDigitMICRNumberSplit = customer.fhnineDigitMICRNumber!.split("");
+    let micr = ""
+    for (let index = 0; index < fhnineDigitMICRNumberSplit.length; index++) {
+      const customerYWD = fhnineDigitMICRNumberSplit[index];
+      micr += micr;// customerYWD
+    }
+
+
     await doc.render({
+      //fields
+      date: moment(date).format("DD-MM-YYYY"),
+      companyName: customer.companyName,
+      companyAddress: customer.companyAddress,
+      companyNumber: customer.companyNumber,
+      emailId: customer.emailId,
+      registerTransferAgentName: customer.registerTransferAgentName,
+      registerTransferAgentAdress: customer.registerTransferAgentAdress,
+      registerTransferAgentContactNumber: customer.registerTransferAgentContactNumber,
+      registerTransferAgentEmail: customer.registerTransferAgentEmail,
+      ledgerFolio: customer.ledgerFolio,
+      bonusDate: customer.bonusDate ? bonusSplitDate : "",
+      splitDate: customer.splitDate ? bonusSplitDate : "",
+      bonusSplit: bonusSplit,
+      notaryDate: moment(customer.notaryDate).format("DD MMM YYYY"),
+      totalShares: customer.totalShares,
+      faceValueAsOnToday: customer.faceValueAsOnToday,
+      holdShareQuantitySelf: customer.holdShareQuantitySelf,
+      companyHoldUndeliveredShareQuantity: customer.companyHoldUndeliveredShareQuantity,
+      holdShareQuantitySelfFaceValue: customer.holdShareQuantitySelfFaceValue,
+      oldCompanyName: customer.oldCompanyName,
+      oldQuantityholdShare: customer.oldQuantityholdShare,
+      fhnameInPancardExactSpelling: customer.fhnameInPancardExactSpelling,
+      fhrateInPercentage: customer.fhrateInPercentage,
+      fhbusiness: customer.fhbusiness,
+      fhpinCode: customer.fhpinCode,
+      fhnameAsPerShareCertificate: customer.fhnameAsPerShareCertificate,
+      fhfatherOrHusbandName: customer.fhfatherOrHusbandName,
+      fhcontactNumber: customer.fhcontactNumber,
+      fhemail: customer.fhemail,
+      fhpancardNumber: customer.fhpancardNumber,
+      fhcity: customer.fhcity,
+      fhaddressSameInAadharcard: customer.fhaddressSameInAadharcard,
+      fholdAddressCompanyRegister: customer.fholdAddressCompanyRegister,
+      fhgender: customer.fhgender,
+      fhstate: customer.fhstate,
+      fhage: customer.fhage,
+      fhaadharCardNumber: customer.fhaadharCardNumber,
+      fhnameInAadharcardExactSpeling: customer.fhnameInAadharcardExactSpeling,
+      fhRelationship: customer.fhRelationship,
+      //jh
+      jhnameInPancardExactSpelling: customer.jhnameInPancardExactSpelling,
+      jhnameAsPerShareCertificate: customer.jhnameAsPerShareCertificate,
+      jhfatherOrHusbandName: customer.jhfatherOrHusbandName,
+      jhcontactNumber: customer.jhcontactNumber,
+      jhemail: customer.jhemail,
+      jhpancardNumber: customer.jhpancardNumber,
+      jhcity: customer.jhcity,
+      jhaddressSameInAadharcard: customer.jhaddressSameInAadharcard,
+      jholdAddressCompanyRegister: customer.jholdAddressCompanyRegister,
+      jhgender: customer.jhgender,
+      jhstate: customer.jhstate,
+      jhage: customer.jhage,
+      jhaadharCardNumber: customer.jhaadharCardNumber,
+      jhnameInAadharcardExactSpeling: customer.jhnameInAadharcardExactSpeling,
+      jhRelationship: customer.jhRelationship,
+      //fh
+      fhbankName: customer.fhbankName,
+      fhbankAddress: customer.fhbankAddress,
+      fhholderAddressInBank: customer.fhholderAddressInBank,
+      fhaccountTypeSavingorCurrent: customer.fhaccountTypeSavingorCurrent,
+      fhaccountNumber: customer.fhaccountNumber,
+      fhbankTelephoneNumber: customer.fhbankTelephoneNumber,
+      fhbankIfscCode: customer.fhbankIfscCode,
+      fhbankEmail: customer.fhbankEmail,
+      fhnineDigitMICRNumber: customer.fhnineDigitMICRNumber,
+      fhnameAsPerBankAccount: customer.fhnameAsPerBankAccount,
+      //jh
+      jhbankName: customer.jhbankName,
+      jhbankAddress: customer.jhbankAddress,
+      jhholderAddressInBank: customer.jhholderAddressInBank,
+      jhaccountTypeSavingorCurrent: customer.jhaccountTypeSavingorCurrent,
+      jhaccountNumber: customer.jhaccountNumber,
+      jhbankTelephoneNumber: customer.jhbankTelephoneNumber,
+      jhbankIfscCode: customer.jhbankIfscCode,
+      jhbankEmail: customer.jhbankEmail,
+      jhnineDigitMICRNumber: customer.jhnineDigitMICRNumber,
+      jhnameAsPerBankAccount: customer.jhnameAsPerBankAccount,
+
+      // Demat
+      dpName: customer.dpName,
+      dematNumber: customer.dematNumber,
+      dpId: customer.dpId,
+      clientId: customer.clientId,
+      cdslOrNsdl: customer.cdslOrNsdl,
+      nameAsPerDematAccount: customer.nameAsPerDematAccount,
+      nomineeName: customer.nomineeName,
+      nomineeFatherOrHusbandName: customer.nomineeFatherOrHusbandName,
+      nomineeAddress: customer.nomineeAddress,
+      nomineeHolderRelationShip: customer.nomineeHolderRelationShip,
+      nomineeBirthdate: moment(customer.nomineeBirthdate).format("DD-MM-YYYY"),
+      // Witness
+      w1NameInPancardExactSpelling: customer.w1NameInPancardExactSpelling,
+      w1addressSameInAadharcard: customer.w1addressSameInAadharcard,
+      w1nameInAadharcardExactSpelling: customer.w1nameInAadharcardExactSpelling,
+      // Witness
+      w2NameInPancardExactSpelling: customer.w2NameInPancardExactSpelling,
+      w2addressSameInAadharcard: customer.w2addressSameInAadharcard,
+      w2nameInAadharcardExactSpelling: customer.w2nameInAadharcardExactSpelling,
+
+      // Surety 1
+      s1nameInPancardExactSpelling: customer.s1nameInPancardExactSpelling,
+      s1nameInAadharcard: customer.s1nameInAadharcard,
+      s1addressAadharcard: customer.s1addressAadharcard,
+      s1age: customer.s1age,
+      s1income: customer.s1income,
+      s1email: customer.s1email,
+      s1mobileNumber: customer.s1mobileNumber,
+      s1itReturnShowAddress: customer.s1itReturnShowAddress,
+      // Surety 2
+      s2nameInPancardExactSpelling: customer.s2nameInPancardExactSpelling,
+      s2nameInAadharcard: customer.s2nameInAadharcard,
+      s2addressAadharcard: customer.s2addressAadharcard,
+      s2age: customer.s2age,
+      s2income: customer.s2income,
+      s2email: customer.s2email,
+      s2mobileNumber: customer.s2mobileNumber,
+      s2itReturnShowAddress: customer.s2itReturnShowAddress,
+      // RTA Letter
+      policeStationName: customer.policeStationName,
+      // Marriage/Gazette
+      oldName: customer.oldName,
+      newName: customer.newName,
+      // Succession
+      deathHolderName1: customer.deathHolderName1,
+      deathHolderName2: customer.deathHolderName2,
+      deathHolderFirstCity: customer.deathHolderFirstCity,
+      deathHolderSecondCity: customer.deathHolderSecondCity,
+      deathOfAddress: customer.deathOfAddress,
+      certificateDeathHolderName1: customer.certificateDeathHolderName1,
+      certificateDeathHolderName2: customer.certificateDeathHolderName2,
+      legalNamePancard: customer.legalNamePancard,
+      successionCertificateNumberYear: customer.successionCertificateNumberYear,
+      successionCertificateCourtOrderDateAndYear: customer.successionCertificateCourtOrderDateAndYear,
+      deceasedHolderAsPerShareCertificate: customer.deceasedHolderAsPerShareCertificate,
+      deceasedHolderAsPerMunicipalityCertificate: customer.deceasedHolderAsPerMunicipalityCertificate,
+      nameInPancardExectSpelling: customer.nameInPancardExectSpelling,
+      nameAsPerShareCertificate: customer.nameAsPerShareCertificate,
+      fatherOrHusbandName: customer.fatherOrHusbandName,
+      contactNumber: customer.contactNumber,
+      email: customer.email,
+      pancardNumber: customer.pancardNumber,
+      city: customer.city,
+      deathOfHolderFirstHolder: moment(customer.deathOfHolderFirstHolder).format("DD-MM-YYYY"),
+      deathOfHolderSecondHolder: moment(customer.deathOfHolderSecondHolder).format("DD-MM-YYYY"),
+      addressSameInAadharcard: customer.addressSameInAadharcard,
+      oldAddressCompanyRegister: customer.oldAddressCompanyRegister,
+      gender: customer.gender,
+      state: customer.state,
+      age: customer.age,
+      aadharcardNumber: customer.aadharcardNumber,
+      nameInAdharcardExactSpeling: customer.nameInAdharcardExactSpeling,
+      // lha bank
+      lhabankName: customer.lhabankName,
+      lhabankAddress: customer.lhabankAddress,
+      lhaholderAddressInBank: customer.lhaholderAddressInBank,
+      lhaaccountTypeSavingorCurrent: customer.lhaaccountTypeSavingorCurrent,
+      lhaaccountNumber: customer.lhaaccountNumber,
+      lhabankTelephoneNumber: customer.lhabankTelephoneNumber,
+      lhabankIfscCode: customer.lhabankIfscCode,
+      lhanineDigitMICRNumber: customer.lhanineDigitMICRNumber,
+      lhanameAsPerBankAccount: customer.lhanameAsPerBankAccount,
+      // LHA Demat
+      lhadpName: customer.lhadpName,
+      lhadematNumber: customer.lhadematNumber,
+      lhacdslOrNsdl: customer.lhacdslOrNsdl,
+      lhanameAsPerDematAccount: customer.lhanameAsPerDematAccount,
+
+      // IEPF
+      iepfDividendAmount: customer.iepfDividendAmount,
+      iepfDividendYear: customer.iepfDividendYear,
+      referenceLetterNo: customer.referenceLetterNo,
+      referenceLetterdate: customer.referenceLetterdate,
+      currentYear: customer.currentYear,
+      MICRECSCode: micr,
+
+      //olh
+      olhnamepan1: olhnamepan.split(",")[0],
+      olhnamepan2: olhnamepan.split(",")[1],
+      olhnamepan3: olhnamepan.split(",")[2],
+
+      olhnameInaadharcard1: olhnameaadhar.split(";")[0],
+      olhnameInaadharcard2: olhnameaadhar.split(";")[1],
+      olhnameInaadharcard3: olhnameaadhar.split(";")[2],
+
+      olhaddressaddhar1: olhaddaadhar.split(";")[0],
+      olhaddressaddhar2: olhaddaadhar.split(";")[1],
+      olhaddressaddhar3: olhaddaadhar.split(";")[2],
+
+      olhage1: olhage.split(",")[0],
+      olhage2: olhage.split(",")[1],
+      olhage3: olhage.split(",")[2],
+
+      olhdaughterson1: olhdaughterson.split(",")[0],
+      olhdaughterson2: olhdaughterson.split(",")[1],
+      olhdaughterson3: olhdaughterson.split(",")[2],
+
+      //SDT
+      distinctiveNumber: dN,
+      shareCertificateNumber: sCN,
+      totalShareQuantity: tSQ,
       // first_name: "John",
       // last_name: "Doe",
       // phone: "0652455478",
@@ -4824,6 +5121,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       subjects: subjects,
       summary1: summary1,
       name: "Jay",
+      tableSDT: tableSDT,
       noticeTable: noticeTable,
       fCDSIC: fCDSIC,
       fSCD: fSCD,
@@ -4837,16 +5135,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       certiDistNoSecurity: certiDistNoSecurity,
       fSCDFT: fSCDFT,
       nfSFCDN: nfSFCDN,
-      // users: [
-      //   {
-      //     fname: "Jay",
-      //     lname: "Amrutiya",
-      //   },
-      //   {
-      //     fname: "Dhruv",
-      //     lname: "Patel",
-      //   },
-      // ],
+
     });
     const buf = doc.getZip().generate({
       type: "nodebuffer",
