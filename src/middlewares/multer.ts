@@ -58,7 +58,7 @@ export const uploadTemplate = multer({
     // if (ext !== ".pdf" && ext !== ".jpg" && ext !== ".gif" && ext !== ".jpeg") {
     //   return callback(new BadRequest("Only pdf are allowed"));
     // }
-    if (ext !== ".docx") {
+    if (ext !== ".docx" && ext !== ".doc") {
       return cb(new BadRequest("Only DOCX is allowed"));
     }
     cb(null, true);

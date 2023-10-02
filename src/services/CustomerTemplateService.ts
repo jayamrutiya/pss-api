@@ -75,7 +75,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     // }
     // str = replaceAll(str, find, olhnamepan);
 
-
     // find = "[[olhnameInPancard1]]";
     // let olhnamepan1 = olhnamepan.split(",")[0];
     // str = replaceAll(str, find, olhnamepan1);
@@ -87,7 +86,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     // find = "[[olhnameInPancard3]]";
     // let olhnamepan3 = olhnamepan.split(",")[2];
     // str = replaceAll(str, find, olhnamepan3);
-
 
     // find = "[[olhnameInaadharcard]]";
     // let olhnameaadhar = "";
@@ -230,8 +228,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     border: none;
     //   "
     // >
-
-
 
     //   <thead>
     //      <tr style="height: 26.95pt">
@@ -408,8 +404,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     // "
     // >
 
-
-
     // <thead>
     // <tr style="height: 26.95pt">
     // <td
@@ -585,8 +579,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     // "
     // >
 
-
-
     // <thead>
     //    <tr style="height: 26.95pt">
     //     <td
@@ -695,7 +687,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //         </p>
     //       </td>
 
-
     //       <td
     //       width="144"
     //       valign="top"
@@ -796,8 +787,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //   border: none;
     // "
     // >
-
-
 
     // <thead>
     //    <tr style="height: 26.95pt">
@@ -907,7 +896,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //         </p>
     //       </td>
 
-
     //       <td
     //       width="144"
     //       valign="top"
@@ -1009,8 +997,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //   border: none;
     // "
     // >
-
-
 
     // <thead>
     //    <tr style="height: 26.95pt">
@@ -1226,8 +1212,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     // "
     // >
 
-
-
     // <thead>
     //    <tr style="height: 26.95pt"><td></td>
     //     <td
@@ -1297,7 +1281,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //       </p>
     //     </td>
 
-
     //   </tr>
     // </thead>
     // <tbody>`;
@@ -1353,7 +1336,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //   </p>
     // </td>
 
-
     //     <td
     //     width="144"
     //     valign="top"
@@ -1362,7 +1344,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //       border: solid windowtext 1pt;
     //       border-top: none;
     //       padding: 0in 5.4pt 0in 5.4pt;
-    //     "> 
+    //     ">
     //     <p class="MsoNoSpacing" align="center" style="text-align: center">
     //         <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber
     //       }</span>
@@ -1403,8 +1385,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     </p>
     //     </td>
 
-
-
     //   </tr>`;
     //   }
     //   const dff = hdf + bdf + fdf;
@@ -1440,8 +1420,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //   border: none;
     // "
     // >
-
-
 
     // <thead>
     //    <tr style="height: 26.95pt">
@@ -1531,7 +1509,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     </p>
     //   </td>
 
-
     //   </tr>
     // </thead>
     // <tbody>`;
@@ -1610,10 +1587,10 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //       padding: 0in 5.4pt 0in 5.4pt;
     //     "
     //     ><p class="MsoNoSpacing" align="center" style="text-align: center">
-    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity} OF F.V 
+    //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity} OF F.V
     //         RS.${customer.faceValueAsOnToday}/-</span>
     //     </p>
-    //     </td> 
+    //     </td>
     //   </tr>`;
     //   }
     //   const daaf = hedf + bedf + fedf;
@@ -1649,8 +1626,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     border: none;
     //   "
     // >
-
-
 
     //   <thead>
     //      <tr style="height: 26.95pt">
@@ -1739,8 +1714,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //         >
     //       </p>
     //     </td>
-
-
 
     //     </tr>
     //   </thead>
@@ -1839,7 +1812,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //         </p>
     //       </td>
 
-
     // 		</tr>`;
     //     }
     //     const ddata = heedf + beedf + feedf;
@@ -1875,8 +1847,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //   border: none;
     // "
     // >
-
-
 
     // <thead>
     //    <tr style="height: 26.95pt">
@@ -1941,7 +1911,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //           >% of Claim</span
     //         >
     //       </p>
-    //     </td>           
+    //     </td>
     //   </tr>
     // </thead>
     // <tbody>`;
@@ -1951,7 +1921,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //   bdata += "";
     //   for (let index = 0; index < customer.tableSDT.length; index++) {
     //     const customerYWD = customer.tableSDT[index];
-    //     bdata += `   
+    //     bdata += `
     //     <tr>
 
     //       <td
@@ -2007,8 +1977,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //               <p class="MsoNoSpacing" align="center" style="text-align: center">
     //               <span style="font-family: 'Tahoma', sans-serif">100 %</span>
     //               </p>
-    //             </td> 
-
+    //             </td>
 
     //         </tr>`;
     //   }
@@ -2045,8 +2014,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     border: none;
     //   "
     // >
-
-
 
     //   <thead>
     //      <tr style="height: 26.95pt">
@@ -2136,8 +2103,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //       </p>
     //     </td>
 
-
-
     //     </tr>
     //   </thead>
     //   <tbody>`;
@@ -2195,7 +2160,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
     //         }</span>
     //                 </p>
-    //               </td> 
+    //               </td>
 
     //               <td
     //                 width="144"
@@ -2216,7 +2181,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //         }
     //       </span>
     //                 </p>
-    //               </td> 
+    //               </td>
     //               <td
     //               width="144"
     //               valign="top"
@@ -2268,8 +2233,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     border: none;
     //   "
     // >
-
-
 
     //   <thead>
     //      <tr style="height: 26.95pt">
@@ -2359,8 +2322,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //       </p>
     //     </td>
 
-
-
     //     </tr>
     //   </thead>
     //   <tbody>`;
@@ -2418,7 +2379,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.distinctiveNumber?.split("-")[0]
     //         }</span>
     //                 </p>
-    //               </td> 
+    //               </td>
 
     //               <td
     //                 width="144"
@@ -2439,7 +2400,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //         }
     //       </span>
     //                 </p>
-    //               </td> 
+    //               </td>
     //               <td
     //               width="144"
     //               valign="top"
@@ -2491,8 +2452,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     border: none;
     //   "
     // >
-
-
 
     //   <thead>
     //      <tr style="height: 26.95pt">
@@ -2598,7 +2557,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
     //                 </p>
-    //               </td> 
+    //               </td>
     //     </tr>
     //     `;
     //     }
@@ -2635,8 +2594,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     border: none;
     //   "
     // >
-
-
 
     //   <thead>
     //      <tr style="height: 26.95pt">
@@ -2778,7 +2735,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //         ${customer.ledgerFolio}
     //       </span>
     //                 </p>
-    //               </td> 
+    //               </td>
     //               <td
     //                 width="144"
     //                 valign="top"
@@ -2793,8 +2750,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     //       <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
     //                 </p>
-    //               </td> 
-
+    //               </td>
 
     //             <td
     //             width="144"
@@ -2811,7 +2767,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //             </p>
     //           </td>
 
-
     //           <td
     //           width="144"
     //           valign="top"
@@ -2826,7 +2781,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //             <span style="font-family: 'Tahoma', sans-serif">${customerYWD.shareCertificateNumber}</span>
     //           </p>
     //         </td>
-
 
     //             <td
     //             width="144"
@@ -2877,8 +2831,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     border: none;
     //   "
     // >
-
-
 
     //   <thead>
     //      <tr style="height: 26.95pt">
@@ -3061,8 +3013,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     // "
     // >
 
-
-
     // <thead>
     //    <tr style="height: 26.95pt">
     //     <td
@@ -3166,7 +3116,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     //     <span style="font-family: 'Tahoma', sans-serif">${customerYWD.totalShareQuantity}</span>
     //               </p>
-    //             </td> 
+    //             </td>
     //   </tr>`;
     //   }
     //   const dataSDT = h + b + f;
@@ -3202,8 +3152,6 @@ export class CustomerTemplateService implements ICustomerTemplateService {
     //     border: none;
     //   "
     //   >
-
-
 
     //   <thead>
     //      <tr style="height: 26.95pt">
@@ -3359,7 +3307,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     //   <span style="font-family: 'Tahoma', sans-serif">${customerYWD.nameInAadharcardExactSpelling}</span>
     //             </p>
-    //           </td> 
+    //           </td>
 
     //           <td
     //             width="144"
@@ -3403,7 +3351,7 @@ export class CustomerTemplateService implements ICustomerTemplateService {
 
     // <span style="font-family: 'Tahoma', sans-serif">${customerYWD.son}</span>
     //         </p>
-    //       </td> 
+    //       </td>
 
     // </tr>
     //     `;
@@ -4628,9 +4576,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       otherLegalHears: JSON.parse(customerData.otherLegalHears!),
     };
 
-
     //noticeTable
-    let noticeTable: any = []
+    let noticeTable: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       console.log("noticeTable data customerYWD:- ", customerYWD);
@@ -4638,23 +4585,30 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         folioNo: customer.ledgerFolio,
         cNo: customerYWD.shareCertificateNumber,
         dNo: customerYWD.distinctiveNumber,
-        shieCertificate: customerYWD.totalShareQuantity + " of Rs." + customer.faceValueAsOnToday + "/-FV",
-      })
+        shieCertificate:
+          customerYWD.totalShareQuantity +
+          " of Rs." +
+          customer.faceValueAsOnToday +
+          "/-FV",
+      });
     }
     //folioCertiDistShareInCerti/fCDSIC
-    let fCDSIC: any = []
+    let fCDSIC: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
-      console.log("folioCertiDistShareInCerti data customerYWD:- ", customerYWD);
+      console.log(
+        "folioCertiDistShareInCerti data customerYWD:- ",
+        customerYWD
+      );
       fCDSIC.push({
         folioNo: customer.ledgerFolio,
         certificateNo: customerYWD.shareCertificateNumber,
         distinctiveNo: customerYWD.distinctiveNumber,
         Shares: customerYWD.totalShareQuantity,
-      })
+      });
     }
     //folioShareCertiDist//fSCD
-    let fSCD: any = []
+    let fSCD: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       console.log("folioShareCertiDist data customerYWD:- ", customerYWD);
@@ -4665,27 +4619,33 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         distinctiveNo_f: customerYWD.distinctiveNumber?.split("-")[0],
         distinctiveNo_t: customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-      })
+          : customerYWD.distinctiveNumber?.split("-")[0],
+      });
     }
 
     // folioCertiDistSharesNameShareHolder/fCDSNSH
-    let fCDSNSH: any = []
+    let fCDSNSH: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
-      console.log("folioCertiDistSharesNameShareHolder data customerYWD:- ", customerYWD);
+      console.log(
+        "folioCertiDistSharesNameShareHolder data customerYWD:- ",
+        customerYWD
+      );
       fCDSNSH.push({
         folioNo: customer.ledgerFolio,
         certificateNo: customerYWD.shareCertificateNumber,
         distinctiveNos: customerYWD.distinctiveNumber,
         noofShares: customerYWD.totalShareQuantity,
-        shareholder: customer.deathHolderName1
-          + " (deceased) jointly"
-          + customer.deathHolderName2 ? customer.deathHolderName2 + "(deceased)" : ""
-      })
+        shareholder:
+          customer.deathHolderName1 +
+          " (deceased) jointly" +
+          customer.deathHolderName2
+            ? customer.deathHolderName2 + "(deceased)"
+            : "",
+      });
     }
     //ywdATable
-    let ywdATable: any = []
+    let ywdATable: any = [];
     for (let index = 0; index < customer.ywdATabelData.length; index++) {
       const customerYWD = customer.ywdATabelData[index];
       console.log("ywdATable data customerYWD:- ", customerYWD);
@@ -4693,43 +4653,53 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         year: customerYWD.year,
         wNo: customerYWD.warrantNo,
         ddMNo: customerYWD.ddMicrNo,
-        amount: customerYWD.amount
-      })
+        amount: customerYWD.amount,
+      });
     }
     //folioSecuCertiNoDisti/fSCND
-    let fSCND: any = []
+    let fSCND: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       console.log("folioSecuCertiNoDisti data customerYWD:- ", customerYWD);
       fSCND.push({
-        no: (index + 1) + ")",
+        no: index + 1 + ")",
         FOLIONO: customer.ledgerFolio,
         noofsecurities: customerYWD.totalShareQuantity,
         securityCertificateNo: customerYWD.shareCertificateNumber,
         distinctiveNosFrom: customerYWD.distinctiveNumber?.split("-")[0],
         distinctiveNosTo: customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-      })
+          : customerYWD.distinctiveNumber?.split("-")[0],
+      });
     }
     //nameComCertiDistFolioSerHeld/nCCDFSH
-    let nCCDFSH: any = []
+    let nCCDFSH: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
-      console.log("nameComCertiDistFolioSerHeld data customerYWD:- ", customerYWD);
+      console.log(
+        "nameComCertiDistFolioSerHeld data customerYWD:- ",
+        customerYWD
+      );
       nCCDFSH.push({
         company: customer.companyName,
         cNo: customerYWD.shareCertificateNumber,
         dNo: customerYWD.distinctiveNumber,
         fNo: customerYWD.ledgerFolio,
-        nofsh: customerYWD.totalShareQuantity + " OF F.V RS." + customer.faceValueAsOnToday + "/-"
-      })
+        nofsh:
+          customerYWD.totalShareQuantity +
+          " OF F.V RS." +
+          customer.faceValueAsOnToday +
+          "/-",
+      });
     }
     // folioCertiDistFDistTNoShare/fCDFDNS
-    let fCDFDNS: any = []
+    let fCDFDNS: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
-      console.log("folioCertiDistFDistTNoShare data customerYWD:- ", customerYWD);
+      console.log(
+        "folioCertiDistFDistTNoShare data customerYWD:- ",
+        customerYWD
+      );
       fCDFDNS.push({
         fNo: customer.ledgerFolio,
         cNo: customerYWD.shareCertificateNumber,
@@ -4737,12 +4707,16 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         dNT: customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
           : customerYWD.distinctiveNumber?.split("-")[0],
-        nSH: customerYWD.totalShareQuantity + " of Rs." + customer.faceValueAsOnToday + "/-"
-      })
+        nSH:
+          customerYWD.totalShareQuantity +
+          " of Rs." +
+          customer.faceValueAsOnToday +
+          "/-",
+      });
     }
 
     // folioShareCertiDistNos/fSCDN
-    let fSCDN: any = []
+    let fSCDN: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       console.log("folioShareCertiDistNos data customerYWD:- ", customerYWD);
@@ -4753,77 +4727,95 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         distinctiveNos_f: customerYWD.distinctiveNumber?.split("-")[0],
         distinctiveNos_t: customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-      })
+          : customerYWD.distinctiveNumber?.split("-")[0],
+      });
     }
     // nameComFolioNoSecperClaim/nCFNSPC
-    let nCFNSPC: any = []
+    let nCFNSPC: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       console.log("nameComFolioNoSecperClaim data customerYWD:- ", customerYWD);
       nCFNSPC.push({
         nameC: customer.companyName,
         fNo: customer.ledgerFolio,
-        noS: customer.totalShares + " of Rs." + customer.faceValueAsOnToday + "/-",
-        per: "100 %"
-      })
+        noS:
+          customer.totalShares + " of Rs." + customer.faceValueAsOnToday + "/-",
+        per: "100 %",
+      });
     }
     //nameComFolioCertDistNEDistShares//nCFCDNEDS
-    let nCFCDNEDS: any = []
+    let nCFCDNEDS: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
-      console.log("nameComFolioCertDistNEDistShares data customerYWD:- ", customerYWD);
+      console.log(
+        "nameComFolioCertDistNEDistShares data customerYWD:- ",
+        customerYWD
+      );
       nCFCDNEDS.push({
         folioNo: customer.ledgerFolio,
-        certNo: customerYWD.shareCertificateNumber + " of Rs." + customer.faceValueAsOnToday + "/-",
+        certNo:
+          customerYWD.shareCertificateNumber +
+          " of Rs." +
+          customer.faceValueAsOnToday +
+          "/-",
         startDistNo: customerYWD.distinctiveNumber?.split("-")[0],
         endDistNo: customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
           : customerYWD.distinctiveNumber?.split("-")[0],
-        Shares: customerYWD.totalShareQuantity
-      })
+        Shares: customerYWD.totalShareQuantity,
+      });
     }
     // certiDistNoSecurity
-    let certiDistNoSecurity: any = []
+    let certiDistNoSecurity: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       console.log("certiDistNoSecurity data customerYWD:- ", customerYWD);
       certiDistNoSecurity.push({
         certiNo: customerYWD.shareCertificateNumber,
         dNos: customerYWD.distinctiveNumber,
-        noS: customerYWD.totalShareQuantity
-      })
+        noS: customerYWD.totalShareQuantity,
+      });
     }
 
     // folioShareCertiDistFT/fSCDFT
-    let fSCDFT: any = []
+    let fSCDFT: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       console.log("folioShareCertiDistFT data customerYWD:- ", customerYWD);
       fSCDFT.push({
         fOLIONO: customer.ledgerFolio,
         SHARES: customerYWD.totalShareQuantity,
-        cNo: customerYWD.shareCertificateNumber + " of Rs." + customer.faceValueAsOnToday + "/-",
+        cNo:
+          customerYWD.shareCertificateNumber +
+          " of Rs." +
+          customer.faceValueAsOnToday +
+          "/-",
         dNof: customerYWD.distinctiveNumber?.split("-")[0],
         dNot: customerYWD.distinctiveNumber?.split("-")[1]
           ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0]
-      })
+          : customerYWD.distinctiveNumber?.split("-")[0],
+      });
     }
 
     // nameFolioShareFVCertiDistNo/nfSFCDN
-    let nfSFCDN: any = []
+    let nfSFCDN: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
-      console.log("nameFolioShareFVCertiDistNo data customerYWD:- ", customerYWD);
+      console.log(
+        "nameFolioShareFVCertiDistNo data customerYWD:- ",
+        customerYWD
+      );
       nfSFCDN.push({
-        name: customer.deathHolderName1 + "  (Deceased) Jointly" + customer.deathHolderName2,
+        name:
+          customer.deathHolderName1 +
+          "  (Deceased) Jointly" +
+          customer.deathHolderName2,
         fNo: customer.ledgerFolio,
         shares: customerYWD.totalShareQuantity,
         fv: customer.faceValueAsOnToday,
         cNo: customerYWD.shareCertificateNumber,
-        dNo: customerYWD.distinctiveNumber
-      })
+        dNo: customerYWD.distinctiveNumber,
+      });
     }
 
     //table otherLegalHears :-
@@ -4854,23 +4846,22 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     let olhdaughterson = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
-      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-        },`;
+      olhdaughterson += `${
+        customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+      },`;
     }
 
     //table sdt
-    let tableSDT: any = []
+    let tableSDT: any = [];
     for (let index = 0; index < customer.tableSDT.length; index++) {
       const customerYWD = customer.tableSDT[index];
       console.log("sdt data customerYWD:- ", customerYWD);
       tableSDT.push({
         shareCertificateNumber: customerYWD.shareCertificateNumber,
         distinctiveNumber: customerYWD.distinctiveNumber,
-        totalShareQuantity: customerYWD.totalShareQuantity
-      })
+        totalShareQuantity: customerYWD.totalShareQuantity,
+      });
     }
-
-
 
     //SDT
     let dN = "";
@@ -4891,7 +4882,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       tSQ += `${customerYWD.totalShareQuantity},`;
     }
     const date = new Date(customer.date!);
-    console.log('date:- ' + date);
+    console.log("date:- " + date);
 
     let bonusSplitDate = "";
     let bonusSplit = "";
@@ -4904,12 +4895,11 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     }
 
     let fhnineDigitMICRNumberSplit = customer.fhnineDigitMICRNumber!.split("");
-    let micr = ""
+    let micr = "";
     for (let index = 0; index < fhnineDigitMICRNumberSplit.length; index++) {
       const customerYWD = fhnineDigitMICRNumberSplit[index];
-      micr += micr;// customerYWD
+      micr += micr; // customerYWD
     }
-
 
     await doc.render({
       //fields
@@ -4920,7 +4910,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       emailId: customer.emailId,
       registerTransferAgentName: customer.registerTransferAgentName,
       registerTransferAgentAdress: customer.registerTransferAgentAdress,
-      registerTransferAgentContactNumber: customer.registerTransferAgentContactNumber,
+      registerTransferAgentContactNumber:
+        customer.registerTransferAgentContactNumber,
       registerTransferAgentEmail: customer.registerTransferAgentEmail,
       ledgerFolio: customer.ledgerFolio,
       bonusDate: customer.bonusDate ? bonusSplitDate : "",
@@ -4930,7 +4921,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       totalShares: customer.totalShares,
       faceValueAsOnToday: customer.faceValueAsOnToday,
       holdShareQuantitySelf: customer.holdShareQuantitySelf,
-      companyHoldUndeliveredShareQuantity: customer.companyHoldUndeliveredShareQuantity,
+      companyHoldUndeliveredShareQuantity:
+        customer.companyHoldUndeliveredShareQuantity,
       holdShareQuantitySelfFaceValue: customer.holdShareQuantitySelfFaceValue,
       oldCompanyName: customer.oldCompanyName,
       oldQuantityholdShare: customer.oldQuantityholdShare,
@@ -5045,9 +5037,12 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       certificateDeathHolderName2: customer.certificateDeathHolderName2,
       legalNamePancard: customer.legalNamePancard,
       successionCertificateNumberYear: customer.successionCertificateNumberYear,
-      successionCertificateCourtOrderDateAndYear: customer.successionCertificateCourtOrderDateAndYear,
-      deceasedHolderAsPerShareCertificate: customer.deceasedHolderAsPerShareCertificate,
-      deceasedHolderAsPerMunicipalityCertificate: customer.deceasedHolderAsPerMunicipalityCertificate,
+      successionCertificateCourtOrderDateAndYear:
+        customer.successionCertificateCourtOrderDateAndYear,
+      deceasedHolderAsPerShareCertificate:
+        customer.deceasedHolderAsPerShareCertificate,
+      deceasedHolderAsPerMunicipalityCertificate:
+        customer.deceasedHolderAsPerMunicipalityCertificate,
       nameInPancardExectSpelling: customer.nameInPancardExectSpelling,
       nameAsPerShareCertificate: customer.nameAsPerShareCertificate,
       fatherOrHusbandName: customer.fatherOrHusbandName,
@@ -5055,8 +5050,12 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       email: customer.email,
       pancardNumber: customer.pancardNumber,
       city: customer.city,
-      deathOfHolderFirstHolder: moment(customer.deathOfHolderFirstHolder).format("DD-MM-YYYY"),
-      deathOfHolderSecondHolder: moment(customer.deathOfHolderSecondHolder).format("DD-MM-YYYY"),
+      deathOfHolderFirstHolder: moment(
+        customer.deathOfHolderFirstHolder
+      ).format("DD-MM-YYYY"),
+      deathOfHolderSecondHolder: moment(
+        customer.deathOfHolderSecondHolder
+      ).format("DD-MM-YYYY"),
       addressSameInAadharcard: customer.addressSameInAadharcard,
       oldAddressCompanyRegister: customer.oldAddressCompanyRegister,
       gender: customer.gender,
@@ -5089,9 +5088,9 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       MICRECSCode: micr,
 
       //olh
-      olhnamepan1: olhnamepan.split(",")[0],
-      olhnamepan2: olhnamepan.split(",")[1],
-      olhnamepan3: olhnamepan.split(",")[2],
+      olhnameInPancard1: olhnamepan.split(",")[0],
+      olhnameInPancard2: olhnamepan.split(",")[1],
+      olhnameInPancard3: olhnamepan.split(",")[2],
 
       olhnameInaadharcard1: olhnameaadhar.split(";")[0],
       olhnameInaadharcard2: olhnameaadhar.split(";")[1],
@@ -5135,7 +5134,6 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       certiDistNoSecurity: certiDistNoSecurity,
       fSCDFT: fSCDFT,
       nfSFCDN: nfSFCDN,
-
     });
     const buf = doc.getZip().generate({
       type: "nodebuffer",

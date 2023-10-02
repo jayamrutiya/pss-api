@@ -26,9 +26,10 @@ export class TemplateRepository implements ITemplateRepository {
     try {
       // Get the database client
       const client = this._databaseService.Client();
-
+      const data: any = templateData;
+      const { file, ...restData } = data;
       const createTemplate = await client.template.create({
-        data: templateData,
+        data: restData,
       });
 
       return createTemplate;
@@ -49,12 +50,13 @@ export class TemplateRepository implements ITemplateRepository {
     try {
       // Get the database client
       const client = this._databaseService.Client();
-
+      const data: any = templateData;
+      const { file, ...restData } = data;
       const updateTemplate = await client.template.update({
         where: {
           id,
         },
-        data: templateData,
+        data: restData,
       });
 
       await client.customerTemplate.updateMany({
