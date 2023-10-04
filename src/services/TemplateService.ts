@@ -94,6 +94,10 @@ export class TemplateService implements ITemplateService {
     if (!getTemplate) {
       throw new NotFound("No such record found");
     }
+    const deletedTemplate = await this._templateRepository.deleteTemplate(
+      id,
+      userId
+    );
 
     getTemplate.storeDocName
       ? await unlinkSync(
@@ -101,6 +105,6 @@ export class TemplateService implements ITemplateService {
         )
       : "";
 
-    return await this._templateRepository.deleteTemplate(id, userId);
+    return deletedTemplate;
   }
 }
