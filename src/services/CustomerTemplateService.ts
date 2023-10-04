@@ -4409,7 +4409,9 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             title: `${subjects.length + 1}. ${template.templateTitle}`,
           });
         } else if (template.templateType === "SUMMARY1") {
-          summary1.push({ title: template.templateTitle });
+          summary1.push({
+            title: `${summary1.length + 1}. ${template.templateTitle}`,
+          });
         }
       }
 
