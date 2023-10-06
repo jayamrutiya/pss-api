@@ -16,7 +16,8 @@ exports.TemplateService = void 0;
 const inversify_1 = require("inversify");
 const types_1 = require("../config/types");
 const NotFound_1 = require("../errors/NotFound");
-const helper_1 = require("../config/helper");
+const fs_1 = require("fs");
+const path_1 = require("path");
 let TemplateService = class TemplateService {
     constructor(loggerService, templateRepository) {
         this._loggerService = loggerService;
@@ -24,29 +25,36 @@ let TemplateService = class TemplateService {
         this._loggerService.getLogger().info(`Creating: ${this.constructor.name}`);
     }
     async upsertTemplate(templateData) {
-        let { id, ...withOutId } = templateData;
-        console.log("withOutId", withOutId);
-        let str, find, replace;
-        str = withOutId.details;
-        find = "<table>";
-        replace = `<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">`;
-        str = (0, helper_1.replaceAll)(str, find, replace);
-        // find = "<td>";
-        // replace = `<td style="text-align:center" >`;
-        // str = replaceAll(str, find, replace);
-        const data = {
-            userId: withOutId.userId,
-            type: withOutId.type,
-            title: withOutId.title,
-            details: str,
-        };
         if (templateData.id) {
-            // update template
-            return await this._templateRepository.updateTemplate(id, data);
+            const getTemplate = await this._templateRepository.getTemplateById(templateData.id, templateData.userId);
+            if (!getTemplate) {
+                throw new NotFound_1.NotFound("No such record found");
+            }
+            if (templateData.originalName) {
+                getTemplate.storeDocName
+                    ? await (0, fs_1.unlinkSync)((0, path_1.join)("./src/public/Template", getTemplate.storeDocName))
+                    : "";
+                // update template
+                return await this._templateRepository.updateTemplate(templateData.id, templateData);
+            }
+            else {
+                const payload = {
+                    ...templateData,
+                    originalName: getTemplate.originalName,
+                    storeDocName: getTemplate.storeDocName,
+                    mimeType: getTemplate.mimeType,
+                    sizeInBytes: getTemplate.sizeInBytes,
+                    url: getTemplate.url,
+                    path: getTemplate.path,
+                };
+                // update template
+                return await this._templateRepository.updateTemplate(templateData.id, payload);
+            }
         }
         else {
             // create template
-            return await this._templateRepository.createTemplate(data);
+            const { id, ...restData } = templateData;
+            return await this._templateRepository.createTemplate(restData);
         }
     }
     async getTemplatesByType(type, userId) {
@@ -60,7 +68,15 @@ let TemplateService = class TemplateService {
         return gettemplateById;
     }
     async deleteTemplate(id, userId) {
-        return await this._templateRepository.deleteTemplate(id, userId);
+        const getTemplate = await this._templateRepository.getTemplateById(id, userId);
+        if (!getTemplate) {
+            throw new NotFound_1.NotFound("No such record found");
+        }
+        const deletedTemplate = await this._templateRepository.deleteTemplate(id, userId);
+        getTemplate.storeDocName
+            ? await (0, fs_1.unlinkSync)((0, path_1.join)("./src/public/Template", getTemplate.storeDocName))
+            : "";
+        return deletedTemplate;
     }
 };
 TemplateService = __decorate([

@@ -13,7 +13,8 @@ export declare class CustomerTemplateService implements ICustomerTemplateService
     constructor(loggerService: ILoggerService, customerTemplateRepository: ICustomerTemplateRepository, customerRepository: ICustomerRepository, templateRepository: ITemplateRepository);
     replaceTemplateData(customerData: Customer, template: Template): Promise<string>;
     createCustomerTemplate(userId: number, customerTemplateDataa: CreateCustomerTemplateInput[]): Promise<CustomerTemplateWithCustomerTemplate>;
-    createWordFileCustomerTemplate(customerTemplateMasterId: number, customerId: number): Promise<any>;
+    createWordFileCustomerTemplate(customerTemplateMasterId: number, customerId: number, userId: number): Promise<any>;
+    createDynamicWord(customerData: any, docName: any, customerTemplateMasterId: any, templateType: any, hasReffLine?: boolean, subjects?: never[], summary1?: never[]): Promise<string>;
     getCustomerTemplateByTypeAndCustomerId(customerId: number, templateType: string, userId: number, customerTemplateMasterId: number): Promise<UpdateCustomerTemplate[]>;
     getCustomerTemplateStatus(customerId: number, templateType: string, userId: number, customerTemplateMasterId: number): Promise<{
         isAvailable: boolean;

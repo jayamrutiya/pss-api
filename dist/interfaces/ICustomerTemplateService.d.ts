@@ -3,7 +3,7 @@ import { CreateCustomerTemplateInput, CustomerTemplateWithCustomerTemplate, Upda
 export interface ICustomerTemplateService {
     createCustomerTemplate(userId: number, customerTemplateDataa: CreateCustomerTemplateInput[]): Promise<CustomerTemplateWithCustomerTemplate>;
     getCustomerTemplateByTypeAndCustomerId(customerId: number, templateType: string, userId: number, customerTemplateMasterId: number): Promise<UpdateCustomerTemplate[]>;
-    createWordFileCustomerTemplate(customerTemplateMasterId: number, customerId: number): Promise<any>;
+    createWordFileCustomerTemplate(customerTemplateMasterId: number, customerId: number, userId: number): Promise<any>;
     getCustomerTemplateStatus(customerId: number, templateType: string, userId: number, customerTemplateMasterId: number): Promise<{
         isAvailable: boolean;
     }>;

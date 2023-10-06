@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const env_1 = __importDefault(require("../config/env"));
 const BadRequest_1 = require("../errors/BadRequest");
 const BaseController_1 = __importDefault(require("./BaseController"));
 class TemplateController extends BaseController_1.default {
@@ -17,6 +18,7 @@ class TemplateController extends BaseController_1.default {
             // validate input
             this.validateRequest(req);
             const { id, type, title, details } = req.body;
+            console.log("File", req.file);
             const types = [
                 "COMMON_CONTENT",
                 "REFE_LINE",
@@ -36,6 +38,13 @@ class TemplateController extends BaseController_1.default {
             const upsertTemplate = await this._templateService.upsertTemplate({
                 userId: token.id,
                 ...req.body,
+                id: req.body.id ? Number(req.body.id) : null,
+                originalName: req.file?.originalname,
+                storeDocName: req.file?.filename,
+                mimeType: req.file?.mimetype,
+                sizeInBytes: req.file?.size.toString(),
+                url: `${env_1.default.API_BASEURL}/temp/${req.file?.filename}`,
+                path: req.file?.path,
             });
             // Return the response
             return this.sendJSONResponse(res, "Template save successfully.", {

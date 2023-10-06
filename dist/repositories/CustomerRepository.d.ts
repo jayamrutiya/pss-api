@@ -10,7 +10,7 @@ export declare class CustomerRepository implements ICustomerRepository {
     createCustomer(customerData: CreateCustomerRepoInput): Promise<Customer>;
     updateCustomer(id: number, customerData: CreateCustomerRepoInput): Promise<Customer>;
     getCustomers(userId: number, customerMasterId: number | null): Promise<Customer[]>;
-    getCustomer(id: number, userId: number): Promise<Customer | null>;
+    getCustomer(id: number, userId: number | null): Promise<Customer | null>;
     deleteCustomer(id: number, userId: number): Promise<Customer | null>;
     createCustomerMaster(name: string, companyName: string | null, userId: number): Promise<CustomerMaster>;
     updateCustomerMaster(id: number, name: string, companyName: string | null, userId: number): Promise<CustomerMaster>;

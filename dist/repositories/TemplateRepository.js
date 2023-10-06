@@ -27,8 +27,10 @@ let TemplateRepository = class TemplateRepository {
         try {
             // Get the database client
             const client = this._databaseService.Client();
+            const data = templateData;
+            const { file, ...restData } = data;
             const createTemplate = await client.template.create({
-                data: templateData,
+                data: restData,
             });
             return createTemplate;
         }
@@ -44,11 +46,13 @@ let TemplateRepository = class TemplateRepository {
         try {
             // Get the database client
             const client = this._databaseService.Client();
+            const data = templateData;
+            const { file, ...restData } = data;
             const updateTemplate = await client.template.update({
                 where: {
                     id,
                 },
-                data: templateData,
+                data: restData,
             });
             await client.customerTemplate.updateMany({
                 where: {

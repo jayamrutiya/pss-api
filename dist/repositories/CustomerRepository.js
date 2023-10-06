@@ -86,10 +86,12 @@ let CustomerRepository = class CustomerRepository {
             // Get the database clinte
             const client = this._databaseService.Client();
             const getCustomer = await client.customer.findFirst({
-                where: {
-                    id,
-                    userId,
-                },
+                where: userId
+                    ? {
+                        id,
+                        userId,
+                    }
+                    : { id },
             });
             return getCustomer;
         }

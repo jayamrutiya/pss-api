@@ -67,7 +67,7 @@ class CustomerTemplateController extends BaseController_1.default {
             const customerTemplateMasterId = Number(req.query.customerTemplateMasterId);
             const customerId = Number(req.query.customerId);
             const token = req.user;
-            const saveCustomerTemplateData = await this._customerTemplateService.createWordFileCustomerTemplate(customerTemplateMasterId, customerId);
+            const saveCustomerTemplateData = await this._customerTemplateService.createWordFileCustomerTemplate(customerTemplateMasterId, customerId, token?.id);
             // res.setHeader(
             //   "Content-Type",
             //   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"

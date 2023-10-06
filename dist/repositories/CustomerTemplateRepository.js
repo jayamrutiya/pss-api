@@ -97,6 +97,9 @@ let CustomerTemplateRepository = class CustomerTemplateRepository {
                 where: {
                     customerTemplateMasterId,
                 },
+                include: {
+                    Template: true,
+                },
             });
             return getData;
         }
