@@ -5336,24 +5336,22 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           isSelected: false,
           createdAt: allData.createdAt,
           updatedAt: allData.updatedAt,
-          isCustomMainContentTemplate
-: 
-false
+          isCustomMainContentTemplate: false,
         });
       }
     }
 
-    const selectedSet = new Set(selected.map((item) => item.templateId));
+    // const selectedSet = new Set(selected.map((item) => item.templateId));
 
-    const newData = all.map((item) => ({
-      ...item,
-      customerId,
-      customerTemplateMasterId,
-      templateTitle: item.title,
-      templateType: item.type,
-      templateData: item.details,
-      isSelected: selectedSet.has(item.id), // Assuming 'id' is the key to match
-    }));
+    // const newData = all.map((item) => ({
+    //   ...item,
+    //   customerId,
+    //   customerTemplateMasterId,
+    //   templateTitle: item.title,
+    //   templateType: item.type,
+    //   templateData: item.details,
+    //   isSelected: selectedSet.has(item.id), // Assuming 'id' is the key to match
+    // }));
 
     return response;
   }
