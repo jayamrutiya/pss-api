@@ -5309,15 +5309,53 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         templateType,
         customerTemplateMasterId
       );
+    const response: any = [];
+    for (let i = 0; i < all.length; i++) {
+      const allData = all[i];
+
+      const selectedTemplate = selected.find(
+        (o) => o.templateId === allData.id
+      );
+
+      if (selectedTemplate) {
+        const { Customer, Template, ...restData } = selectedTemplate;
+        response.push({
+          ...restData,
+          isSelected: true,
+        });
+      } else {
+        response.push({
+          customerId,
+          id: null,
+          order: null,
+          templateId: allData.id,
+          customerTemplateMasterId,
+          templateTitle: allData.title,
+          templateType: allData.type,
+          templateData: allData.details,
+          isSelected: false,
+          createdAt: allData.createdAt,
+          updatedAt: allData.updatedAt,
+          isCustomMainContentTemplate
+: 
+false
+        });
+      }
+    }
 
     const selectedSet = new Set(selected.map((item) => item.templateId));
 
     const newData = all.map((item) => ({
       ...item,
+      customerId,
+      customerTemplateMasterId,
+      templateTitle: item.title,
+      templateType: item.type,
+      templateData: item.details,
       isSelected: selectedSet.has(item.id), // Assuming 'id' is the key to match
     }));
 
-    return newData;
+    return response;
   }
 
   async getCustomerTemplateById(id: number): Promise<UpdateCustomerTemplate> {
