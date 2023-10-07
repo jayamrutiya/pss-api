@@ -4640,8 +4640,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         noofShares: customerYWD.totalShareQuantity,
         shareholder:
           customer.deathHolderName1 +
-            " (deceased) jointly" +
-            customer.deathHolderName2
+          " (deceased) jointly" +
+          customer.deathHolderName2
             ? customer.deathHolderName2 + "(deceased)"
             : "",
       });
@@ -4848,8 +4848,9 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     let olhdaughterson = "";
     for (let index = 0; index < customer.otherLegalHears.length; index++) {
       const customerYWD = customer.otherLegalHears[index];
-      olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-        },`;
+      olhdaughterson += `${
+        customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+      },`;
     }
 
     //table sdt
@@ -4901,8 +4902,6 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       const customerYWD = fhnineDigitMICRNumberSplit[index];
       micr += micr; // customerYWD
     }
-
-
 
     await doc.render({
       //fields
@@ -5075,8 +5074,12 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       lhabankTelephoneNumber: customer.lhabankTelephoneNumber,
       lhabankIfscCode: customer.lhabankIfscCode,
       lhanineDigitMICRNumber: customer.lhanineDigitMICRNumber,
-      lhadeathOfHolderFirstHolder: moment(customer.deathOfHolderFirstHolder).format("DD-MM-YYYY"),
-      lhadeathOfHolderSecondHolder: moment(customer.deathOfHolderSecondHolder).format("DD-MM-YYYY"),
+      lhadeathOfHolderFirstHolder: moment(
+        customer.deathOfHolderFirstHolder
+      ).format("DD-MM-YYYY"),
+      lhadeathOfHolderSecondHolder: moment(
+        customer.deathOfHolderSecondHolder
+      ).format("DD-MM-YYYY"),
       lhanameAsPerBankAccount: customer.lhanameAsPerBankAccount,
       // LHA Demat
       lhadpName: customer.lhadpName,
@@ -5094,8 +5097,6 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       currentYear: new Date().getFullYear(),
       lhadeathHolderFirstCity: customer.deathHolderFirstCity,
       lhadeathHolderSecondCity: customer.deathHolderSecondCity,
-
-
 
       //olh
       olhnameInPancard1: olhnamepan.split(",")[0],
@@ -5309,9 +5310,14 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         customerTemplateMasterId
       );
 
-    return await all.filter(
-      ({ id: id1 }) => !selected.some(({ templateId: id2 }) => id2 === id1)
-    );
+    const selectedSet = new Set(selected.map((item) => item.templateId));
+
+    const newData = all.map((item) => ({
+      ...item,
+      isSelected: selectedSet.has(item.id), // Assuming 'id' is the key to match
+    }));
+
+    return newData;
   }
 
   async getCustomerTemplateById(id: number): Promise<UpdateCustomerTemplate> {
