@@ -5091,7 +5091,9 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       iepfDividendAmount: customer.iepfDividendAmount,
       iepfDividendYear: customer.iepfDividendYear,
       referenceLetterNo: customer.referenceLetterNo,
-      referenceLetterdate: customer.referenceLetterdate,
+      referenceLetterdate: moment(customer.referenceLetterdate).format(
+        "DD-MM-YYYY"
+      ),
 
       MICRECSCode: micr,
       currentYear: new Date().getFullYear(),
