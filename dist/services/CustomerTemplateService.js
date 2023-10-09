@@ -4578,7 +4578,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             iepfDividendAmount: customer.iepfDividendAmount,
             iepfDividendYear: customer.iepfDividendYear,
             referenceLetterNo: customer.referenceLetterNo,
-            referenceLetterdate: customer.referenceLetterdate,
+            referenceLetterdate: (0, moment_1.default)(customer.referenceLetterdate).format("DD-MM-YYYY"),
             MICRECSCode: micr,
             currentYear: new Date().getFullYear(),
             lhadeathHolderFirstCity: customer.deathHolderFirstCity,
@@ -4714,7 +4714,45 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     async getFiltterTemplate(customerId, templateType, userId, customerTemplateMasterId) {
         const all = await this._templateRepository.getTemplatesByType(templateType, userId);
         const selected = await this._customerTemplateRepository.getCustomerTemplateByTypeAndCustomerId(customerId, templateType, customerTemplateMasterId);
-        return await all.filter(({ id: id1 }) => !selected.some(({ templateId: id2 }) => id2 === id1));
+        const response = [];
+        for (let i = 0; i < all.length; i++) {
+            const allData = all[i];
+            const selectedTemplate = selected.find((o) => o.templateId === allData.id);
+            if (selectedTemplate) {
+                const { Customer, Template, ...restData } = selectedTemplate;
+                response.push({
+                    ...restData,
+                    isSelected: true,
+                });
+            }
+            else {
+                response.push({
+                    customerId,
+                    id: null,
+                    order: null,
+                    templateId: allData.id,
+                    customerTemplateMasterId,
+                    templateTitle: allData.title,
+                    templateType: allData.type,
+                    templateData: allData.details,
+                    isSelected: false,
+                    createdAt: allData.createdAt,
+                    updatedAt: allData.updatedAt,
+                    isCustomMainContentTemplate: false,
+                });
+            }
+        }
+        // const selectedSet = new Set(selected.map((item) => item.templateId));
+        // const newData = all.map((item) => ({
+        //   ...item,
+        //   customerId,
+        //   customerTemplateMasterId,
+        //   templateTitle: item.title,
+        //   templateType: item.type,
+        //   templateData: item.details,
+        //   isSelected: selectedSet.has(item.id), // Assuming 'id' is the key to match
+        // }));
+        return response;
     }
     async getCustomerTemplateById(id) {
         const getData = await this._customerTemplateRepository.getCustomerTemplateById(id);
