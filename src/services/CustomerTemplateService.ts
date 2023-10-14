@@ -28,6 +28,7 @@ import env from "../config/env";
 import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
 import DocxMerger from "docx-merger";
+import { InternalServerError } from "../errors/InternalServerError";
 // var DocxMerger = require("docx-merger");
 
 @injectable()
@@ -4547,8 +4548,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
 
       return { filePath: docxFilePath, fileName: finalFileName };
     } catch (error) {
-      console.log("error:-" + error);
-      throw error;
+      throw new InternalServerError(`Error: ${error}`);
     }
   }
 
@@ -4561,610 +4561,771 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     subjects = [],
     summary1 = []
   ) {
-    const content = await readFileSync(
-      join("./src/public/Template", docName),
-      "binary"
-    );
-    const zip = new PizZip(content);
-    const doc = new Docxtemplater(zip, {
-      paragraphLoop: false,
-      linebreaks: true,
-    });
-
-    const customer = {
-      ...customerData,
-      tableSDT: JSON.parse(customerData.tableSDT!),
-      ywdATabelData: JSON.parse(customerData.ywdATabelData!),
-      otherLegalHears: JSON.parse(customerData.otherLegalHears!),
-    };
-
-    //noticeTable
-    let noticeTable: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log("noticeTable data customerYWD:- ", customerYWD);
-      noticeTable.push({
-        folioNo: customer.ledgerFolio,
-        cNo: customerYWD.shareCertificateNumber,
-        dNo: customerYWD.distinctiveNumber,
-        shieCertificate:
-          customerYWD.totalShareQuantity +
-          " of Rs." +
-          customer.faceValueAsOnToday +
-          "/-FV",
-      });
-    }
-    //folioCertiDistShareInCerti/fCDSIC
-    let fCDSIC: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log(
-        "folioCertiDistShareInCerti data customerYWD:- ",
-        customerYWD
+    try {
+      const content = await readFileSync(
+        join("./src/public/Template", docName),
+        "binary"
       );
-      fCDSIC.push({
-        folioNo: customer.ledgerFolio,
-        certificateNo: customerYWD.shareCertificateNumber,
-        distinctiveNo: customerYWD.distinctiveNumber,
-        Shares: customerYWD.totalShareQuantity,
+      const zip = new PizZip(content);
+      const doc = new Docxtemplater(zip, {
+        paragraphLoop: false,
+        linebreaks: true,
       });
-    }
-    //folioShareCertiDist//fSCD
-    let fSCD: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log("folioShareCertiDist data customerYWD:- ", customerYWD);
-      fSCD.push({
-        folioNumber: customer.ledgerFolio,
-        no_ofShares: customerYWD.totalShareQuantity,
-        certificateNumbers: customerYWD.shareCertificateNumber,
-        distinctiveNo_f: customerYWD.distinctiveNumber?.split("-")[0],
-        distinctiveNo_t: customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0],
-      });
-    }
 
-    // folioCertiDistSharesNameShareHolder/fCDSNSH
-    let fCDSNSH: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log(
-        "folioCertiDistSharesNameShareHolder data customerYWD:- ",
-        customerYWD
-      );
-      fCDSNSH.push({
-        folioNo: customer.ledgerFolio,
-        certificateNo: customerYWD.shareCertificateNumber,
-        distinctiveNos: customerYWD.distinctiveNumber,
-        noofShares: customerYWD.totalShareQuantity,
-        shareholder:
-          customer.deathHolderName1 +
-          " (deceased) jointly" +
-          customer.deathHolderName2
-            ? customer.deathHolderName2 + "(deceased)"
-            : "",
-      });
-    }
-    //ywdATable
-    let ywdATable: any = [];
-    for (let index = 0; index < customer.ywdATabelData.length; index++) {
-      const customerYWD = customer.ywdATabelData[index];
-      console.log("ywdATable data customerYWD:- ", customerYWD);
-      ywdATable.push({
-        year: customerYWD.year,
-        wNo: customerYWD.warrantNo,
-        ddMNo: customerYWD.ddMicrNo,
-        amount: customerYWD.amount,
-      });
-    }
-    //folioSecuCertiNoDisti/fSCND
-    let fSCND: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log("folioSecuCertiNoDisti data customerYWD:- ", customerYWD);
-      fSCND.push({
-        no: index + 1 + ")",
-        FOLIONO: customer.ledgerFolio,
-        noofsecurities: customerYWD.totalShareQuantity,
-        securityCertificateNo: customerYWD.shareCertificateNumber,
-        distinctiveNosFrom: customerYWD.distinctiveNumber?.split("-")[0],
-        distinctiveNosTo: customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0],
-      });
-    }
-    //nameComCertiDistFolioSerHeld/nCCDFSH
-    let nCCDFSH: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log(
-        "nameComCertiDistFolioSerHeld data customerYWD:- ",
-        customerYWD
-      );
-      nCCDFSH.push({
-        company: customer.companyName,
-        cNo: customerYWD.shareCertificateNumber,
-        dNo: customerYWD.distinctiveNumber,
-        fNo: customerYWD.ledgerFolio,
-        nofsh:
-          customerYWD.totalShareQuantity +
-          " OF F.V RS." +
-          customer.faceValueAsOnToday +
-          "/-",
-      });
-    }
-    // folioCertiDistFDistTNoShare/fCDFDNS
-    let fCDFDNS: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log(
-        "folioCertiDistFDistTNoShare data customerYWD:- ",
-        customerYWD
-      );
-      fCDFDNS.push({
-        fNo: customer.ledgerFolio,
-        cNo: customerYWD.shareCertificateNumber,
-        dNF: customerYWD.distinctiveNumber?.split("-")[0],
-        dNT: customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0],
-        nSH:
-          customerYWD.totalShareQuantity +
-          " of Rs." +
-          customer.faceValueAsOnToday +
-          "/-",
-      });
-    }
+      const customer = {
+        ...customerData,
+        tableSDT: JSON.parse(customerData.tableSDT!),
+        ywdATabelData: JSON.parse(customerData.ywdATabelData!),
+        otherLegalHears: JSON.parse(customerData.otherLegalHears!),
+      };
 
-    // folioShareCertiDistNos/fSCDN
-    let fSCDN: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log("folioShareCertiDistNos data customerYWD:- ", customerYWD);
-      fSCDN.push({
-        folioNumber: customer.ledgerFolio,
-        noofShares: customerYWD.totalShareQuantity,
-        certificateNo: customerYWD.shareCertificateNumber,
-        distinctiveNos_f: customerYWD.distinctiveNumber?.split("-")[0],
-        distinctiveNos_t: customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0],
-      });
-    }
-    // nameComFolioNoSecperClaim/nCFNSPC
-    let nCFNSPC: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log("nameComFolioNoSecperClaim data customerYWD:- ", customerYWD);
-      nCFNSPC.push({
-        nameC: customer.companyName,
-        fNo: customer.ledgerFolio,
-        noS:
-          customer.totalShares + " of Rs." + customer.faceValueAsOnToday + "/-",
-        per: "100 %",
-      });
-    }
-    //nameComFolioCertDistNEDistShares//nCFCDNEDS
-    let nCFCDNEDS: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log(
-        "nameComFolioCertDistNEDistShares data customerYWD:- ",
-        customerYWD
-      );
-      nCFCDNEDS.push({
-        folioNo: customer.ledgerFolio,
-        certNo:
-          customerYWD.shareCertificateNumber +
-          " of Rs." +
-          customer.faceValueAsOnToday +
-          "/-",
-        startDistNo: customerYWD.distinctiveNumber?.split("-")[0],
-        endDistNo: customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0],
-        Shares: customerYWD.totalShareQuantity,
-      });
-    }
-    // certiDistNoSecurity
-    let certiDistNoSecurity: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log("certiDistNoSecurity data customerYWD:- ", customerYWD);
-      certiDistNoSecurity.push({
-        certiNo: customerYWD.shareCertificateNumber,
-        dNos: customerYWD.distinctiveNumber,
-        noS: customerYWD.totalShareQuantity,
-      });
-    }
+      //noticeTable
+      let noticeTable: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("noticeTable data customerYWD:- ", customerYWD);
+        noticeTable.push({
+          folioNo: customer.ledgerFolio,
+          cNo: customerYWD.shareCertificateNumber,
+          dNo: customerYWD.distinctiveNumber,
+          shieCertificate:
+            customerYWD.totalShareQuantity +
+            " of Rs." +
+            customer.faceValueAsOnToday +
+            "/-FV",
+        });
+      }
+      //folioCertiDistShareInCerti/fCDSIC
+      let fCDSIC: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log(
+          "folioCertiDistShareInCerti data customerYWD:- ",
+          customerYWD
+        );
+        fCDSIC.push({
+          folioNo: customer.ledgerFolio,
+          certificateNo: customerYWD.shareCertificateNumber,
+          distinctiveNo: customerYWD.distinctiveNumber,
+          Shares: customerYWD.totalShareQuantity,
+        });
+      }
+      //folioShareCertiDist//fSCD
+      let fSCD: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("folioShareCertiDist data customerYWD:- ", customerYWD);
+        fSCD.push({
+          folioNumber: customer.ledgerFolio,
+          no_ofShares: customerYWD.totalShareQuantity,
+          certificateNumbers: customerYWD.shareCertificateNumber,
+          distinctiveNo_f: customerYWD.distinctiveNumber?.split("-")[0],
+          distinctiveNo_t: customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0],
+        });
+      }
 
-    // folioShareCertiDistFT/fSCDFT
-    let fSCDFT: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log("folioShareCertiDistFT data customerYWD:- ", customerYWD);
-      fSCDFT.push({
-        fOLIONO: customer.ledgerFolio,
-        SHARES: customerYWD.totalShareQuantity,
-        cNo:
-          customerYWD.shareCertificateNumber +
-          " of Rs." +
-          customer.faceValueAsOnToday +
-          "/-",
-        dNof: customerYWD.distinctiveNumber?.split("-")[0],
-        dNot: customerYWD.distinctiveNumber?.split("-")[1]
-          ? customerYWD.distinctiveNumber?.split("-")[1]
-          : customerYWD.distinctiveNumber?.split("-")[0],
-      });
-    }
+      // folioCertiDistSharesNameShareHolder/fCDSNSH
+      let fCDSNSH: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log(
+          "folioCertiDistSharesNameShareHolder data customerYWD:- ",
+          customerYWD
+        );
+        fCDSNSH.push({
+          folioNo: customer.ledgerFolio,
+          certificateNo: customerYWD.shareCertificateNumber,
+          distinctiveNos: customerYWD.distinctiveNumber,
+          noofShares: customerYWD.totalShareQuantity,
+          shareholder:
+            customer.deathHolderName1 +
+            " (deceased) jointly" +
+            customer.deathHolderName2
+              ? customer.deathHolderName2 + "(deceased)"
+              : "",
+        });
+      }
+      //ywdATable
+      let ywdATable: any = [];
+      for (let index = 0; index < customer.ywdATabelData.length; index++) {
+        const customerYWD = customer.ywdATabelData[index];
+        console.log("ywdATable data customerYWD:- ", customerYWD);
+        ywdATable.push({
+          year: customerYWD.year,
+          wNo: customerYWD.warrantNo,
+          ddMNo: customerYWD.ddMicrNo,
+          amount: customerYWD.amount,
+        });
+      }
+      //folioSecuCertiNoDisti/fSCND
+      let fSCND: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("folioSecuCertiNoDisti data customerYWD:- ", customerYWD);
+        fSCND.push({
+          no: index + 1 + ")",
+          FOLIONO: customer.ledgerFolio,
+          noofsecurities: customerYWD.totalShareQuantity,
+          securityCertificateNo: customerYWD.shareCertificateNumber,
+          distinctiveNosFrom: customerYWD.distinctiveNumber?.split("-")[0],
+          distinctiveNosTo: customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0],
+        });
+      }
+      //nameComCertiDistFolioSerHeld/nCCDFSH
+      let nCCDFSH: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log(
+          "nameComCertiDistFolioSerHeld data customerYWD:- ",
+          customerYWD
+        );
+        nCCDFSH.push({
+          company: customer.companyName,
+          cNo: customerYWD.shareCertificateNumber,
+          dNo: customerYWD.distinctiveNumber,
+          fNo: customerYWD.ledgerFolio,
+          nofsh:
+            customerYWD.totalShareQuantity +
+            " OF F.V RS." +
+            customer.faceValueAsOnToday +
+            "/-",
+        });
+      }
+      // folioCertiDistFDistTNoShare/fCDFDNS
+      let fCDFDNS: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log(
+          "folioCertiDistFDistTNoShare data customerYWD:- ",
+          customerYWD
+        );
+        fCDFDNS.push({
+          fNo: customer.ledgerFolio,
+          cNo: customerYWD.shareCertificateNumber,
+          dNF: customerYWD.distinctiveNumber?.split("-")[0],
+          dNT: customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0],
+          nSH:
+            customerYWD.totalShareQuantity +
+            " of Rs." +
+            customer.faceValueAsOnToday +
+            "/-",
+        });
+      }
 
-    // nameFolioShareFVCertiDistNo/nfSFCDN
-    let nfSFCDN: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log(
-        "nameFolioShareFVCertiDistNo data customerYWD:- ",
-        customerYWD
-      );
-      nfSFCDN.push({
-        name:
-          customer.deathHolderName1 +
-          "  (Deceased) Jointly" +
-          customer.deathHolderName2,
-        fNo: customer.ledgerFolio,
-        shares: customerYWD.totalShareQuantity,
-        fv: customer.faceValueAsOnToday,
-        cNo: customerYWD.shareCertificateNumber,
-        dNo: customerYWD.distinctiveNumber,
-      });
-    }
+      // folioShareCertiDistNos/fSCDN
+      let fSCDN: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("folioShareCertiDistNos data customerYWD:- ", customerYWD);
+        fSCDN.push({
+          folioNumber: customer.ledgerFolio,
+          noofShares: customerYWD.totalShareQuantity,
+          certificateNo: customerYWD.shareCertificateNumber,
+          distinctiveNos_f: customerYWD.distinctiveNumber?.split("-")[0],
+          distinctiveNos_t: customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0],
+        });
+      }
+      // nameComFolioNoSecperClaim/nCFNSPC
+      let nCFNSPC: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log(
+          "nameComFolioNoSecperClaim data customerYWD:- ",
+          customerYWD
+        );
+        nCFNSPC.push({
+          nameC: customer.companyName,
+          fNo: customer.ledgerFolio,
+          noS:
+            customer.totalShares +
+            " of Rs." +
+            customer.faceValueAsOnToday +
+            "/-",
+          per: "100 %",
+        });
+      }
+      //nameComFolioCertDistNEDistShares//nCFCDNEDS
+      let nCFCDNEDS: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log(
+          "nameComFolioCertDistNEDistShares data customerYWD:- ",
+          customerYWD
+        );
+        nCFCDNEDS.push({
+          folioNo: customer.ledgerFolio,
+          certNo:
+            customerYWD.shareCertificateNumber +
+            " of Rs." +
+            customer.faceValueAsOnToday +
+            "/-",
+          startDistNo: customerYWD.distinctiveNumber?.split("-")[0],
+          endDistNo: customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0],
+          Shares: customerYWD.totalShareQuantity,
+        });
+      }
+      // certiDistNoSecurity
+      let certiDistNoSecurity: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("certiDistNoSecurity data customerYWD:- ", customerYWD);
+        certiDistNoSecurity.push({
+          certiNo: customerYWD.shareCertificateNumber,
+          dNos: customerYWD.distinctiveNumber,
+          noS: customerYWD.totalShareQuantity,
+        });
+      }
 
-    //table otherLegalHears :-
-    let olhnamepan = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhnamepan += `${customerYWD.nameInPancardExactSpelling},`;
-    }
+      // folioShareCertiDistFT/fSCDFT
+      let fSCDFT: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("folioShareCertiDistFT data customerYWD:- ", customerYWD);
+        fSCDFT.push({
+          fOLIONO: customer.ledgerFolio,
+          SHARES: customerYWD.totalShareQuantity,
+          cNo:
+            customerYWD.shareCertificateNumber +
+            " of Rs." +
+            customer.faceValueAsOnToday +
+            "/-",
+          dNof: customerYWD.distinctiveNumber?.split("-")[0],
+          dNot: customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0],
+        });
+      }
 
-    let olhnameaadhar = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling};`;
-    }
+      // nameFolioShareFVCertiDistNo/nfSFCDN
+      let nfSFCDN: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log(
+          "nameFolioShareFVCertiDistNo data customerYWD:- ",
+          customerYWD
+        );
+        nfSFCDN.push({
+          name:
+            customer.deathHolderName1 +
+            "  (Deceased) Jointly" +
+            customer.deathHolderName2,
+          fNo: customer.ledgerFolio,
+          shares: customerYWD.totalShareQuantity,
+          fv: customer.faceValueAsOnToday,
+          cNo: customerYWD.shareCertificateNumber,
+          dNo: customerYWD.distinctiveNumber,
+        });
+      }
 
-    let olhaddaadhar = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhaddaadhar += `${customerYWD.addressSameInAadharcard};`;
-    }
+      //table otherLegalHears :-
+      let olhnamepan = "";
+      for (let index = 0; index < customer.otherLegalHears.length; index++) {
+        const customerYWD = customer.otherLegalHears[index];
+        olhnamepan += `${customerYWD.nameInPancardExactSpelling},`;
+      }
 
-    let olhage = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhage += `${customerYWD.age},`;
-    }
+      let olhnameaadhar = "";
+      for (let index = 0; index < customer.otherLegalHears.length; index++) {
+        const customerYWD = customer.otherLegalHears[index];
+        olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling};`;
+      }
 
-    let olhdaughterson = "";
-    for (let index = 0; index < customer.otherLegalHears.length; index++) {
-      const customerYWD = customer.otherLegalHears[index];
-      olhdaughterson += `${
-        customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-      },`;
-    }
+      let olhaddaadhar = "";
+      for (let index = 0; index < customer.otherLegalHears.length; index++) {
+        const customerYWD = customer.otherLegalHears[index];
+        olhaddaadhar += `${customerYWD.addressSameInAadharcard};`;
+      }
 
-    //table sdt
-    let tableSDT: any = [];
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      console.log("sdt data customerYWD:- ", customerYWD);
-      tableSDT.push({
-        shareCertificateNumber: customerYWD.shareCertificateNumber,
-        distinctiveNumber: customerYWD.distinctiveNumber,
-        totalShareQuantity: customerYWD.totalShareQuantity,
-      });
-    }
+      let olhage = "";
+      for (let index = 0; index < customer.otherLegalHears.length; index++) {
+        const customerYWD = customer.otherLegalHears[index];
+        olhage += `${customerYWD.age},`;
+      }
 
-    //SDT
-    let dN = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      dN += `${customerYWD.distinctiveNumber},`;
-    }
+      let olhdaughterson = "";
+      for (let index = 0; index < customer.otherLegalHears.length; index++) {
+        const customerYWD = customer.otherLegalHears[index];
+        olhdaughterson += `${
+          customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+        },`;
+      }
 
-    let sCN = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      sCN += `${customerYWD.shareCertificateNumber},`;
-    }
-
-    let tSQ = "";
-    for (let index = 0; index < customer.tableSDT.length; index++) {
-      const customerYWD = customer.tableSDT[index];
-      tSQ += `${customerYWD.totalShareQuantity},`;
-    }
-    const date = new Date(customer.date!);
-    console.log("date:- " + date);
-
-    let bonusSplitDate = "";
-    let bonusSplit = "";
-    if (customer.bonusDate) {
-      bonusSplitDate = moment(customer.bonusDate).format("DD MMM YYYY");
-      bonusSplit = "bonus";
-    } else if (customer.splitDate) {
-      bonusSplitDate = moment(customer.splitDate).format("DD MMM YYYY");
-      bonusSplit = "split";
-    }
-
-    let fhnineDigitMICRNumberSplit = customer.fhnineDigitMICRNumber!.split("");
-    let micr = "";
-    for (let index = 0; index < fhnineDigitMICRNumberSplit.length; index++) {
-      const customerYWD = fhnineDigitMICRNumberSplit[index];
-      micr += micr; // customerYWD
-    }
-
-    await doc.render({
-      //fields
-      date: moment(date).format("DD-MM-YYYY"),
-      companyName: customer.companyName||"{Company Name}",
-      companyAddress: customer.companyAddress||"{companyAddress}",
-      companyNumber: customer.companyNumber||"{Company Number}",
-      emailId: customer.emailId||"{Email Id}",
-      registerTransferAgentName: customer.registerTransferAgentName||"{Register Transfer Agent Name (RTA)}",
-      registerTransferAgentAdress: customer.registerTransferAgentAdress||"{RTA Address}",
-      registerTransferAgentContactNumber:
-        customer.registerTransferAgentContactNumber||"{RTA Contact Number}",
-      registerTransferAgentEmail: customer.registerTransferAgentEmail||"{RTA Email Id}",
-      ledgerFolio: customer.ledgerFolio||"{Ledger Folio}",
-      bonusDate: customer.bonusDate ? bonusSplitDate : "{Bonus  Date}",
-      splitDate: customer.splitDate ? bonusSplitDate : "{Bonus  Date}",
-      bonusSplit: bonusSplit||"{bonus}",
-      notaryDate: moment(customer.notaryDate).format("DD MMM YYYY")||"{Notary Date}",
-      totalShares: customer.totalShares||"{Total Shares}",
-      faceValueAsOnToday: customer.faceValueAsOnToday||"{Face Value as On Today}",
-      holdShareQuantitySelf: customer.holdShareQuantitySelf||"{Hold Share Quantity Self}",
-      companyHoldUndeliveredShareQuantity:
-        customer.companyHoldUndeliveredShareQuantity||"{Company Hold Undelivered Share Quantity}",
-      holdShareQuantitySelfFaceValue: customer.holdShareQuantitySelfFaceValue||"{Hold Share Quantity Self Face Value}",
-      oldCompanyName: customer.oldCompanyName||"{Old Company Name}",
-      oldQuantityholdShare: customer.oldQuantityholdShare||"{Old Quantity Hold Share}",
-      
-      fhnameInPancardExactSpelling: customer.fhnameInPancardExactSpelling||"{First Holder Name in Pan Card (Exact Spelling)}",
-      fhrateInPercentage: customer.fhrateInPercentage||"{First Holder Percentage %}",
-      fhbusiness: customer.fhbusiness||"{First Holder Business}",
-      fhpinCode: customer.fhpinCode||"{First Holder Pincode}",
-      fhnameAsPerShareCertificate: customer.fhnameAsPerShareCertificate||"{First Holder Name as per share certificate}",
-      fhfatherOrHusbandName: customer.fhfatherOrHusbandName||"{First Holder Father/Husband Name}",
-      fhcontactNumber: customer.fhcontactNumber||"{First Holder Contact Number}",
-      fhemail: customer.fhemail||"{First Holder Email}",
-      fhpancardNumber: customer.fhpancardNumber||"{First Holder Pancard Number}",
-      fhcity: customer.fhcity||"{First Holder City}",
-      fhaddressSameInAadharcard: customer.fhaddressSameInAadharcard||"{First Holder Address Same in Aadhar Card}",
-      fholdAddressCompanyRegister: customer.fholdAddressCompanyRegister||"{First Holder Old Address Company Register}",
-      fhgender: customer.fhgender||"{First Holder Gender}",
-      fhstate: customer.fhstate||"{First Holder State}",
-      fhage: customer.fhage||"{First Holder Age}",
-      fhaadharCardNumber: customer.fhaadharCardNumber||"{First Holder Aadhar Card Number}",
-      fhnameInAadharcardExactSpeling: customer.fhnameInAadharcardExactSpeling||"{First Holder Name In Aadhar Card Exact Speling}",
-      fhRelationship: customer.fhRelationship||"{First Holder Relationship}",
-      //jh
-      jhnameInPancardExactSpelling: customer.jhnameInPancardExactSpelling||"{Joint Holder Name in Pan Card (Exact Spelling)}",
-      jhnameAsPerShareCertificate: customer.jhnameAsPerShareCertificate||"{Joint Holder Name as per share certificate}",
-      jhfatherOrHusbandName: customer.jhfatherOrHusbandName||"{Joint Holder Father/Husband Name}",
-      jhcontactNumber: customer.jhcontactNumber||"{Joint Holder Contact Number}",
-      jhemail: customer.jhemail||"{Joint Holder Email}",
-      jhpancardNumber: customer.jhpancardNumber||"{Joint Holder Pancard Number}",
-      jhcity: customer.jhcity||"{Joint Holder City}",
-      jhaddressSameInAadharcard: customer.jhaddressSameInAadharcard||"{Joint Holder Address Same in Aadhar Card}",
-      jholdAddressCompanyRegister: customer.jholdAddressCompanyRegister||"{Joint Holder Old Address Company Register}",
-      jhgender: customer.jhgender||"{Joint Holder Gender}",
-      jhstate: customer.jhstate||"{Joint Holder State}",
-      jhage: customer.jhage||"{Joint Holder Age}",
-      jhaadharCardNumber: customer.jhaadharCardNumber||"{Joint Holder AadharCard Number}",
-      jhnameInAadharcardExactSpeling: customer.jhnameInAadharcardExactSpeling||"{Joint Holder Name In Aadhar Card Exact Speling}",
-      jhRelationship: customer.jhRelationship||"{Joint Holder Relationship}",
-      //fh
-      fhbankName: customer.fhbankName||"{First Holder Bank Name}",
-      fhbankAddress: customer.fhbankAddress||"{First Holder Bank Address}",
-      fhholderAddressInBank: customer.fhholderAddressInBank||"{First Holder Address In Bank}",
-      fhaccountTypeSavingorCurrent: customer.fhaccountTypeSavingorCurrent||"{First Holder Account Type Saving/Current}",
-      fhaccountNumber: customer.fhaccountNumber||"{First Holder Bank Account Number}",
-      fhbankTelephoneNumber: customer.fhbankTelephoneNumber||"{First Holder Bank Telephone Number}",
-      fhbankIfscCode: customer.fhbankIfscCode||"{First Holder Bank Ifsc Code}",
-      fhbankEmail: customer.fhbankEmail||"{First Holder Bank Email}",
-      fhnineDigitMICRNumber: customer.fhnineDigitMICRNumber||"{First Holder NineDigitMICRNumber}",
-      fhnameAsPerBankAccount: customer.fhnameAsPerBankAccount||"{First Holder Name As Per Bank Account}",
-      //jh
-      jhbankName: customer.jhbankName||"{Joint Holder Bank Name}",
-      jhbankAddress: customer.jhbankAddress||"{Joint Holder Bank Address}",
-      jhholderAddressInBank: customer.jhholderAddressInBank||"{Joint Holder Address In Bank}",
-      jhaccountTypeSavingorCurrent: customer.jhaccountTypeSavingorCurrent||"{Joint Holder Account Type Saving/Current}",
-      jhaccountNumber: customer.jhaccountNumber||"{Joint Holder Bank Account Number}",
-      jhbankTelephoneNumber: customer.jhbankTelephoneNumber||"{Joint Holder Bank Telephone Number}",
-      jhbankIfscCode: customer.jhbankIfscCode||"{Joint Holder Bank Ifsc Code}",
-      jhbankEmail: customer.jhbankEmail||"{Joint Holder Bank Email}",
-      jhnineDigitMICRNumber: customer.jhnineDigitMICRNumber||"{Joint Holder NineDigitMICRNumber}",
-      jhnameAsPerBankAccount: customer.jhnameAsPerBankAccount||"{Joint Holder Name As Per Bank Account}",
-      // Demat
-      dpName: customer.dpName||"{First Holder DP Name}",
-      dematNumber: customer.dematNumber||"{First Holder Demat Number}",
-      dpId: customer.dpId||"{First Holder dpId (first 8 number of Demat Number)}",
-      clientId: customer.clientId||"{First Holder clientId (first 8 number of Demat Number)}",
-      cdslOrNsdl: customer.cdslOrNsdl||"{First Holder Cdsl Or Nsdl}",
-      nameAsPerDematAccount: customer.nameAsPerDematAccount||"{First Holder Name As Per Demat Account}",
-      nomineeName: customer.nomineeName||"{First Holder Nominee Name}",
-      nomineeFatherOrHusbandName: customer.nomineeFatherOrHusbandName||"{First Holder Nominee Father Or Husband Name}",
-      nomineeAddress: customer.nomineeAddress||"{First Holder Nominee Address}",
-      nomineeHolderRelationShip: customer.nomineeHolderRelationShip||"{First Holder Nominee Holder Relations Ship}",
-      nomineeBirthdate: moment(customer.nomineeBirthdate).format("DD-MM-YYYY")||"{First Holder Nominee Birthdate}",
-      // Witness
-      w1NameInPancardExactSpelling: customer.w1NameInPancardExactSpelling||"{Witness 1 Name In Pancard Exact Spelling}",
-      w1addressSameInAadharcard: customer.w1addressSameInAadharcard||"{Witness 1 Address Same in Aadhar Card}",
-      w1nameInAadharcardExactSpelling: customer.w1nameInAadharcardExactSpelling||"{Witness 1 Name In Aadhar Card Exact Spelling}",
-      // Witness
-      w2NameInPancardExactSpelling: customer.w2nameInPancardExactSpelling||"{Witness 2 Name In Pancard Exact Spelling}",
-      w2addressSameInAadharcard: customer.w2addressSameInAadharcard||"{Witness 2 Address Same in Aadhar Card}",
-      w2nameInAadharcardExactSpelling: customer.w2nameInAadharcardExactSpelling||"{Witness 2 Name In Aadhar Card Exact Spelling}",
-
-      // Surety 1
-      s1nameInPancardExactSpelling: customer.s1nameInPancardExactSpelling||"{Surety 1 Name In Pancard}",
-      s1nameInAadharcard: customer.s1nameInAadharcard||"{Surety 1 Name In Aadharcard}",
-      s1addressAadharcard: customer.s1addressAadharcard||"{Surety 1 Address Aadhar Card}",
-      s1age: customer.s1age||"{Surety 1 Age}",
-      s1income: customer.s1income||"{Surety 1 Income}",
-      s1email: customer.s1email||"{Surety 1 Email}",
-      s1mobileNumber: customer.s1mobileNumber||"{Surety 1 Mobile Number}",
-      s1itReturnShowAddress: customer.s1itReturnShowAddress||"{Surety 1 It Return Show Address}",
-      
-      // Surety 2
-      s2nameInPancardExactSpelling: customer.s2nameInPancardExactSpelling||"{Surety 2 Name In Pancard}",
-      s2nameInAadharcard: customer.s2nameInAadharcard||"{Surety 2 Name In Aadharcard}",
-      s2addressAadharcard: customer.s2addressAadharcard||"{Surety 2 Address Aadhar Card}",
-      s2age: customer.s2age||"{Surety 2 Age}",
-      s2income: customer.s2income||"{Surety 2 Income}",
-      s2email: customer.s2email||"{Surety 2 Email}",
-      s2mobileNumber: customer.s2mobileNumber||"{Surety 2 Mobile Number}",
-      s2itReturnShowAddress: customer.s2itReturnShowAddress||"{Surety 2 It Return Show Address}",
-      // RTA Letter
-      policeStationName: customer.policeStationName||"{PoliceStationName}",
-      // Marriage/Gazette
-      oldName: customer.oldName||"{OldName}",
-      newName: customer.newname||"{NewName}",
-      // Succession
-      deathHolderName1: customer.deathHolderName1||"{DeathHolderName1}",
-      deathHolderName2: customer.deathHolderName2||"{DeathHolderName2}",
-      deathHolderFirstCity: customer.deathHolderFirstCity||"{Death Holder First City}",
-      deathHolderSecondCity: customer.deathHolderSecondCity||"{Death Holder Second City}",
-      deathOfAddress: customer.deathOfAddress||"{Death Of Address}",
-      certificateDeathHolderName1: customer.certificateDeathHolderName1||"{Certificate Death Holder Name 1}",
-      certificateDeathHolderName2: customer.certificateDeathHolderName2||"{Certificate Death Holder Name 2}",
-      legalNamePancard: customer.legalNamePancard||"{Legal Name Pancard}",
-      successionCertificateNumberYear: customer.successionCertificateNumberYear||"{Succession Certificate Number Year}",
-      successionCertificateCourtOrderDateAndYear:
-        customer.successionCertificateCourtOrderDateAndYear||"{Succession Certificate Court Order Date And Year}",
-      deceasedHolderAsPerShareCertificate:
-        customer.deceasedHolderAsPerShareCertificate||"{Deceased Holder As Per Share Certificate}",
-      deceasedHolderAsPerMunicipalityCertificate:
-        customer.deceasedHolderAsPerMunicipalityCertificate||"{Deceased Holder As Per Municipality Certificate}",
-
-      //LHA
-      nameInPancardExectSpelling: customer.nameInPancardExectSpelling||"{LHA Name In Pancard Exect Spelling}",
-      nameAsPerShareCertificate: customer.nameAsPerShareCertificate||"{LHA Name As Per Share Certificate}",
-      fatherOrHusbandName: customer.fatherOrHusbandName||"{LHA Father Or Husband Name}",
-      contactNumber: customer.contactNumber||"{LHA Contact Number}",
-      email: customer.email||"{LHA Email}",
-      pancardNumber: customer.pancardNumber||"{LHA Pancard Number}",
-      city: customer.city||"{LHA City}",
-      deathOfHolderFirstHolder: moment(
-        customer.deathOfHolderFirstHolder
-      ).format("DD-MM-YYYY")||"{LHA Death Of Holder First Holder}",
-      deathOfHolderSecondHolder: moment(
-        customer.deathOfHolderSecondHolder
-      ).format("DD-MM-YYYY")||"{LHA Death Of Holder Second Holder}",
-      addressSameInAadharcard: customer.addressSameInAadharcard||"{LHA Address Same In Aadharcard}",
-      oldAddressCompanyRegister: customer.oldAddressCompanyRegister||"{LHA Old Address Company Register}",
-      gender: customer.gender||"{LHA Gender}",
-      state: customer.state||"{LHA State}",
-      age: customer.age||"{LHA Age}",
-      aadharcardNumber: customer.aadharcardNumber||"{LHA Aadharcard Number}",
-      nameInAdharcardExactSpeling: customer.nameInAdharcardExactSpeling||"{LHA Name In Adharcard Exact Speling}",
-      // lha bank
-      lhabankName: customer.lhabankName||"{LHA bankName}",
-      lhabankAddress: customer.lhabankAddress||"{LHA bankAddress}",
-      lhaholderAddressInBank: customer.lhaholderAddressInBank||"{LHA holderAddressInBank}",
-      lhaaccountTypeSavingorCurrent: customer.lhaaccountTypeSavingorCurrent||"{LHA accountTypeSavingorCurrent}",
-      lhaaccountNumber: customer.lhaaccountNumber||"{LHA Account Number}",
-      lhabankTelephoneNumber: customer.lhabankTelephoneNumber||"{LHA BankTelephoneNumber}",
-      lhabankIfscCode: customer.lhabankIfscCode||"{LHA bankIfscCode}",
-      lhanineDigitMICRNumber: customer.lhanineDigitMICRNumber||"{LHA nineDigitMICRNumber}",
-      lhadeathOfHolderFirstHolder: moment(
-        customer.deathOfHolderFirstHolder
-      ).format("DD-MM-YYYY")||"{LHA deathOfHolderFirstHolder}",
-      lhadeathOfHolderSecondHolder: moment(
-        customer.deathOfHolderSecondHolder
-      ).format("DD-MM-YYYY")||"{LHA deathOfHolderSecondHolder}",
-      lhanameAsPerBankAccount: customer.lhanameAsPerBankAccount||"{LHA nameAsPerBankAccount}",
-      // LHA Demat
-      lhadpName: customer.lhadpName||"{LHA dpName}",
-      lhadematNumber: customer.lhadematNumber||"{LHA dematNumber}",
-      lhacdslOrNsdl: customer.lhacdslOrNsdl||"{LHA cdslOrNsdl}",
-      lhanameAsPerDematAccount: customer.lhanameAsPerDematAccount||"{LHA nameAsPerDematAccount}",
-
-      // IEPF
-      iepfDividendAmount: customer.iepfDividendAmount||"{IEPF DividendAmount}",
-      iepfDividendYear: customer.iepfDividendYear||"{IEPF DividendYear}",
-      referenceLetterNo: customer.referenceLetterNo||"{Reference Letter No}",
-      referenceLetterdate: moment(customer.referenceLetterdate).format(
-        "DD-MM-YYYY"
-      )||"{Reference Letter Date}",
-
-      MICRECSCode: micr||"{MICRECSCode}",
-      currentYear: new Date().getFullYear()||"{currentYear}",
-      lhadeathHolderFirstCity: customer.deathHolderFirstCity||"{LHA Death Holder First City}",
-      lhadeathHolderSecondCity: customer.deathHolderSecondCity||"{LHA Death Holder Second City}",
-
-      //olh
-      olhnameInPancard1: olhnamepan.split(",")[0]||"{OLH 1 nameInPancard}",
-      olhnameInPancard2: olhnamepan.split(",")[1]||"{OLH 2 nameInPancard}",
-      olhnameInPancard3: olhnamepan.split(",")[2]||"{OLH 3 nameInPancard}",
-
-      olhnameInaadharcard1: olhnameaadhar.split(";")[0]||"{OLH 1 nameInaadharcard}",
-      olhnameInaadharcard2: olhnameaadhar.split(";")[1]||"{OLH 2 nameInaadharcard}",
-      olhnameInaadharcard3: olhnameaadhar.split(";")[2]||"{OLH 3 nameInaadharcard}",
-
-      olhaddressaddhar1: olhaddaadhar.split(";")[0]||"{OLH 1 addressaddhar}",
-      olhaddressaddhar2: olhaddaadhar.split(";")[1]||"{OLH 2 addressaddhar}",
-      olhaddressaddhar3: olhaddaadhar.split(";")[2]||"{OLH 3 addressaddhar}",
-
-      olhage1: olhage.split(",")[0]||"{OLH 1 age}",
-      olhage2: olhage.split(",")[1]||"{OLH 2 age}",
-      olhage3: olhage.split(",")[2]||"{OLH 3 age}",
-
-      olhdaughterson1: olhdaughterson.split(",")[0]||"{OLH 1 daughterson}",
-      olhdaughterson2: olhdaughterson.split(",")[1]||"{OLH 2 daughterson}",
-      olhdaughterson3: olhdaughterson.split(",")[2]||"{OLH 3 daughterson}",
+      //table sdt
+      let tableSDT: any = [];
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("sdt data customerYWD:- ", customerYWD);
+        tableSDT.push({
+          shareCertificateNumber: customerYWD.shareCertificateNumber,
+          distinctiveNumber: customerYWD.distinctiveNumber,
+          totalShareQuantity: customerYWD.totalShareQuantity,
+        });
+      }
 
       //SDT
-      distinctiveNumber: dN||"\n\n\n",
-      shareCertificateNumber: sCN||"\n\n\n",
-      totalShareQuantity: tSQ||"\n\n\n",
-      // first_name: "John",
-      // last_name: "Doe",
-      // phone: "0652455478",
-      // description: "New Website",
-      hasReff: hasReffLine||"\n\n\n",
-      subjects: subjects||"\n\n\n",
-      summary1: summary1||"\n\n\n",
-      name: "Jay"||"\n\n\n",
-      tableSDT: tableSDT||"\n\n\n",
-      noticeTable: noticeTable||"\n\n\n",
-      fCDSIC: fCDSIC||"\n\n\n",
-      fSCD: fSCD||"\n\n\n",
-      fCDSNSH: fCDSNSH||"\n\n\n",
-      ywdATable: ywdATable||"\n\n\n",
-      fSCND: fSCND||"\n\n\n",
-      nCCDFSH: nCCDFSH||"\n\n\n",
-      fCDFDNS: fCDFDNS||"\n\n\n",
-      nCFNSPC: nCFNSPC||"\n\n\n",
-      nCFCDNEDS: nCFCDNEDS||"\n\n\n",
-      certiDistNoSecurity: certiDistNoSecurity||"\n\n\n",
-      fSCDFT: fSCDFT||"\n\n\n",
-      nfSFCDN: nfSFCDN||"\n\n\n",
-    });
-    const buf = doc.getZip().generate({
-      type: "nodebuffer",
-      // compression: DEFLATE adds a compression step.
-      // For a 50MB output document, expect 500ms additional CPU time
-      compression: "DEFLATE",
-    });
-    const fileName = `${Date.now()}_${customerTemplateMasterId}_${templateType}.docx`;
-    await writeFileSync(path.resolve(__dirname, fileName), buf);
-    const readFileData = await readFileSync(
-      path.resolve(__dirname, fileName),
-      "binary"
-    );
-    await unlinkSync(path.resolve(__dirname, fileName));
-    return readFileData;
+      let dN = "";
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        dN += `${customerYWD.distinctiveNumber},`;
+      }
+
+      let sCN = "";
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        sCN += `${customerYWD.shareCertificateNumber},`;
+      }
+
+      let tSQ = "";
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        tSQ += `${customerYWD.totalShareQuantity},`;
+      }
+      const date = new Date(customer.date!);
+      console.log("date:- " + date);
+
+      let bonusSplitDate = "";
+      let bonusSplit = "";
+      if (customer.bonusDate) {
+        bonusSplitDate = moment(customer.bonusDate).format("DD MMM YYYY");
+        bonusSplit = "bonus";
+      } else if (customer.splitDate) {
+        bonusSplitDate = moment(customer.splitDate).format("DD MMM YYYY");
+        bonusSplit = "split";
+      }
+
+      let fhnineDigitMICRNumberSplit =
+        customer.fhnineDigitMICRNumber!.split("");
+      let micr = "";
+      for (let index = 0; index < fhnineDigitMICRNumberSplit.length; index++) {
+        const customerYWD = fhnineDigitMICRNumberSplit[index];
+        micr += micr; // customerYWD
+      }
+
+      await doc.render({
+        //fields
+        date: moment(date).format("DD-MM-YYYY"),
+        companyName: customer.companyName || "{Company Name}",
+        companyAddress: customer.companyAddress || "{companyAddress}",
+        companyNumber: customer.companyNumber || "{Company Number}",
+        emailId: customer.emailId || "{Email Id}",
+        registerTransferAgentName:
+          customer.registerTransferAgentName ||
+          "{Register Transfer Agent Name (RTA)}",
+        registerTransferAgentAdress:
+          customer.registerTransferAgentAdress || "{RTA Address}",
+        registerTransferAgentContactNumber:
+          customer.registerTransferAgentContactNumber || "{RTA Contact Number}",
+        registerTransferAgentEmail:
+          customer.registerTransferAgentEmail || "{RTA Email Id}",
+        ledgerFolio: customer.ledgerFolio || "{Ledger Folio}",
+        bonusDate: customer.bonusDate ? bonusSplitDate : "{Bonus  Date}",
+        splitDate: customer.splitDate ? bonusSplitDate : "{Bonus  Date}",
+        bonusSplit: bonusSplit || "{bonus}",
+        notaryDate:
+          moment(customer.notaryDate).format("DD MMM YYYY") || "{Notary Date}",
+        totalShares: customer.totalShares || "{Total Shares}",
+        faceValueAsOnToday:
+          customer.faceValueAsOnToday || "{Face Value as On Today}",
+        holdShareQuantitySelf:
+          customer.holdShareQuantitySelf || "{Hold Share Quantity Self}",
+        companyHoldUndeliveredShareQuantity:
+          customer.companyHoldUndeliveredShareQuantity ||
+          "{Company Hold Undelivered Share Quantity}",
+        holdShareQuantitySelfFaceValue:
+          customer.holdShareQuantitySelfFaceValue ||
+          "{Hold Share Quantity Self Face Value}",
+        oldCompanyName: customer.oldCompanyName || "{Old Company Name}",
+        oldQuantityholdShare:
+          customer.oldQuantityholdShare || "{Old Quantity Hold Share}",
+
+        fhnameInPancardExactSpelling:
+          customer.fhnameInPancardExactSpelling ||
+          "{First Holder Name in Pan Card (Exact Spelling)}",
+        fhrateInPercentage:
+          customer.fhrateInPercentage || "{First Holder Percentage %}",
+        fhbusiness: customer.fhbusiness || "{First Holder Business}",
+        fhpinCode: customer.fhpinCode || "{First Holder Pincode}",
+        fhnameAsPerShareCertificate:
+          customer.fhnameAsPerShareCertificate ||
+          "{First Holder Name as per share certificate}",
+        fhfatherOrHusbandName:
+          customer.fhfatherOrHusbandName ||
+          "{First Holder Father/Husband Name}",
+        fhcontactNumber:
+          customer.fhcontactNumber || "{First Holder Contact Number}",
+        fhemail: customer.fhemail || "{First Holder Email}",
+        fhpancardNumber:
+          customer.fhpancardNumber || "{First Holder Pancard Number}",
+        fhcity: customer.fhcity || "{First Holder City}",
+        fhaddressSameInAadharcard:
+          customer.fhaddressSameInAadharcard ||
+          "{First Holder Address Same in Aadhar Card}",
+        fholdAddressCompanyRegister:
+          customer.fholdAddressCompanyRegister ||
+          "{First Holder Old Address Company Register}",
+        fhgender: customer.fhgender || "{First Holder Gender}",
+        fhstate: customer.fhstate || "{First Holder State}",
+        fhage: customer.fhage || "{First Holder Age}",
+        fhaadharCardNumber:
+          customer.fhaadharCardNumber || "{First Holder Aadhar Card Number}",
+        fhnameInAadharcardExactSpeling:
+          customer.fhnameInAadharcardExactSpeling ||
+          "{First Holder Name In Aadhar Card Exact Speling}",
+        fhRelationship:
+          customer.fhRelationship || "{First Holder Relationship}",
+        //jh
+        jhnameInPancardExactSpelling:
+          customer.jhnameInPancardExactSpelling ||
+          "{Joint Holder Name in Pan Card (Exact Spelling)}",
+        jhnameAsPerShareCertificate:
+          customer.jhnameAsPerShareCertificate ||
+          "{Joint Holder Name as per share certificate}",
+        jhfatherOrHusbandName:
+          customer.jhfatherOrHusbandName ||
+          "{Joint Holder Father/Husband Name}",
+        jhcontactNumber:
+          customer.jhcontactNumber || "{Joint Holder Contact Number}",
+        jhemail: customer.jhemail || "{Joint Holder Email}",
+        jhpancardNumber:
+          customer.jhpancardNumber || "{Joint Holder Pancard Number}",
+        jhcity: customer.jhcity || "{Joint Holder City}",
+        jhaddressSameInAadharcard:
+          customer.jhaddressSameInAadharcard ||
+          "{Joint Holder Address Same in Aadhar Card}",
+        jholdAddressCompanyRegister:
+          customer.jholdAddressCompanyRegister ||
+          "{Joint Holder Old Address Company Register}",
+        jhgender: customer.jhgender || "{Joint Holder Gender}",
+        jhstate: customer.jhstate || "{Joint Holder State}",
+        jhage: customer.jhage || "{Joint Holder Age}",
+        jhaadharCardNumber:
+          customer.jhaadharCardNumber || "{Joint Holder AadharCard Number}",
+        jhnameInAadharcardExactSpeling:
+          customer.jhnameInAadharcardExactSpeling ||
+          "{Joint Holder Name In Aadhar Card Exact Speling}",
+        jhRelationship:
+          customer.jhRelationship || "{Joint Holder Relationship}",
+        //fh
+        fhbankName: customer.fhbankName || "{First Holder Bank Name}",
+        fhbankAddress: customer.fhbankAddress || "{First Holder Bank Address}",
+        fhholderAddressInBank:
+          customer.fhholderAddressInBank || "{First Holder Address In Bank}",
+        fhaccountTypeSavingorCurrent:
+          customer.fhaccountTypeSavingorCurrent ||
+          "{First Holder Account Type Saving/Current}",
+        fhaccountNumber:
+          customer.fhaccountNumber || "{First Holder Bank Account Number}",
+        fhbankTelephoneNumber:
+          customer.fhbankTelephoneNumber ||
+          "{First Holder Bank Telephone Number}",
+        fhbankIfscCode:
+          customer.fhbankIfscCode || "{First Holder Bank Ifsc Code}",
+        fhbankEmail: customer.fhbankEmail || "{First Holder Bank Email}",
+        fhnineDigitMICRNumber:
+          customer.fhnineDigitMICRNumber ||
+          "{First Holder NineDigitMICRNumber}",
+        fhnameAsPerBankAccount:
+          customer.fhnameAsPerBankAccount ||
+          "{First Holder Name As Per Bank Account}",
+        //jh
+        jhbankName: customer.jhbankName || "{Joint Holder Bank Name}",
+        jhbankAddress: customer.jhbankAddress || "{Joint Holder Bank Address}",
+        jhholderAddressInBank:
+          customer.jhholderAddressInBank || "{Joint Holder Address In Bank}",
+        jhaccountTypeSavingorCurrent:
+          customer.jhaccountTypeSavingorCurrent ||
+          "{Joint Holder Account Type Saving/Current}",
+        jhaccountNumber:
+          customer.jhaccountNumber || "{Joint Holder Bank Account Number}",
+        jhbankTelephoneNumber:
+          customer.jhbankTelephoneNumber ||
+          "{Joint Holder Bank Telephone Number}",
+        jhbankIfscCode:
+          customer.jhbankIfscCode || "{Joint Holder Bank Ifsc Code}",
+        jhbankEmail: customer.jhbankEmail || "{Joint Holder Bank Email}",
+        jhnineDigitMICRNumber:
+          customer.jhnineDigitMICRNumber ||
+          "{Joint Holder NineDigitMICRNumber}",
+        jhnameAsPerBankAccount:
+          customer.jhnameAsPerBankAccount ||
+          "{Joint Holder Name As Per Bank Account}",
+        // Demat
+        dpName: customer.dpName || "{First Holder DP Name}",
+        dematNumber: customer.dematNumber || "{First Holder Demat Number}",
+        dpId:
+          customer.dpId ||
+          "{First Holder dpId (first 8 number of Demat Number)}",
+        clientId:
+          customer.clientId ||
+          "{First Holder clientId (first 8 number of Demat Number)}",
+        cdslOrNsdl: customer.cdslOrNsdl || "{First Holder Cdsl Or Nsdl}",
+        nameAsPerDematAccount:
+          customer.nameAsPerDematAccount ||
+          "{First Holder Name As Per Demat Account}",
+        nomineeName: customer.nomineeName || "{First Holder Nominee Name}",
+        nomineeFatherOrHusbandName:
+          customer.nomineeFatherOrHusbandName ||
+          "{First Holder Nominee Father Or Husband Name}",
+        nomineeAddress:
+          customer.nomineeAddress || "{First Holder Nominee Address}",
+        nomineeHolderRelationShip:
+          customer.nomineeHolderRelationShip ||
+          "{First Holder Nominee Holder Relations Ship}",
+        nomineeBirthdate:
+          moment(customer.nomineeBirthdate).format("DD-MM-YYYY") ||
+          "{First Holder Nominee Birthdate}",
+        // Witness
+        w1NameInPancardExactSpelling:
+          customer.w1NameInPancardExactSpelling ||
+          "{Witness 1 Name In Pancard Exact Spelling}",
+        w1addressSameInAadharcard:
+          customer.w1addressSameInAadharcard ||
+          "{Witness 1 Address Same in Aadhar Card}",
+        w1nameInAadharcardExactSpelling:
+          customer.w1nameInAadharcardExactSpelling ||
+          "{Witness 1 Name In Aadhar Card Exact Spelling}",
+        // Witness
+        w2NameInPancardExactSpelling:
+          customer.w2nameInPancardExactSpelling ||
+          "{Witness 2 Name In Pancard Exact Spelling}",
+        w2addressSameInAadharcard:
+          customer.w2addressSameInAadharcard ||
+          "{Witness 2 Address Same in Aadhar Card}",
+        w2nameInAadharcardExactSpelling:
+          customer.w2nameInAadharcardExactSpelling ||
+          "{Witness 2 Name In Aadhar Card Exact Spelling}",
+
+        // Surety 1
+        s1nameInPancardExactSpelling:
+          customer.s1nameInPancardExactSpelling || "{Surety 1 Name In Pancard}",
+        s1nameInAadharcard:
+          customer.s1nameInAadharcard || "{Surety 1 Name In Aadharcard}",
+        s1addressAadharcard:
+          customer.s1addressAadharcard || "{Surety 1 Address Aadhar Card}",
+        s1age: customer.s1age || "{Surety 1 Age}",
+        s1income: customer.s1income || "{Surety 1 Income}",
+        s1email: customer.s1email || "{Surety 1 Email}",
+        s1mobileNumber: customer.s1mobileNumber || "{Surety 1 Mobile Number}",
+        s1itReturnShowAddress:
+          customer.s1itReturnShowAddress || "{Surety 1 It Return Show Address}",
+
+        // Surety 2
+        s2nameInPancardExactSpelling:
+          customer.s2nameInPancardExactSpelling || "{Surety 2 Name In Pancard}",
+        s2nameInAadharcard:
+          customer.s2nameInAadharcard || "{Surety 2 Name In Aadharcard}",
+        s2addressAadharcard:
+          customer.s2addressAadharcard || "{Surety 2 Address Aadhar Card}",
+        s2age: customer.s2age || "{Surety 2 Age}",
+        s2income: customer.s2income || "{Surety 2 Income}",
+        s2email: customer.s2email || "{Surety 2 Email}",
+        s2mobileNumber: customer.s2mobileNumber || "{Surety 2 Mobile Number}",
+        s2itReturnShowAddress:
+          customer.s2itReturnShowAddress || "{Surety 2 It Return Show Address}",
+        // RTA Letter
+        policeStationName: customer.policeStationName || "{PoliceStationName}",
+        // Marriage/Gazette
+        oldName: customer.oldName || "{OldName}",
+        newName: customer.newname || "{NewName}",
+        // Succession
+        deathHolderName1: customer.deathHolderName1 || "{DeathHolderName1}",
+        deathHolderName2: customer.deathHolderName2 || "{DeathHolderName2}",
+        deathHolderFirstCity:
+          customer.deathHolderFirstCity || "{Death Holder First City}",
+        deathHolderSecondCity:
+          customer.deathHolderSecondCity || "{Death Holder Second City}",
+        deathOfAddress: customer.deathOfAddress || "{Death Of Address}",
+        certificateDeathHolderName1:
+          customer.certificateDeathHolderName1 ||
+          "{Certificate Death Holder Name 1}",
+        certificateDeathHolderName2:
+          customer.certificateDeathHolderName2 ||
+          "{Certificate Death Holder Name 2}",
+        legalNamePancard: customer.legalNamePancard || "{Legal Name Pancard}",
+        successionCertificateNumberYear:
+          customer.successionCertificateNumberYear ||
+          "{Succession Certificate Number Year}",
+        successionCertificateCourtOrderDateAndYear:
+          customer.successionCertificateCourtOrderDateAndYear ||
+          "{Succession Certificate Court Order Date And Year}",
+        deceasedHolderAsPerShareCertificate:
+          customer.deceasedHolderAsPerShareCertificate ||
+          "{Deceased Holder As Per Share Certificate}",
+        deceasedHolderAsPerMunicipalityCertificate:
+          customer.deceasedHolderAsPerMunicipalityCertificate ||
+          "{Deceased Holder As Per Municipality Certificate}",
+
+        //LHA
+        nameInPancardExectSpelling:
+          customer.nameInPancardExectSpelling ||
+          "{LHA Name In Pancard Exect Spelling}",
+        nameAsPerShareCertificate:
+          customer.nameAsPerShareCertificate ||
+          "{LHA Name As Per Share Certificate}",
+        fatherOrHusbandName:
+          customer.fatherOrHusbandName || "{LHA Father Or Husband Name}",
+        contactNumber: customer.contactNumber || "{LHA Contact Number}",
+        email: customer.email || "{LHA Email}",
+        pancardNumber: customer.pancardNumber || "{LHA Pancard Number}",
+        city: customer.city || "{LHA City}",
+        deathOfHolderFirstHolder:
+          moment(customer.deathOfHolderFirstHolder).format("DD-MM-YYYY") ||
+          "{LHA Death Of Holder First Holder}",
+        deathOfHolderSecondHolder:
+          moment(customer.deathOfHolderSecondHolder).format("DD-MM-YYYY") ||
+          "{LHA Death Of Holder Second Holder}",
+        addressSameInAadharcard:
+          customer.addressSameInAadharcard ||
+          "{LHA Address Same In Aadharcard}",
+        oldAddressCompanyRegister:
+          customer.oldAddressCompanyRegister ||
+          "{LHA Old Address Company Register}",
+        gender: customer.gender || "{LHA Gender}",
+        state: customer.state || "{LHA State}",
+        age: customer.age || "{LHA Age}",
+        aadharcardNumber:
+          customer.aadharcardNumber || "{LHA Aadharcard Number}",
+        nameInAdharcardExactSpeling:
+          customer.nameInAdharcardExactSpeling ||
+          "{LHA Name In Adharcard Exact Speling}",
+        // lha bank
+        lhabankName: customer.lhabankName || "{LHA bankName}",
+        lhabankAddress: customer.lhabankAddress || "{LHA bankAddress}",
+        lhaholderAddressInBank:
+          customer.lhaholderAddressInBank || "{LHA holderAddressInBank}",
+        lhaaccountTypeSavingorCurrent:
+          customer.lhaaccountTypeSavingorCurrent ||
+          "{LHA accountTypeSavingorCurrent}",
+        lhaaccountNumber: customer.lhaaccountNumber || "{LHA Account Number}",
+        lhabankTelephoneNumber:
+          customer.lhabankTelephoneNumber || "{LHA BankTelephoneNumber}",
+        lhabankIfscCode: customer.lhabankIfscCode || "{LHA bankIfscCode}",
+        lhanineDigitMICRNumber:
+          customer.lhanineDigitMICRNumber || "{LHA nineDigitMICRNumber}",
+        lhadeathOfHolderFirstHolder:
+          moment(customer.deathOfHolderFirstHolder).format("DD-MM-YYYY") ||
+          "{LHA deathOfHolderFirstHolder}",
+        lhadeathOfHolderSecondHolder:
+          moment(customer.deathOfHolderSecondHolder).format("DD-MM-YYYY") ||
+          "{LHA deathOfHolderSecondHolder}",
+        lhanameAsPerBankAccount:
+          customer.lhanameAsPerBankAccount || "{LHA nameAsPerBankAccount}",
+        // LHA Demat
+        lhadpName: customer.lhadpName || "{LHA dpName}",
+        lhadematNumber: customer.lhadematNumber || "{LHA dematNumber}",
+        lhacdslOrNsdl: customer.lhacdslOrNsdl || "{LHA cdslOrNsdl}",
+        lhanameAsPerDematAccount:
+          customer.lhanameAsPerDematAccount || "{LHA nameAsPerDematAccount}",
+
+        // IEPF
+        iepfDividendAmount:
+          customer.iepfDividendAmount || "{IEPF DividendAmount}",
+        iepfDividendYear: customer.iepfDividendYear || "{IEPF DividendYear}",
+        referenceLetterNo:
+          customer.referenceLetterNo || "{Reference Letter No}",
+        referenceLetterdate:
+          moment(customer.referenceLetterdate).format("DD-MM-YYYY") ||
+          "{Reference Letter Date}",
+
+        MICRECSCode: micr || "{MICRECSCode}",
+        currentYear: new Date().getFullYear() || "{currentYear}",
+        lhadeathHolderFirstCity:
+          customer.deathHolderFirstCity || "{LHA Death Holder First City}",
+        lhadeathHolderSecondCity:
+          customer.deathHolderSecondCity || "{LHA Death Holder Second City}",
+
+        //olh
+        olhnameInPancard1: olhnamepan.split(",")[0] || "{OLH 1 nameInPancard}",
+        olhnameInPancard2: olhnamepan.split(",")[1] || "{OLH 2 nameInPancard}",
+        olhnameInPancard3: olhnamepan.split(",")[2] || "{OLH 3 nameInPancard}",
+
+        olhnameInaadharcard1:
+          olhnameaadhar.split(";")[0] || "{OLH 1 nameInaadharcard}",
+        olhnameInaadharcard2:
+          olhnameaadhar.split(";")[1] || "{OLH 2 nameInaadharcard}",
+        olhnameInaadharcard3:
+          olhnameaadhar.split(";")[2] || "{OLH 3 nameInaadharcard}",
+
+        olhaddressaddhar1:
+          olhaddaadhar.split(";")[0] || "{OLH 1 addressaddhar}",
+        olhaddressaddhar2:
+          olhaddaadhar.split(";")[1] || "{OLH 2 addressaddhar}",
+        olhaddressaddhar3:
+          olhaddaadhar.split(";")[2] || "{OLH 3 addressaddhar}",
+
+        olhage1: olhage.split(",")[0] || "{OLH 1 age}",
+        olhage2: olhage.split(",")[1] || "{OLH 2 age}",
+        olhage3: olhage.split(",")[2] || "{OLH 3 age}",
+
+        olhdaughterson1: olhdaughterson.split(",")[0] || "{OLH 1 daughterson}",
+        olhdaughterson2: olhdaughterson.split(",")[1] || "{OLH 2 daughterson}",
+        olhdaughterson3: olhdaughterson.split(",")[2] || "{OLH 3 daughterson}",
+
+        //SDT
+        distinctiveNumber: dN || "\n\n\n",
+        shareCertificateNumber: sCN || "\n\n\n",
+        totalShareQuantity: tSQ || "\n\n\n",
+        // first_name: "John",
+        // last_name: "Doe",
+        // phone: "0652455478",
+        // description: "New Website",
+        hasReff: hasReffLine || "\n\n\n",
+        subjects: subjects || "\n\n\n",
+        summary1: summary1 || "\n\n\n",
+        name: "Jay" || "\n\n\n",
+        tableSDT: tableSDT || "\n\n\n",
+        noticeTable: noticeTable || "\n\n\n",
+        fCDSIC: fCDSIC || "\n\n\n",
+        fSCD: fSCD || "\n\n\n",
+        fCDSNSH: fCDSNSH || "\n\n\n",
+        ywdATable: ywdATable || "\n\n\n",
+        fSCND: fSCND || "\n\n\n",
+        nCCDFSH: nCCDFSH || "\n\n\n",
+        fCDFDNS: fCDFDNS || "\n\n\n",
+        nCFNSPC: nCFNSPC || "\n\n\n",
+        nCFCDNEDS: nCFCDNEDS || "\n\n\n",
+        certiDistNoSecurity: certiDistNoSecurity || "\n\n\n",
+        fSCDFT: fSCDFT || "\n\n\n",
+        nfSFCDN: nfSFCDN || "\n\n\n",
+      });
+      const buf = doc.getZip().generate({
+        type: "nodebuffer",
+        // compression: DEFLATE adds a compression step.
+        // For a 50MB output document, expect 500ms additional CPU time
+        compression: "DEFLATE",
+      });
+      const fileName = `${Date.now()}_${customerTemplateMasterId}_${templateType}.docx`;
+      await writeFileSync(path.resolve(__dirname, fileName), buf);
+      const readFileData = await readFileSync(
+        path.resolve(__dirname, fileName),
+        "binary"
+      );
+      await unlinkSync(path.resolve(__dirname, fileName));
+      return readFileData;
+    } catch (error) {
+      if (error.properties) {
+        throw new InternalServerError(
+          `Error from Create createDynamicWord in docx ${docName} and error: ${JSON.stringify(
+            error.properties,
+            null,
+            1
+          )}`
+        );
+      }
+      throw new InternalServerError(
+        `Error from Create createDynamicWord in docx ${docName} and error: ${error}`
+      );
+    }
   }
 
   async getCustomerTemplateByTypeAndCustomerId(
