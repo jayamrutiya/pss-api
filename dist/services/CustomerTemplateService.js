@@ -4212,6 +4212,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                         : customerYWD.distinctiveNumber?.split("-")[0],
                 });
             }
+            console.log("fSCND:- ", fSCND);
             //nameComCertiDistFolioSerHeld/nCCDFSH
             let nCCDFSH = [];
             for (let index = 0; index < customer.tableSDT.length; index++) {
@@ -4380,17 +4381,17 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             let dN = "";
             for (let index = 0; index < customer.tableSDT.length; index++) {
                 const customerYWD = customer.tableSDT[index];
-                dN += `${customerYWD.distinctiveNumber},`;
+                dN += `${customerYWD.distinctiveNumber}\n`;
             }
             let sCN = "";
             for (let index = 0; index < customer.tableSDT.length; index++) {
                 const customerYWD = customer.tableSDT[index];
-                sCN += `${customerYWD.shareCertificateNumber},`;
+                sCN += `${customerYWD.shareCertificateNumber}\n`;
             }
             let tSQ = "";
             for (let index = 0; index < customer.tableSDT.length; index++) {
                 const customerYWD = customer.tableSDT[index];
-                tSQ += `${customerYWD.totalShareQuantity},`;
+                tSQ += `${customerYWD.totalShareQuantity}\n`;
             }
             const date = new Date(customer.date);
             console.log("date:- " + date);
@@ -4410,6 +4411,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 const customerYWD = fhnineDigitMICRNumberSplit[index];
                 micr += micr; // customerYWD
             }
+            console.log('DN:- ', dN);
             await doc.render({
                 //fields
                 date: (0, moment_1.default)(date).format("DD-MM-YYYY"),
@@ -4460,9 +4462,13 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 fhnameInAadharcardExactSpeling: customer.fhnameInAadharcardExactSpeling ||
                     "{First Holder Name In Aadhar Card Exact Speling}",
                 fhRelationship: customer.fhRelationship || "{First Holder Relationship}",
+                //fh and jh
+                jhnameWithJointly: customer.jhnameInPancardExactSpelling ?
+                    " Jointly " + customer.jhnameInPancardExactSpelling :
+                    '',
                 //jh
                 jhnameInPancardExactSpelling: customer.jhnameInPancardExactSpelling ||
-                    "{Joint Holder Name in Pan Card (Exact Spelling)}",
+                    "    ",
                 jhnameAsPerShareCertificate: customer.jhnameAsPerShareCertificate ||
                     "{Joint Holder Name as per share certificate}",
                 jhfatherOrHusbandName: customer.jhfatherOrHusbandName ||
@@ -4660,6 +4666,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 distinctiveNumber: dN || "\n\n\n",
                 shareCertificateNumber: sCN || "\n\n\n",
                 totalShareQuantity: tSQ || "\n\n\n",
+                jhsignature: customer.jhnameInPancardExactSpelling ? "Signature:" : "",
                 // first_name: "John",
                 // last_name: "Doe",
                 // phone: "0652455478",
@@ -4682,6 +4689,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 certiDistNoSecurity: certiDistNoSecurity || "\n\n\n",
                 fSCDFT: fSCDFT || "\n\n\n",
                 nfSFCDN: nfSFCDN || "\n\n\n",
+                fSCDN: fSCDN || "\n\n\n",
             });
             const buf = doc.getZip().generate({
                 type: "nodebuffer",
