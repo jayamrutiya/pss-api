@@ -4372,7 +4372,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
 
       let finalFileName:
         | string
-        | null = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
+        | null = `Forwarding-Letter_${customerTemplateMasterId}_${Date.now()}.docx`;
       let url: string | null = `${env.API_BASEURL}/doc/${finalFileName}`;
       let originalName: string | null = finalFileName;
       let status: string | null = "PENDING";
@@ -4520,7 +4520,10 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         throw new NotFound("Customer Template Not found.");
       }
       if (getCustomerTemplateMaster.url) {
-        finalFileName = getCustomerTemplateMaster.storeDocName;
+        await unlinkSync(
+          join("./src/public", getCustomerTemplateMaster.storeDocName!)
+        );
+        finalFileName = finalFileName;
         url = `${env.API_BASEURL}/doc/${finalFileName}`;
         originalName = finalFileName;
         status = getCustomerTemplateMaster.status;
@@ -4641,8 +4644,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           noofShares: customerYWD.totalShareQuantity,
           shareholder:
             customer.deathHolderName1 +
-              " (deceased) jointly" +
-              customer.deathHolderName2
+            " (deceased) jointly" +
+            customer.deathHolderName2
               ? customer.deathHolderName2 + "(deceased)"
               : "",
         });
@@ -4857,8 +4860,9 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       let olhdaughterson = "";
       for (let index = 0; index < customer.otherLegalHears.length; index++) {
         const customerYWD = customer.otherLegalHears[index];
-        olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-          },`;
+        olhdaughterson += `${
+          customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+        },`;
       }
 
       //table sdt
@@ -4911,8 +4915,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         const customerYWD = fhnineDigitMICRNumberSplit[index];
         micr += micr; // customerYWD
       }
-      console.log('DN:- ', dN);
-
+      console.log("DN:- ", dN);
 
       await doc.render({
         //fields
@@ -4951,7 +4954,6 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         oldQuantityholdShare:
           customer.oldQuantityholdShare || "{Old Quantity Hold Share}",
 
-
         fhnameInPancardExactSpelling:
           customer.fhnameInPancardExactSpelling ||
           "{First Holder Name in Pan Card (Exact Spelling)}",
@@ -4989,14 +4991,12 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           customer.fhRelationship || "{First Holder Relationship}",
 
         //fh and jh
-        jhnameWithJointly:
-          customer.jhnameInPancardExactSpelling ?
-            " Jointly " + customer.jhnameInPancardExactSpelling :
-            '',
+        jhnameWithJointly: customer.jhnameInPancardExactSpelling
+          ? " Jointly " + customer.jhnameInPancardExactSpelling
+          : "",
         //jh
         jhnameInPancardExactSpelling:
-          customer.jhnameInPancardExactSpelling ||
-          "    ",
+          customer.jhnameInPancardExactSpelling || "    ",
         jhnameAsPerShareCertificate:
           customer.jhnameAsPerShareCertificate ||
           "{Joint Holder Name as per share certificate}",

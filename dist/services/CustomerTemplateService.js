@@ -3988,7 +3988,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             //   docxFilePath,
             //   Buffer.from(converted)
             // );
-            let finalFileName = `Forwarding-Letter_${customerTemplateMasterId}.docx`;
+            let finalFileName = `Forwarding-Letter_${customerTemplateMasterId}_${Date.now()}.docx`;
             let url = `${env_1.default.API_BASEURL}/doc/${finalFileName}`;
             let originalName = finalFileName;
             let status = "PENDING";
@@ -4090,7 +4090,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 throw new NotFound_1.NotFound("Customer Template Not found.");
             }
             if (getCustomerTemplateMaster.url) {
-                finalFileName = getCustomerTemplateMaster.storeDocName;
+                await (0, fs_1.unlinkSync)((0, path_1.join)("./src/public", getCustomerTemplateMaster.storeDocName));
+                finalFileName = finalFileName;
                 url = `${env_1.default.API_BASEURL}/doc/${finalFileName}`;
                 originalName = finalFileName;
                 status = getCustomerTemplateMaster.status;
@@ -4411,7 +4412,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 const customerYWD = fhnineDigitMICRNumberSplit[index];
                 micr += micr; // customerYWD
             }
-            console.log('DN:- ', dN);
+            console.log("DN:- ", dN);
             await doc.render({
                 //fields
                 date: (0, moment_1.default)(date).format("DD-MM-YYYY"),
@@ -4463,12 +4464,11 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                     "{First Holder Name In Aadhar Card Exact Speling}",
                 fhRelationship: customer.fhRelationship || "{First Holder Relationship}",
                 //fh and jh
-                jhnameWithJointly: customer.jhnameInPancardExactSpelling ?
-                    " Jointly " + customer.jhnameInPancardExactSpelling :
-                    '',
+                jhnameWithJointly: customer.jhnameInPancardExactSpelling
+                    ? " Jointly " + customer.jhnameInPancardExactSpelling
+                    : "",
                 //jh
-                jhnameInPancardExactSpelling: customer.jhnameInPancardExactSpelling ||
-                    "    ",
+                jhnameInPancardExactSpelling: customer.jhnameInPancardExactSpelling || "    ",
                 jhnameAsPerShareCertificate: customer.jhnameAsPerShareCertificate ||
                     "{Joint Holder Name as per share certificate}",
                 jhfatherOrHusbandName: customer.jhfatherOrHusbandName ||
