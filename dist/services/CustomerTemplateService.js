@@ -4667,6 +4667,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 shareCertificateNumber: sCN || "\n\n\n",
                 totalShareQuantity: tSQ || "\n\n\n",
                 jhsignature: customer.jhnameInPancardExactSpelling ? "Signature:" : "",
+                jhSignatureUnderline: customer.jhnameInPancardExactSpelling ? "X________________________________" : "",
+                jhSignatureUnderlineWithTag2: customer.jhnameInPancardExactSpelling ? "Signature of 2st Legal Heir: x_________________________________" : "",
                 // first_name: "John",
                 // last_name: "Doe",
                 // phone: "0652455478",
