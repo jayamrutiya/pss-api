@@ -4810,6 +4810,55 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             : customerYWD.distinctiveNumber?.split("-")[0],
         });
       }
+      let fhjhTable: any = [];
+      let fhorjh: any = [];
+
+      if (customer.fhnameInPancardExactSpelling) {
+        fhorjh.push({
+          name: customer.fhnameInPancardExactSpelling,
+          pin: customer.fhpinCode,
+          address: customer.fhaddressSameInAadharcard,
+        })
+        if (customer.jhnameInPancardExactSpelling) {
+          fhorjh.push({
+            name: customer.jhnameInPancardExactSpelling,
+            pin: customer.jhpinCode,
+            address: customer.jhaddressSameInAadharcard,
+          })
+        }
+      }
+      console.log('fhorjh :- ', fhorjh);
+      for (let index = 0; index < fhorjh.length; index++) {
+        const fhelement = fhorjh[index];
+        fhjhTable.push({
+          Signature: "Signature",
+          Name: "Name",
+          name: fhelement.name,
+          Fulladdress: "Full address",
+          address: fhelement.address,
+          PIN: "PIN",
+          pincode: fhelement.pin || ''
+        })
+      }
+      console.log('fhjhTable :- ', fhjhTable);
+
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("folioShareCertiDistFT data customerYWD:- ", customerYWD);
+        fSCDFT.push({
+          fOLIONO: customer.ledgerFolio,
+          SHARES: customerYWD.totalShareQuantity,
+          cNo:
+            customerYWD.shareCertificateNumber +
+            " of Rs." +
+            customer.faceValueAsOnToday +
+            "/-",
+          dNof: customerYWD.distinctiveNumber?.split("-")[0],
+          dNot: customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0],
+        });
+      }
 
       // nameFolioShareFVCertiDistNo/nfSFCDN
       let nfSFCDN: any = [];
@@ -4915,6 +4964,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         micr += micr; // customerYWD
       }
       console.log("DN:- ", dN);
+
 
       await doc.render({
         //fields
@@ -5311,6 +5361,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         fSCDFT: fSCDFT || "\n\n\n",
         nfSFCDN: nfSFCDN || "\n\n\n",
         fSCDN: fSCDN || "\n\n\n",
+        fhjhTable: fhjhTable || "\n\n\n",
       });
       const buf = doc.getZip().generate({
         type: "nodebuffer",
