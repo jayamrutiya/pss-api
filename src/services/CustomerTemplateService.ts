@@ -4987,7 +4987,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         micr += micr; // customerYWD
       }
       console.log("DN:- ", dN);
-      const notaryMonth = await moment(customer.notaryDate).format("MMM");
+      const notaryMonth = await moment(customer.notaryDate).format("MMMM");
       console.log("notaryMonth:- ", notaryMonth);
 
       let lhajhasperShareCerti = '';
