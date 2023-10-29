@@ -4407,11 +4407,12 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           isReffLineAvailable = true;
         } else if (template.templateType === "SUBJECT") {
           subjects.push({
-            title: `${subjects.length + 1}. ${template.templateTitle}`,
+            no: `${subjects.length + 1}.`,
+            title: `${template.templateTitle}`,
           });
         } else if (template.templateType === "SUMMARY1") {
           summary1.push({
-            title: `${summary1.length + 1}. ${template.templateTitle}`,
+            title: `${summary1.length + 1}.${template.templateTitle}`,
           });
         }
       }
@@ -4524,7 +4525,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           join("./src/public", getCustomerTemplateMaster.storeDocName!)
         );
         finalFileName = finalFileName;
-        url = `${env.API_BASEURL}/doc/${finalFileName}`;
+        url = `${env.API_BASEURL} / doc / ${finalFileName}`;
         originalName = finalFileName;
         status = getCustomerTemplateMaster.status;
       }
@@ -4860,6 +4861,28 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         });
       }
 
+
+      let T1: any = [];
+      //T1/T1
+
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        console.log("Table data customerYWD:- ", customerYWD);
+        T1.push({
+          SN: index + 1 + ")",
+          Folio: customer.ledgerFolio,
+          Share: customerYWD.totalShareQuantity,
+          certificateNo: customerYWD.shareCertificateNumber,
+          dF: customerYWD.distinctiveNumber?.split("-")[0],
+          dT: customerYWD.distinctiveNumber?.split("-")[1]
+            ? customerYWD.distinctiveNumber?.split("-")[1]
+            : customerYWD.distinctiveNumber?.split("-")[0],
+        });
+      }
+      console.log("T1:- ", T1);
+
+
+
       // nameFolioShareFVCertiDistNo/nfSFCDN
       let nfSFCDN: any = [];
       for (let index = 0; index < customer.tableSDT.length; index++) {
@@ -4885,32 +4908,32 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       let olhnamepan = "";
       for (let index = 0; index < customer.otherLegalHears.length; index++) {
         const customerYWD = customer.otherLegalHears[index];
-        olhnamepan += `${customerYWD.nameInPancardExactSpelling},`;
+        olhnamepan += `${customerYWD.nameInPancardExactSpelling}, `;
       }
 
       let olhnameaadhar = "";
       for (let index = 0; index < customer.otherLegalHears.length; index++) {
         const customerYWD = customer.otherLegalHears[index];
-        olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling};`;
+        olhnameaadhar += `${customerYWD.nameInAadharcardExactSpelling}; `;
       }
 
       let olhaddaadhar = "";
       for (let index = 0; index < customer.otherLegalHears.length; index++) {
         const customerYWD = customer.otherLegalHears[index];
-        olhaddaadhar += `${customerYWD.addressSameInAadharcard};`;
+        olhaddaadhar += `${customerYWD.addressSameInAadharcard}; `;
       }
 
       let olhage = "";
       for (let index = 0; index < customer.otherLegalHears.length; index++) {
         const customerYWD = customer.otherLegalHears[index];
-        olhage += `${customerYWD.age},`;
+        olhage += `${customerYWD.age}, `;
       }
 
       let olhdaughterson = "";
       for (let index = 0; index < customer.otherLegalHears.length; index++) {
         const customerYWD = customer.otherLegalHears[index];
         olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-          },`;
+          }, `;
       }
 
       //table sdt
@@ -4929,19 +4952,19 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       let dN = "";
       for (let index = 0; index < customer.tableSDT.length; index++) {
         const customerYWD = customer.tableSDT[index];
-        dN += `${customerYWD.distinctiveNumber}\n`;
+        dN += `${customerYWD.distinctiveNumber} \n`;
       }
 
       let sCN = "";
       for (let index = 0; index < customer.tableSDT.length; index++) {
         const customerYWD = customer.tableSDT[index];
-        sCN += `${customerYWD.shareCertificateNumber}\n`;
+        sCN += `${customerYWD.shareCertificateNumber} \n`;
       }
 
       let tSQ = "";
       for (let index = 0; index < customer.tableSDT.length; index++) {
         const customerYWD = customer.tableSDT[index];
-        tSQ += `${customerYWD.totalShareQuantity}\n`;
+        tSQ += `${customerYWD.totalShareQuantity} \n`;
       }
       const date = new Date(customer.date!);
       console.log("date:- " + date);
@@ -4964,6 +4987,22 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         micr += micr; // customerYWD
       }
       console.log("DN:- ", dN);
+      const notaryMonth = await moment(customer.notaryDate).format("MMM");
+      console.log("notaryMonth:- ", notaryMonth);
+
+      let lhajhasperShareCerti = '';
+
+      if (customer.fhnameAsPerShareCertificate) {
+        if (customer.nameAsPerShareCertificate) {
+          lhajhasperShareCerti = `${customer.nameAsPerShareCertificate} LEGAL HEIR OF ${customer.deathHolderName1} ${customer.deathHolderName2 ? `Jointly ${customer.deathHolderName2}` : ''}`
+        }
+        else {
+          lhajhasperShareCerti = customer.fhnameAsPerShareCertificate
+        }
+      }
+      console.log('lhajhasperShareCerti:- ', lhajhasperShareCerti);
+      // RUPALBEN  SURENDRA SHAH LEGAL HEIR OF SURYABEN SURENDRA SHAH (deceased) Jointly FURYABEN SURENDRA SHAH (deceased) Jointly
+
 
 
       await doc.render({
@@ -5055,6 +5094,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         jhcontactNumber:
           customer.jhcontactNumber || "{Joint Holder Contact Number}",
         jhemail: customer.jhemail || "{Joint Holder Email}",
+        jhpinCode: customer.jhpinCode || '',
         jhpancardNumber:
           customer.jhpancardNumber || "{Joint Holder Pancard Number}",
         jhcity: customer.jhcity || "{Joint Holder City}",
@@ -5142,7 +5182,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           "{First Holder Nominee Holder Relations Ship}",
         nomineeBirthdate:
           moment(customer.nomineeBirthdate).format("DD-MM-YYYY") ||
-          "{First Holder Nominee Birthdate}",
+          "",
         // Witness
         w1NameInPancardExactSpelling:
           customer.w1NameInPancardExactSpelling ||
@@ -5336,8 +5376,11 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         totalShareQuantity: tSQ || "\n\n\n",
         jhsignature: customer.jhnameInPancardExactSpelling ? "Signature:" : "",
         jhSignatureUnderline: customer.jhnameInPancardExactSpelling ? "X________________________________" : "",
-        jhSignatureUnderlineWithTag2: customer.jhnameInPancardExactSpelling ? "Signature of 2st Legal Heir: x_________________________________" : "",
-
+        jhSignatureUnderlineWithTag2: customer.jhnameInPancardExactSpelling ? "Signature of ShareHolder/Legal Heir: x_________________________________" : "",
+        jhWithNameAddPan: `and ${customer.jhnameInPancardExactSpelling}, ${customer.jhRelationship} of ${customer.jhfatherOrHusbandName}, ${customer.jhage} years, presently residing at: ${customer.jhaddressSameInAadharcard}, having Permanent Account No. ${customer.jhpancardNumber},`,
+        jhSignatureUnderlineWithPhoto: customer.jhnameInPancardExactSpelling ? "Signature of ShareHolder/Legal Heir: x_________________________________               Photo" : "",
+        notaryMonth: notaryMonth,
+        lhajhasperShareCerti: lhajhasperShareCerti,
         // first_name: "John",
         // last_name: "Doe",
         // phone: "0652455478",
@@ -5362,6 +5405,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         nfSFCDN: nfSFCDN || "\n\n\n",
         fSCDN: fSCDN || "\n\n\n",
         fhjhTable: fhjhTable || "\n\n\n",
+        T1: T1 || "\n\n\n"
       });
       const buf = doc.getZip().generate({
         type: "nodebuffer",
@@ -5384,11 +5428,12 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             error.properties,
             null,
             1
-          )}`
+          )
+          } `
         );
       }
       throw new InternalServerError(
-        `Error from Create createDynamicWord in docx ${docName} and error: ${error}`
+        `Error from Create createDynamicWord in docx ${docName} and error: ${error} `
       );
     }
   }
@@ -5614,8 +5659,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
     console.log("count", count);
     const letterNo =
       status === "COMPANY REPLY"
-        ? `Company Letter - ${count + 1}`
-        : `Letter - ${count + 1}`;
+        ? `Company Letter - ${count + 1} `
+        : `Letter - ${count + 1} `;
     return await this._customerTemplateRepository.createCustomerTemplateMaster(
       userId,
       customerId,
