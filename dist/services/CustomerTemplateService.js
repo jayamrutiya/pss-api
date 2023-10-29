@@ -4477,7 +4477,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 micr += micr; // customerYWD
             }
             console.log("DN:- ", dN);
-            const notaryMonth = await (0, moment_1.default)(customer.notaryDate).format("MMM");
+            const notaryMonth = await (0, moment_1.default)(customer.notaryDate).format("MMMM");
             console.log("notaryMonth:- ", notaryMonth);
             let lhajhasperShareCerti = '';
             if (customer.fhnameAsPerShareCertificate) {
