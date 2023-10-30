@@ -4525,7 +4525,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           join("./src/public", getCustomerTemplateMaster.storeDocName!)
         );
         finalFileName = finalFileName;
-        url = `${env.API_BASEURL} / doc / ${finalFileName}`;
+        url = `${env.API_BASEURL}/doc/${finalFileName}`;
         originalName = finalFileName;
         status = getCustomerTemplateMaster.status;
       }

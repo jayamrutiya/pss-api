@@ -4093,7 +4093,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             if (getCustomerTemplateMaster.url) {
                 await (0, fs_1.unlinkSync)((0, path_1.join)("./src/public", getCustomerTemplateMaster.storeDocName));
                 finalFileName = finalFileName;
-                url = `${env_1.default.API_BASEURL} / doc / ${finalFileName}`;
+                url = `${env_1.default.API_BASEURL}/doc/${finalFileName}`;
                 originalName = finalFileName;
                 status = getCustomerTemplateMaster.status;
             }
