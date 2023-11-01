@@ -54,7 +54,7 @@ exports.uploadTemplate = (0, multer_1.default)({
         },
         filename: function (req, file, cb) {
             var ext = path_1.default.extname(file.originalname);
-            cb(null, `${Date.now()}_${req.body.type}.${ext}`);
+            cb(null, `${Date.now()}_${req.body.type}${ext}`);
         },
     }),
     fileFilter: function (req, file, cb) {
