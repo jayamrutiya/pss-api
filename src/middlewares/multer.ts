@@ -50,7 +50,8 @@ export const uploadTemplate = multer({
       cb(null, "./src/public/Template");
     },
     filename: function (req, file, cb) {
-      cb(null, `${Date.now()}_${req.body.type}_${file.originalname}`);
+      var ext = path.extname(file.originalname);
+      cb(null, `${Date.now()}_${req.body.type}.${ext}`);
     },
   }),
   fileFilter: function (req, file, cb) {
