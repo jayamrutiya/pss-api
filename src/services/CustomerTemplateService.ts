@@ -4582,6 +4582,42 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         ywdATabelData: JSON.parse(customerData.ywdATabelData!),
         otherLegalHears: JSON.parse(customerData.otherLegalHears!),
       };
+      const TAB1 :any= [];
+      const TAB2 :any= [];
+      
+      for (let index = 0; index < customer.tableSDT.length; index++) {
+        const customerYWD = customer.tableSDT[index];
+        // console.log("TAB1 TAB1:- ", customerYWD);
+        if(customerYWD.distinctiveNumber.includes('d'))
+          { 
+            customerYWD.distinctiveNumber = customerYWD.distinctiveNumber.replace('d', '');
+            console.log("customerYWD.distinctiveNumber:- ", customerYWD.distinctiveNumber);            
+            TAB1.push({
+              SN: index + 1 + ")",
+              Folio: customer.ledgerFolio,
+              Share: customerYWD.totalShareQuantity,
+              certificateNo: customerYWD.shareCertificateNumber,
+              dF: customerYWD.distinctiveNumber?.split("-")[0],
+              dT: customerYWD.distinctiveNumber?.split("-")[1]
+                ? customerYWD.distinctiveNumber?.split("-")[1]
+                : customerYWD.distinctiveNumber?.split("-")[0],
+            });
+            TAB2.push({
+              company: customer.companyName,
+              cNo: customerYWD.shareCertificateNumber,
+              dNo: customerYWD.distinctiveNumber,
+              fNo: customerYWD.ledgerFolio,
+              nofsh:
+                customerYWD.totalShareQuantity +
+                " OF F.V RS." +
+                customer.faceValueAsOnToday +
+                "/-",
+            });
+          }
+      }
+      console.log("TAB1:- ", TAB1);
+      console.log("TAB2:- ", TAB2);
+
 
       //noticeTable
       let noticeTable: any = [];
@@ -5405,7 +5441,9 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         nfSFCDN: nfSFCDN || "\n\n\n",
         fSCDN: fSCDN || "\n\n\n",
         fhjhTable: fhjhTable || "\n\n\n",
-        T1: T1 || "\n\n\n"
+        T1: T1 || "\n\n\n",
+        TAB1: TAB1 || "\n\n\n",
+        TAB2: TAB2 || "\n\n\n",
       });
       const buf = doc.getZip().generate({
         type: "nodebuffer",
