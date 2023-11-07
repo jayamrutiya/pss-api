@@ -109,15 +109,15 @@ export class TemplateRepository implements ITemplateRepository {
       // Get the database clinte
       const client = this._databaseService.Client();
 
-      const getData = await client.customerTemplate.findMany({
+      const deletecustomerTemplate = await client.customerTemplate.deleteMany({
         where: {
           templateId: id,
         },
       });
 
-      if (getData.length > 0) {
-        throw new BadRequest("Template Alredy attach to client.");
-      }
+      // if (getData.length > 0) {
+      //   throw new BadRequest("Template Alredy attach to client.");
+      // }
 
       const deleteTemplates = await client.template.delete({
         where: {

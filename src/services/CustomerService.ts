@@ -54,9 +54,9 @@ export class CustomerService implements ICustomerService {
       totalShares:
         customerData.tableSDT.length > 0
           ? customerData.tableSDT
-            .map((d) => Number(d.totalShareQuantity))
-            .reduce((prev, next) => prev + next)
-            .toString()
+              .map((d) => Number(d.totalShareQuantity))
+              .reduce((prev, next) => prev + next)
+              .toString()
           : "0",
       nomineeBirthdate: customerData.nomineeBirthdate
         ? new Date(customerData.nomineeBirthdate)
@@ -83,7 +83,7 @@ export class CustomerService implements ICustomerService {
       dpId: customerData.dematNumber?.slice(0, 8) || null,
       clientId: customerData.dematNumber?.slice(8, 16) || null,
     };
-    console.log('customerRepoData:- ', customerRepoData);
+    console.log("customerRepoData:- ", customerRepoData);
 
     if (!id) {
       return await this._customerRepository.createCustomer(customerRepoData);
@@ -98,7 +98,7 @@ export class CustomerService implements ICustomerService {
   async getCustomers(
     userId: number,
     customerMasterId: number | null
-  ): Promise<CustomerData[]> {
+  ): Promise<any> {
     const customersData = await this._customerRepository.getCustomers(
       userId,
       customerMasterId
@@ -114,7 +114,7 @@ export class CustomerService implements ICustomerService {
     return customers;
   }
 
-  async getCustomer(id: number, userId: number): Promise<CustomerData> {
+  async getCustomer(id: number, userId: number): Promise<any> {
     const getCustomer = await this._customerRepository.getCustomer(id, userId);
 
     if (!getCustomer) {

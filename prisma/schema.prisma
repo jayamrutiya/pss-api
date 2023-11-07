@@ -241,6 +241,9 @@ model Customer {
   currentYear                                String?                  @db.VarChar(10)
   dpId                                       String?                  @db.VarChar(10)
   clientId                                   String?                  @db.VarChar(10)
+  jhpinCode                                  String?                  @db.VarChar(10)
+  fhbankBranch                               String?                  @db.VarChar(50)
+  jhbankBranch                               String?                  @db.VarChar(50)
   createdAt                                  DateTime                 @default(now()) @db.Timestamp(6)
   updatedAt                                  DateTime?                @updatedAt
   CustomerTemplate                           CustomerTemplate[]

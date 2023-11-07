@@ -29,6 +29,8 @@ import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
 import DocxMerger from "docx-merger";
 import { InternalServerError } from "../errors/InternalServerError";
+import mammoth from "mammoth";
+import { readFile } from "fs/promises";
 // var DocxMerger = require("docx-merger");
 
 @injectable()
@@ -4582,42 +4584,46 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         ywdATabelData: JSON.parse(customerData.ywdATabelData!),
         otherLegalHears: JSON.parse(customerData.otherLegalHears!),
       };
-      const TAB1 :any= [];
-      const TAB2 :any= [];
-      
+      const TAB1: any = [];
+      const TAB2: any = [];
+
       for (let index = 0; index < customer.tableSDT.length; index++) {
         const customerYWD = customer.tableSDT[index];
         // console.log("TAB1 TAB1:- ", customerYWD);
-        if(customerYWD.distinctiveNumber.includes('d'))
-          { 
-            customerYWD.distinctiveNumber = customerYWD.distinctiveNumber.replace('d', '');
-            console.log("customerYWD.distinctiveNumber:- ", customerYWD.distinctiveNumber);            
-            TAB1.push({
-              SN: index + 1 + ")",
-              Folio: customer.ledgerFolio,
-              Share: customerYWD.totalShareQuantity,
-              certificateNo: customerYWD.shareCertificateNumber,
-              dF: customerYWD.distinctiveNumber?.split("-")[0],
-              dT: customerYWD.distinctiveNumber?.split("-")[1]
-                ? customerYWD.distinctiveNumber?.split("-")[1]
-                : customerYWD.distinctiveNumber?.split("-")[0],
-            });
-            TAB2.push({
-              company: customer.companyName,
-              cNo: customerYWD.shareCertificateNumber,
-              dNo: customerYWD.distinctiveNumber,
-              fNo: customerYWD.ledgerFolio,
-              nofsh:
-                customerYWD.totalShareQuantity +
-                " OF F.V RS." +
-                customer.faceValueAsOnToday +
-                "/-",
-            });
-          }
+        if (customerYWD.distinctiveNumber.includes("d")) {
+          customerYWD.distinctiveNumber = customerYWD.distinctiveNumber.replace(
+            "d",
+            ""
+          );
+          console.log(
+            "customerYWD.distinctiveNumber:- ",
+            customerYWD.distinctiveNumber
+          );
+          TAB1.push({
+            SN: index + 1 + ")",
+            Folio: customer.ledgerFolio,
+            Share: customerYWD.totalShareQuantity,
+            certificateNo: customerYWD.shareCertificateNumber,
+            dF: customerYWD.distinctiveNumber?.split("-")[0],
+            dT: customerYWD.distinctiveNumber?.split("-")[1]
+              ? customerYWD.distinctiveNumber?.split("-")[1]
+              : customerYWD.distinctiveNumber?.split("-")[0],
+          });
+          TAB2.push({
+            company: customer.companyName,
+            cNo: customerYWD.shareCertificateNumber,
+            dNo: customerYWD.distinctiveNumber,
+            fNo: customerYWD.ledgerFolio,
+            nofsh:
+              customerYWD.totalShareQuantity +
+              " OF F.V RS." +
+              customer.faceValueAsOnToday +
+              "/-",
+          });
+        }
       }
       console.log("TAB1:- ", TAB1);
       console.log("TAB2:- ", TAB2);
-
 
       //noticeTable
       let noticeTable: any = [];
@@ -4681,8 +4687,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           noofShares: customerYWD.totalShareQuantity,
           shareholder:
             customer.deathHolderName1 +
-              " (deceased) jointly" +
-              customer.deathHolderName2
+            " (deceased) jointly" +
+            customer.deathHolderName2
               ? customer.deathHolderName2 + "(deceased)"
               : "",
         });
@@ -4855,16 +4861,16 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           name: customer.fhnameInPancardExactSpelling,
           pin: customer.fhpinCode,
           address: customer.fhaddressSameInAadharcard,
-        })
+        });
         if (customer.jhnameInPancardExactSpelling) {
           fhorjh.push({
             name: customer.jhnameInPancardExactSpelling,
             pin: customer.jhpinCode,
             address: customer.jhaddressSameInAadharcard,
-          })
+          });
         }
       }
-      console.log('fhorjh :- ', fhorjh);
+      console.log("fhorjh :- ", fhorjh);
       for (let index = 0; index < fhorjh.length; index++) {
         const fhelement = fhorjh[index];
         fhjhTable.push({
@@ -4874,10 +4880,10 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           Fulladdress: "Full address",
           address: fhelement.address,
           PIN: "PIN",
-          pincode: fhelement.pin || ''
-        })
+          pincode: fhelement.pin || "",
+        });
       }
-      console.log('fhjhTable :- ', fhjhTable);
+      console.log("fhjhTable :- ", fhjhTable);
 
       for (let index = 0; index < customer.tableSDT.length; index++) {
         const customerYWD = customer.tableSDT[index];
@@ -4897,7 +4903,6 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         });
       }
 
-
       let T1: any = [];
       //T1/T1
 
@@ -4916,8 +4921,6 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         });
       }
       console.log("T1:- ", T1);
-
-
 
       // nameFolioShareFVCertiDistNo/nfSFCDN
       let nfSFCDN: any = [];
@@ -4968,8 +4971,9 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       let olhdaughterson = "";
       for (let index = 0; index < customer.otherLegalHears.length; index++) {
         const customerYWD = customer.otherLegalHears[index];
-        olhdaughterson += `${customerYWD.daughter ? customerYWD.daughter : customerYWD.son
-          }, `;
+        olhdaughterson += `${
+          customerYWD.daughter ? customerYWD.daughter : customerYWD.son
+        }, `;
       }
 
       //table sdt
@@ -5026,20 +5030,23 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
       const notaryMonth = await moment(customer.notaryDate).format("MMMM");
       console.log("notaryMonth:- ", notaryMonth);
 
-      let lhajhasperShareCerti = '';
+      let lhajhasperShareCerti = "";
 
       if (customer.fhnameAsPerShareCertificate) {
         if (customer.nameAsPerShareCertificate) {
-          lhajhasperShareCerti = `${customer.nameAsPerShareCertificate} LEGAL HEIR OF ${customer.deathHolderName1} ${customer.deathHolderName2 ? `Jointly ${customer.deathHolderName2}` : ''}`
-        }
-        else {
-          lhajhasperShareCerti = customer.fhnameAsPerShareCertificate
+          lhajhasperShareCerti = `${
+            customer.nameAsPerShareCertificate
+          } LEGAL HEIR OF ${customer.deathHolderName1} ${
+            customer.deathHolderName2
+              ? `Jointly ${customer.deathHolderName2}`
+              : ""
+          }`;
+        } else {
+          lhajhasperShareCerti = customer.fhnameAsPerShareCertificate;
         }
       }
-      console.log('lhajhasperShareCerti:- ', lhajhasperShareCerti);
+      console.log("lhajhasperShareCerti:- ", lhajhasperShareCerti);
       // RUPALBEN  SURENDRA SHAH LEGAL HEIR OF SURYABEN SURENDRA SHAH (deceased) Jointly FURYABEN SURENDRA SHAH (deceased) Jointly
-
-
 
       await doc.render({
         //fields
@@ -5130,7 +5137,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         jhcontactNumber:
           customer.jhcontactNumber || "{Joint Holder Contact Number}",
         jhemail: customer.jhemail || "{Joint Holder Email}",
-        jhpinCode: customer.jhpinCode || '',
+        jhpinCode: customer.jhpinCode || "",
         jhpancardNumber:
           customer.jhpancardNumber || "{Joint Holder Pancard Number}",
         jhcity: customer.jhcity || "{Joint Holder City}",
@@ -5217,8 +5224,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
           customer.nomineeHolderRelationShip ||
           "{First Holder Nominee Holder Relations Ship}",
         nomineeBirthdate:
-          moment(customer.nomineeBirthdate).format("DD-MM-YYYY") ||
-          "",
+          moment(customer.nomineeBirthdate).format("DD-MM-YYYY") || "",
         // Witness
         w1NameInPancardExactSpelling:
           customer.w1NameInPancardExactSpelling ||
@@ -5411,10 +5417,16 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         shareCertificateNumber: sCN || "\n\n\n",
         totalShareQuantity: tSQ || "\n\n\n",
         jhsignature: customer.jhnameInPancardExactSpelling ? "Signature:" : "",
-        jhSignatureUnderline: customer.jhnameInPancardExactSpelling ? "X________________________________" : "",
-        jhSignatureUnderlineWithTag2: customer.jhnameInPancardExactSpelling ? "Signature of ShareHolder/Legal Heir: x_________________________________" : "",
+        jhSignatureUnderline: customer.jhnameInPancardExactSpelling
+          ? "X________________________________"
+          : "",
+        jhSignatureUnderlineWithTag2: customer.jhnameInPancardExactSpelling
+          ? "Signature of ShareHolder/Legal Heir: x_________________________________"
+          : "",
         jhWithNameAddPan: `and ${customer.jhnameInPancardExactSpelling}, ${customer.jhRelationship} of ${customer.jhfatherOrHusbandName}, ${customer.jhage} years, presently residing at: ${customer.jhaddressSameInAadharcard}, having Permanent Account No. ${customer.jhpancardNumber},`,
-        jhSignatureUnderlineWithPhoto: customer.jhnameInPancardExactSpelling ? "Signature of ShareHolder/Legal Heir: x_________________________________               Photo" : "",
+        jhSignatureUnderlineWithPhoto: customer.jhnameInPancardExactSpelling
+          ? "Signature of ShareHolder/Legal Heir: x_________________________________               Photo"
+          : "",
         notaryMonth: notaryMonth,
         lhajhasperShareCerti: lhajhasperShareCerti,
         // first_name: "John",
@@ -5444,6 +5456,9 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
         T1: T1 || "\n\n\n",
         TAB1: TAB1 || "\n\n\n",
         TAB2: TAB2 || "\n\n\n",
+
+        fhbankBranch: customer.fhbankBranch || "",
+        jhbankBranch: customer.jhbankBranch || "",
       });
       const buf = doc.getZip().generate({
         type: "nodebuffer",
@@ -5466,8 +5481,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             error.properties,
             null,
             1
-          )
-          } `
+          )} `
         );
       }
       throw new InternalServerError(
@@ -5633,20 +5647,37 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
 
       if (selectedTemplate) {
         const { Customer, Template, ...restData } = selectedTemplate;
+        let templateTitle = restData.templateTitle;
+        if (templateType === "MAIN_CONTENT") {
+          const text = await mammoth.extractRawText({
+            path: join("./src/public/Template", allData.storeDocName!),
+          });
+          templateTitle = text.value;
+        }
         response.push({
           ...restData,
+          templateUrl: Template?.url,
+          templateTitle,
           isSelected: true,
         });
       } else {
+        let templateTitle = allData.title;
+        if (templateType === "MAIN_CONTENT") {
+          const text = await mammoth.extractRawText({
+            path: join("./src/public/Template", allData.storeDocName!),
+          });
+          templateTitle = text.value;
+        }
         response.push({
           customerId,
           id: null,
           order: null,
           templateId: allData.id,
           customerTemplateMasterId,
-          templateTitle: allData.title,
+          templateTitle,
           templateType: allData.type,
           templateData: allData.details,
+          templateUrl: allData.url,
           isSelected: false,
           createdAt: allData.createdAt,
           updatedAt: allData.updatedAt,

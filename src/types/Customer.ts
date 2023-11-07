@@ -169,6 +169,10 @@ export declare type CreateCustomerRepoInput = {
   otherLegalHears: string | null;
   //   createdAt: Date;
   //   updatedAt: Date | null;
+
+  jhpinCode: string | null;
+  fhbankBranch: string | null;
+  jhbankBranch: string | null;
 };
 
 export declare type CreateCustomerServiceInput = {
@@ -354,6 +358,10 @@ export declare type CreateCustomerServiceInput = {
   deceasedHolderAsPerMunicipalityCertificate: string | null;
   fhRelationship: string | null;
   jhRelationship: string | null;
+
+  jhpinCode: string | null;
+  fhbankBranch: string | null;
+  jhbankBranch: string | null;
 };
 
 export declare type CustomerData = {
@@ -534,6 +542,10 @@ export declare type CustomerData = {
   deceasedHolderAsPerMunicipalityCertificate: string | null;
   fhRelationship: string | null;
   jhRelationship: string | null;
+
+  jhpinCode: string | null;
+  fhbankBranch: string | null;
+  jhbankBranch: string | null;
 
   createdAt: Date;
   updatedAt: Date | null;

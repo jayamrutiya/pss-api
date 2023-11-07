@@ -12,12 +12,9 @@ export interface ICustomerService {
     customerData: CreateCustomerServiceInput
   ): Promise<Customer>;
 
-  getCustomers(
-    userId: number,
-    customerMasterId: number | null
-  ): Promise<CustomerData[]>;
+  getCustomers(userId: number, customerMasterId: number | null): Promise<any>;
 
-  getCustomer(id: number, userId: number): Promise<CustomerData>;
+  getCustomer(id: number, userId: number): Promise<any>;
 
   deleteCustomer(id: number, userId: number): Promise<Customer | null>;
 
