@@ -71,7 +71,7 @@ let CustomerService = class CustomerService {
             dpId: customerData.dematNumber?.slice(0, 8) || null,
             clientId: customerData.dematNumber?.slice(8, 16) || null,
         };
-        console.log('customerRepoData:- ', customerRepoData);
+        console.log("customerRepoData:- ", customerRepoData);
         if (!id) {
             return await this._customerRepository.createCustomer(customerRepoData);
         }

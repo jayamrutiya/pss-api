@@ -52,6 +52,7 @@ const pizzip_1 = __importDefault(require("pizzip"));
 const docxtemplater_1 = __importDefault(require("docxtemplater"));
 const docx_merger_1 = __importDefault(require("docx-merger"));
 const InternalServerError_1 = require("../errors/InternalServerError");
+const mammoth_1 = __importDefault(require("mammoth"));
 // var DocxMerger = require("docx-merger");
 let CustomerTemplateService = class CustomerTemplateService {
     constructor(loggerService, customerTemplateRepository, customerRepository, templateRepository) {
@@ -4132,8 +4133,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             for (let index = 0; index < customer.tableSDT.length; index++) {
                 const customerYWD = customer.tableSDT[index];
                 // console.log("TAB1 TAB1:- ", customerYWD);
-                if (customerYWD.distinctiveNumber.includes('d')) {
-                    customerYWD.distinctiveNumber = customerYWD.distinctiveNumber.replace('d', '');
+                if (customerYWD.distinctiveNumber.includes("d")) {
+                    customerYWD.distinctiveNumber = customerYWD.distinctiveNumber.replace("d", "");
                     console.log("customerYWD.distinctiveNumber:- ", customerYWD.distinctiveNumber);
                     TAB1.push({
                         SN: index + 1 + ")",
@@ -4374,7 +4375,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                     });
                 }
             }
-            console.log('fhorjh :- ', fhorjh);
+            console.log("fhorjh :- ", fhorjh);
             for (let index = 0; index < fhorjh.length; index++) {
                 const fhelement = fhorjh[index];
                 fhjhTable.push({
@@ -4384,10 +4385,10 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                     Fulladdress: "Full address",
                     address: fhelement.address,
                     PIN: "PIN",
-                    pincode: fhelement.pin || ''
+                    pincode: fhelement.pin || "",
                 });
             }
-            console.log('fhjhTable :- ', fhjhTable);
+            console.log("fhjhTable :- ", fhjhTable);
             for (let index = 0; index < customer.tableSDT.length; index++) {
                 const customerYWD = customer.tableSDT[index];
                 console.log("folioShareCertiDistFT data customerYWD:- ", customerYWD);
@@ -4511,16 +4512,18 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             console.log("DN:- ", dN);
             const notaryMonth = await (0, moment_1.default)(customer.notaryDate).format("MMMM");
             console.log("notaryMonth:- ", notaryMonth);
-            let lhajhasperShareCerti = '';
+            let lhajhasperShareCerti = "";
             if (customer.fhnameAsPerShareCertificate) {
                 if (customer.nameAsPerShareCertificate) {
-                    lhajhasperShareCerti = `${customer.nameAsPerShareCertificate} LEGAL HEIR OF ${customer.deathHolderName1} ${customer.deathHolderName2 ? `Jointly ${customer.deathHolderName2}` : ''}`;
+                    lhajhasperShareCerti = `${customer.nameAsPerShareCertificate} LEGAL HEIR OF ${customer.deathHolderName1} ${customer.deathHolderName2
+                        ? `Jointly ${customer.deathHolderName2}`
+                        : ""}`;
                 }
                 else {
                     lhajhasperShareCerti = customer.fhnameAsPerShareCertificate;
                 }
             }
-            console.log('lhajhasperShareCerti:- ', lhajhasperShareCerti);
+            console.log("lhajhasperShareCerti:- ", lhajhasperShareCerti);
             // RUPALBEN  SURENDRA SHAH LEGAL HEIR OF SURYABEN SURENDRA SHAH (deceased) Jointly FURYABEN SURENDRA SHAH (deceased) Jointly
             await doc.render({
                 //fields
@@ -4584,7 +4587,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                     "{Joint Holder Father/Husband Name}",
                 jhcontactNumber: customer.jhcontactNumber || "{Joint Holder Contact Number}",
                 jhemail: customer.jhemail || "{Joint Holder Email}",
-                jhpinCode: customer.jhpinCode || '',
+                jhpinCode: customer.jhpinCode || "",
                 jhpancardNumber: customer.jhpancardNumber || "{Joint Holder Pancard Number}",
                 jhcity: customer.jhcity || "{Joint Holder City}",
                 jhaddressSameInAadharcard: customer.jhaddressSameInAadharcard ||
@@ -4644,8 +4647,7 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 nomineeAddress: customer.nomineeAddress || "{First Holder Nominee Address}",
                 nomineeHolderRelationShip: customer.nomineeHolderRelationShip ||
                     "{First Holder Nominee Holder Relations Ship}",
-                nomineeBirthdate: (0, moment_1.default)(customer.nomineeBirthdate).format("DD-MM-YYYY") ||
-                    "",
+                nomineeBirthdate: (0, moment_1.default)(customer.nomineeBirthdate).format("DD-MM-YYYY") || "",
                 // Witness
                 w1NameInPancardExactSpelling: customer.w1NameInPancardExactSpelling ||
                     "{Witness 1 Name In Pancard Exact Spelling}",
@@ -4777,10 +4779,16 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 shareCertificateNumber: sCN || "\n\n\n",
                 totalShareQuantity: tSQ || "\n\n\n",
                 jhsignature: customer.jhnameInPancardExactSpelling ? "Signature:" : "",
-                jhSignatureUnderline: customer.jhnameInPancardExactSpelling ? "X________________________________" : "",
-                jhSignatureUnderlineWithTag2: customer.jhnameInPancardExactSpelling ? "Signature of ShareHolder/Legal Heir: x_________________________________" : "",
+                jhSignatureUnderline: customer.jhnameInPancardExactSpelling
+                    ? "X________________________________"
+                    : "",
+                jhSignatureUnderlineWithTag2: customer.jhnameInPancardExactSpelling
+                    ? "Signature of ShareHolder/Legal Heir: x_________________________________"
+                    : "",
                 jhWithNameAddPan: `and ${customer.jhnameInPancardExactSpelling}, ${customer.jhRelationship} of ${customer.jhfatherOrHusbandName}, ${customer.jhage} years, presently residing at: ${customer.jhaddressSameInAadharcard}, having Permanent Account No. ${customer.jhpancardNumber},`,
-                jhSignatureUnderlineWithPhoto: customer.jhnameInPancardExactSpelling ? "Signature of ShareHolder/Legal Heir: x_________________________________               Photo" : "",
+                jhSignatureUnderlineWithPhoto: customer.jhnameInPancardExactSpelling
+                    ? "Signature of ShareHolder/Legal Heir: x_________________________________               Photo"
+                    : "",
                 notaryMonth: notaryMonth,
                 lhajhasperShareCerti: lhajhasperShareCerti,
                 // first_name: "John",
@@ -4810,6 +4818,8 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
                 T1: T1 || "\n\n\n",
                 TAB1: TAB1 || "\n\n\n",
                 TAB2: TAB2 || "\n\n\n",
+                fhbankBranch: customer.fhbankBranch || "",
+                jhbankBranch: customer.jhbankBranch || "",
             });
             const buf = doc.getZip().generate({
                 type: "nodebuffer",
@@ -4912,21 +4922,38 @@ font-family:"Arial",sans-serif'>${customerYWD}</span></b></p>
             const selectedTemplate = selected.find((o) => o.templateId === allData.id);
             if (selectedTemplate) {
                 const { Customer, Template, ...restData } = selectedTemplate;
+                let templateTitle = restData.templateTitle;
+                if (templateType === "MAIN_CONTENT") {
+                    const text = await mammoth_1.default.extractRawText({
+                        path: (0, path_1.join)("./src/public/Template", allData.storeDocName),
+                    });
+                    templateTitle = text.value;
+                }
                 response.push({
                     ...restData,
+                    templateUrl: Template?.url,
+                    templateTitle,
                     isSelected: true,
                 });
             }
             else {
+                let templateTitle = allData.title;
+                if (templateType === "MAIN_CONTENT") {
+                    const text = await mammoth_1.default.extractRawText({
+                        path: (0, path_1.join)("./src/public/Template", allData.storeDocName),
+                    });
+                    templateTitle = text.value;
+                }
                 response.push({
                     customerId,
                     id: null,
                     order: null,
                     templateId: allData.id,
                     customerTemplateMasterId,
-                    templateTitle: allData.title,
+                    templateTitle,
                     templateType: allData.type,
                     templateData: allData.details,
+                    templateUrl: allData.url,
                     isSelected: false,
                     createdAt: allData.createdAt,
                     updatedAt: allData.updatedAt,

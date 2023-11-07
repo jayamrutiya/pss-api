@@ -99,14 +99,14 @@ let TemplateRepository = class TemplateRepository {
         try {
             // Get the database clinte
             const client = this._databaseService.Client();
-            const getData = await client.customerTemplate.findMany({
+            const deletecustomerTemplate = await client.customerTemplate.deleteMany({
                 where: {
                     templateId: id,
                 },
             });
-            if (getData.length > 0) {
-                throw new BadRequest_1.BadRequest("Template Alredy attach to client.");
-            }
+            // if (getData.length > 0) {
+            //   throw new BadRequest("Template Alredy attach to client.");
+            // }
             const deleteTemplates = await client.template.delete({
                 where: {
                     id,
